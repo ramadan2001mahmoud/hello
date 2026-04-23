@@ -1,0 +1,430 @@
+here<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftGig | Global Digital Services</title>
+    <!-- فونت عالمي أنيق -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f9fafb;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header عالمي مع Switch للغة/عملة */
+        .top-bar {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 12px 0;
+            font-size: 0.9rem;
+        }
+
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .currency-switcher {
+            display: flex;
+            gap: 15px;
+        }
+
+        .currency-switcher span {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #f3f4f6;
+            transition: 0.2s;
+        }
+
+        .currency-switcher span.active {
+            background: #4f46e5;
+            color: white;
+        }
+
+        nav {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #4f46e5;
+            letter-spacing: -1px;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.4rem;
+            color: #1f2937;
+        }
+
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #eef2ff 0%, #ffffff 100%);
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #4f46e5, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .badge {
+            background: #10b981;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* قسم الخدمات (مصدر الدخل) */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid #f3f4f6;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.1);
+            border-color: #c7d2fe;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #4f46e5;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #111827;
+            margin: 15px 0;
+        }
+
+        .price small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #6b7280;
+        }
+
+        .buy-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        .buy-btn:hover {
+            background: #4338ca;
+        }
+
+        /* شريط الإشعارات للدخل */
+        .income-banner {
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .income-banner h3 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .paypal-btn {
+            background: #ffc439;
+            color: #003087;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 60px;
+        }
+
+        /* تفاعلات جافاسكريبت */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transform: translateX(400px);
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="notification" id="liveNotification">🎉 New Order from USA! $49 earned</div>
+
+<!-- شريط علوي عالمي -->
+<div class="top-bar">
+    <div class="container">
+        <div><i class="fas fa-globe"></i> Worldwide Shipping (Digital Delivery)</div>
+        <div class="currency-switcher">
+            <span class="active" data-currency="USD">$ USD</span>
+            <span data-currency="EUR">€ EUR</span>
+            <span data-currency="SAR">﷼ SAR</span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <nav>
+        <div class="logo"><i class="fas fa-bolt"></i> SwiftGig</div>
+        <div class="nav-links">
+            <a href="#">Services</a>
+            <a href="#">How it Works</a>
+            <a href="#">For Sellers</a>
+            <a href="#" class="cart-icon"><i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span></a>
+        </div>
+    </nav>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="badge"><i class="fas fa-rocket"></i> Start Earning in 5 Minutes</div>
+        <h1>Digital Services,<br>Global Income</h1>
+        <p>Buy and sell premium digital tasks. From logo design to data entry. Your income stream starts here.</p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button class="buy-btn" style="width: auto; padding: 15px 30px;" onclick="scrollToServices()">Explore Services</button>
+            <button class="paypal-btn" onclick="alert('Connect your PayPal to start receiving payments instantly.')"><i class="fab fa-paypal"></i> Connect PayPal</button>
+        </div>
+    </div>
+</section>
+
+<!-- خدمات جاهزة للشراء (مصدر الدخل) -->
+<div class="container" id="services">
+    <h2 class="section-title">Top Selling Gigs — Buy & Resell</h2>
+    <div class="services-grid">
+        <!-- خدمة 1 -->
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+            <h3>Logo Design</h3>
+            <p>Professional, minimalist logo with source files.</p>
+            <div class="price" data-price-usd="49"><span class="price-symbol">$</span><span class="price-value">49</span></div>
+            <button class="buy-btn" onclick="addToCart('Logo Design', 49)">Add to Cart <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <!-- خدمة 2 -->
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+            <h3>CV / Resume Writing</h3>
+            <p>ATS-optimized resume by expert writers.</p>
+            <div class="price" data-price-usd="79"><span class="price-symbol">$</span><span class="price-value">79</span></div>
+            <button class="buy-btn" onclick="addToCart('Resume Writing', 79)">Add to Cart <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <!-- خدمة 3 -->
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-video"></i></div>
+            <h3>Video Editing (1 min)</h3>
+            <p>Social media reel editing + captions.</p>
+            <div class="price" data-price-usd="29"><span class="price-symbol">$</span><span class="price-value">29</span></div>
+            <button class="buy-btn" onclick="addToCart('Video Editing', 29)">Add to Cart <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <!-- خدمة 4 -->
+        <div class="service-card">
+            <div class="service-icon"><i class="fas fa-language"></i></div>
+            <h3>Translation (1000 words)</h3>
+            <p>English ↔ Arabic, Spanish, French.</p>
+            <div class="price" data-price-usd="35"><span class="price-symbol">$</span><span class="price-value">35</span></div>
+            <button class="buy-btn" onclick="addToCart('Translation', 35)">Add to Cart <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- بانر الأرباح المباشرة -->
+    <div class="income-banner">
+        <div>
+            <h3><i class="fas fa-wallet"></i> Your Potential Monthly Income</h3>
+            <p style="opacity: 0.8;">Based on average 10 orders/day from global traffic.</p>
+        </div>
+        <div style="font-size: 2.5rem; font-weight: 800;">$4,200 <span style="font-size: 1rem; font-weight: 400;">/mo</span></div>
+        <button class="paypal-btn" onclick="alert('Demo: In real site, this connects to Stripe/PayPal Payouts.')"><i class="fab fa-paypal"></i> Set Up Payouts</button>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>© 2025 SwiftGig — Global Digital Marketplace. Ready to deploy.</p>
+        <p style="margin-top: 15px; font-size: 0.9rem;">💡 Tip: Connect your domain and link a PayPal Business account to start receiving payments.</p>
+    </div>
+</footer>
+
+<script>
+    // إعدادات عالمية
+    let cartCount = 0;
+    const cartSpan = document.getElementById('cartCount');
+    const notification = document.getElementById('liveNotification');
+    let currentCurrency = 'USD';
+    const rates = { USD: 1, EUR: 0.92, SAR: 3.75 };
+
+    // محاكاة إشعارات بيع حية (تأثير نفسي يزيد ثقة الزائر)
+    const messages = [
+        "🎉 New Order from Germany! $79 earned",
+        "💰 Someone from Dubai just bought Logo Design",
+        "📈 +$35 from Canada - Translation Service",
+        "🇬🇧 UK customer checked out: Resume Writing"
+    ];
+    
+    setInterval(() => {
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        notification.textContent = randomMsg;
+        notification.classList.add('show');
+        setTimeout(() => notification.classList.remove('show'), 3000);
+    }, 8000);
+
+    // تغيير العملة
+    document.querySelectorAll('.currency-switcher span').forEach(el => {
+        el.addEventListener('click', function() {
+            document.querySelectorAll('.currency-switcher span').forEach(s => s.classList.remove('active'));
+            this.classList.add('active');
+            currentCurrency = this.dataset.currency;
+            updatePrices();
+        });
+    });
+
+    function updatePrices() {
+        const priceElements = document.querySelectorAll('.price');
+        priceElements.forEach(priceDiv => {
+            const usdValue = parseFloat(priceDiv.dataset.priceUsd);
+            if (!usdValue) return;
+            const symbolSpan = priceDiv.querySelector('.price-symbol');
+            const valueSpan = priceDiv.querySelector('.price-value');
+            
+            let converted = usdValue * rates[currentCurrency];
+            let symbol = '$';
+            if (currentCurrency === 'EUR') symbol = '€';
+            if (currentCurrency === 'SAR') symbol = '﷼';
+            
+            symbolSpan.textContent = symbol;
+            valueSpan.textContent = converted.toFixed(0);
+        });
+    }
+
+    // إضافة للسلة (محاكاة)
+    function addToCart(itemName, priceUSD) {
+        cartCount++;
+        cartSpan.textContent = cartCount;
+        
+        // تحويل السعر للعملة الحالية للإشعار
+        let convertedPrice = priceUSD * rates[currentCurrency];
+        let symbol = currentCurrency === 'USD' ? '$' : (currentCurrency === 'EUR' ? '€' : '﷼');
+        
+        // إشعار فوري
+        notification.textContent = `🛒 ${itemName} added! Total potential earnings: ${symbol}${(priceUSD * rates[currentCurrency]).toFixed(0)}`;
+        notification.style.background = '#4f46e5';
+        notification.classList.add('show');
+        setTimeout(() => {
+            notification.classList.remove('show');
+            notification.style.background = '#10b981';
+        }, 2000);
+        
+        // هنا في الواقع يتم ربطها ببوابة دفع مثل Stripe Checkout
+        alert(`✅ Demo Mode: "${itemName}" added.\n\nIn live version, this redirects to payment.\nYour PayPal/Stripe will receive ${symbol}${convertedPrice.toFixed(0)}.`);
+    }
+
+    function scrollToServices() {
+        document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // عرض سعر مبدئي للعملة
+    window.onload = function() {
+        updatePrices();
+    };
+</script>
+
+</body>
+                                                                   </html>
