@@ -1,3 +1,6 @@
+// ============================================
+// PWA & Online Status
+// ============================================
 function updateOnlineStatus() {
     const dot = document.getElementById('statusDot');
     const text = document.getElementById('statusText');
@@ -15,11 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
     
-    // PWA
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         window.deferredPrompt = e;
-        showToast('📲 يمكنك تثبيت التطبيق على جهازك', 'info');
+        showToast('يمكنك تثبيت التطبيق على جهازك', 'info');
     });
     
     console.log('✅ PDF Master Pro - جميع الأنظمة جاهزة');
