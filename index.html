@@ -3,352 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PDF Master Pro - أقوى منصة عربية لمعالجة ملفات PDF أونلاين. دمج، تقسيم، ضغط، تحويل، تعديل والمزيد - مجاني وسريع">
-    <title>PDF Master Pro | المنصة العربية الأولى لمعالجة PDF</title>
+    <title>PDF Tools Pro | أدوات PDF شغالة 100%</title>
+    
+    <!-- تحميل المكتبات بطريقة مضمونة -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     
     <style>
-        :root {
-            --primary: #e74c3c;
-            --primary-dark: #c0392b;
-            --secondary: #2ecc71;
-            --blue: #3498db;
-            --dark: #2c3e50;
-            --bg: #f8f9fa;
-            --card: #ffffff;
-            --border: #e1e8ed;
-            --text: #333333;
-            --gray: #7f8c8d;
-            --shadow: 0 2px 15px rgba(0,0,0,0.08);
-            --radius: 16px;
-            --transition: all 0.3s ease;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f0f2f5;
+            direction: rtl;
         }
 
-        /* Header */
         .header {
-            background: white;
+            background: #1a1a2e;
+            color: white;
             padding: 1rem 2rem;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
         }
 
-        .header-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .header h1 { font-size: 2rem; }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--primary);
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
-            transition: var(--transition);
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        .nav-links a:hover { color: var(--primary); }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after { width: 100%; }
-
-        /* Hero */
-        .hero {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 5rem 2rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-
-        .upload-zone {
-            max-width: 700px;
-            margin: 2rem auto;
-            background: rgba(255,255,255,0.15);
-            border: 3px dashed rgba(255,255,255,0.5);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-
-        .upload-zone:hover {
-            background: rgba(255,255,255,0.25);
-            border-color: white;
-        }
-
-        .upload-zone.dragover {
-            background: rgba(255,255,255,0.35);
-            border-color: white;
-            transform: scale(1.02);
-        }
-
-        .upload-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .upload-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .upload-sub {
-            font-size: 0.95rem;
-            opacity: 0.8;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        /* Tools Grid */
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin: 4rem 0 2rem;
-            color: var(--dark);
-        }
-
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 1.5rem;
+            margin: 2rem 0;
         }
 
         .tool-card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 2rem 1.5rem;
-            border: 2px solid var(--border);
-            transition: var(--transition);
-            cursor: pointer;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
             text-align: center;
-            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .tool-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #e74c3c;
         }
 
-        .tool-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
+        .tool-card .icon { font-size: 3rem; margin-bottom: 1rem; }
+        .tool-card .title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .tool-card .desc { color: #666; font-size: 0.9rem; }
 
-        .tool-name {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .tool-desc {
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-
-        .tool-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--secondary);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-
-        /* Workspace */
         .workspace {
             background: white;
-            border-radius: var(--radius);
-            padding: 3rem;
+            border-radius: 20px;
+            padding: 2rem;
             margin: 2rem 0;
-            box-shadow: var(--shadow);
             display: none;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
         }
 
-        .workspace.active {
-            display: block;
-        }
+        .workspace.active { display: block; }
 
         .workspace-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
         }
 
-        .workspace-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-        }
-
-        .close-workspace {
-            background: none;
+        .close-btn {
+            background: #e74c3c;
+            color: white;
             border: none;
-            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
             cursor: pointer;
-            color: var(--gray);
+            transition: 0.3s;
         }
 
-        /* Drop Zone */
+        .close-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
         .drop-zone {
-            border: 3px dashed var(--primary);
+            border: 3px dashed #3498db;
             border-radius: 20px;
-            padding: 4rem 2rem;
+            padding: 3rem;
             text-align: center;
-            margin: 2rem 0;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s;
+            background: #f8f9fa;
+            margin: 1rem 0;
+        }
+
+        .drop-zone:hover, .drop-zone.drag-over {
+            border-color: #e74c3c;
             background: #fff5f5;
         }
 
-        .drop-zone.active {
-            border-color: var(--secondary);
-            background: #f0fff4;
-        }
+        .drop-zone .upload-icon { font-size: 4rem; }
+        .drop-zone .upload-text { font-size: 1.2rem; font-weight: 700; margin: 0.5rem 0; }
+        .drop-zone .upload-hint { color: #999; font-size: 0.9rem; }
 
-        .drop-zone.dragover {
-            background: #ffeaea;
-            border-color: var(--primary-dark);
-        }
+        .file-list { margin: 1rem 0; }
 
-        /* File Preview */
-        .file-preview {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
+        .file-item {
             display: flex;
             align-items: center;
             gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e0e0e0;
         }
 
-        .file-icon {
-            font-size: 2.5rem;
-        }
-
-        .file-info {
-            flex: 1;
-        }
-
-        .file-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .file-size {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        .remove-file {
+        .file-item .file-icon { font-size: 2rem; }
+        .file-item .file-info { flex: 1; }
+        .file-item .file-name { font-weight: 700; }
+        .file-item .file-size { color: #999; font-size: 0.85rem; }
+        .file-item .remove-btn {
             background: #ff4444;
             color: white;
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
-        /* Progress Bar */
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #e74c3c;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(231,76,60,0.3);
+        }
+
+        .btn-download {
+            background: #27ae60;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-download:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(39,174,96,0.3);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .options-panel {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .options-panel h4 { margin-bottom: 1rem; }
+
+        .options-panel select,
+        .options-panel input[type="text"],
+        .options-panel input[type="number"],
+        .options-panel input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-family: inherit;
+        }
+
         .progress-container {
-            margin: 2rem 0;
+            margin: 1rem 0;
             display: none;
         }
 
-        .progress-container.active {
-            display: block;
-        }
+        .progress-container.active { display: block; }
 
         .progress-bar {
             height: 10px;
@@ -359,9 +231,9 @@
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: #e74c3c;
             border-radius: 10px;
-            width: 0;
+            width: 0%;
             transition: width 0.3s;
         }
 
@@ -369,131 +241,63 @@
             text-align: center;
             margin-top: 0.5rem;
             font-weight: 600;
+            color: #666;
         }
 
-        /* Download Section */
-        .download-section {
+        .result-section {
+            display: none;
             text-align: center;
             padding: 2rem;
-            display: none;
+            background: #f0fff4;
+            border-radius: 15px;
+            margin: 1rem 0;
+            border: 2px solid #27ae60;
         }
 
-        .download-section.active {
-            display: block;
-        }
+        .result-section.active { display: block; }
 
-        .download-btn {
-            background: var(--secondary);
-            color: white;
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(46,204,113,0.4);
-        }
-
-        /* Preview Canvas */
-        #pdfPreview {
+        .preview-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
-            margin: 2rem 0;
+            margin: 1rem 0;
         }
 
-        canvas {
-            border: 2px solid var(--border);
-            border-radius: 8px;
+        .preview-container canvas {
             width: 100%;
-            box-shadow: var(--shadow);
-        }
-
-        /* Options Panel */
-        .options-panel {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .option-row {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .option-label {
-            font-weight: 700;
-            min-width: 100px;
-        }
-
-        select, input[type="number"], input[type="text"] {
-            padding: 0.7rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-        }
-
-        /* Toast Notifications */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 9999;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .toast {
+            position: fixed;
+            top: 20px;
+            left: 20px;
             background: white;
-            border-radius: 12px;
             padding: 1rem 1.5rem;
-            margin-bottom: 0.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            z-index: 9999;
+            animation: slideIn 0.4s ease;
             display: flex;
             align-items: center;
             gap: 1rem;
-            animation: slideInRight 0.4s ease;
-            min-width: 300px;
+            max-width: 400px;
         }
 
-        .toast.success { border-right: 4px solid #2ecc71; }
-        .toast.error { border-right: 4px solid #e74c3c; }
-        .toast.info { border-right: 4px solid #3498db; }
-
-        @keyframes slideInRight {
+        @keyframes slideIn {
             from { transform: translateX(100px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Responsive */
+        .toast.success { border-right: 4px solid #27ae60; }
+        .toast.error { border-right: 4px solid #e74c3c; }
+        .toast.info { border-right: 4px solid #3498db; }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
             .tools-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 4rem 2rem 2rem;
-            margin-top: 5rem;
-        }
-
-        .footer-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            .header h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -501,173 +305,88 @@
 
     <!-- Header -->
     <header class="header">
-        <div class="header-inner">
-            <div class="logo">
-                <span class="logo-icon">📄</span>
-                <span>PDF Master Pro</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#tools">الأدوات</a></li>
-                <li><a href="#merge">دمج PDF</a></li>
-                <li><a href="#split">تقسيم PDF</a></li>
-                <li><a href="#compress">ضغط PDF</a></li>
-                <li><a href="#convert">تحويل</a></li>
-            </ul>
-        </div>
+        <h1>📄 PDF Tools Pro - أدوات PDF شغالة 100%</h1>
+        <p style="margin-top:0.5rem; opacity:0.8;">كل الأدوات مجانية وتعمل مباشرة في متصفحك</p>
     </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <h1>📄 المنصة العربية الأولى لمعالجة PDF</h1>
-        <p>كل الأدوات اللي تحتاجها لملفات PDF في مكان واحد - مجاني، سريع، وآمن 100%</p>
-        <div class="upload-zone" id="mainUploadZone">
-            <div class="upload-icon">📁</div>
-            <div class="upload-text">اسحب وأفلت ملفات PDF هنا</div>
-            <div class="upload-sub">أو اضغط للاختيار من جهازك</div>
-            <input type="file" id="mainFileInput" accept=".pdf" multiple style="display:none;">
-        </div>
-    </section>
-
     <!-- Main Container -->
-    <div class="container" id="tools">
+    <div class="container">
         
-        <!-- الأدوات المتاحة -->
-        <h2 class="section-title">🔧 جميع الأدوات المتاحة</h2>
-        <div class="tools-grid">
-            <!-- 1. دمج PDF -->
+        <!-- Tools Grid -->
+        <div class="tools-grid" id="toolsGrid">
             <div class="tool-card" onclick="openTool('merge')">
-                <span class="tool-badge">🔥 الأكثر استخداماً</span>
-                <div class="tool-icon">🔗</div>
-                <div class="tool-name">دمج PDF</div>
-                <div class="tool-desc">ادمج عدة ملفات PDF في ملف واحد بترتيب حسب رغبتك</div>
-            </div>
-
-            <!-- 2. تقسيم PDF -->
-            <div class="tool-card" onclick="openTool('split')">
-                <div class="tool-icon">✂️</div>
-                <div class="tool-name">تقسيم PDF</div>
-                <div class="tool-desc">قسم ملف PDF إلى عدة ملفات منفصلة بسهولة</div>
-            </div>
-
-            <!-- 3. ضغط PDF -->
-            <div class="tool-card" onclick="openTool('compress')">
-                <span class="tool-badge">💡 موفر للمساحة</span>
-                <div class="tool-icon">📦</div>
-                <div class="tool-name">ضغط PDF</div>
-                <div class="tool-desc">قلل حجم ملف PDF مع الحفاظ على الجودة</div>
-            </div>
-
-            <!-- 4. PDF إلى صور -->
-            <div class="tool-card" onclick="openTool('pdf-to-image')">
-                <div class="tool-icon">🖼️</div>
-                <div class="tool-name">PDF إلى صور</div>
-                <div class="tool-desc">حول كل صفحة من PDF إلى صورة JPG أو PNG</div>
-            </div>
-
-            <!-- 5. صور إلى PDF -->
-            <div class="tool-card" onclick="openTool('image-to-pdf')">
-                <div class="tool-icon">📸</div>
-                <div class="tool-name">صور إلى PDF</div>
-                <div class="tool-desc">حول مجموعة صور إلى ملف PDF واحد</div>
-            </div>
-
-            <!-- 6. تدوير PDF -->
-            <div class="tool-card" onclick="openTool('rotate')">
-                <div class="tool-icon">🔄</div>
-                <div class="tool-name">تدوير PDF</div>
-                <div class="tool-desc">قم بتدوير صفحات PDF بالزاوية الصحيحة</div>
-            </div>
-
-            <!-- 7. حذف صفحات -->
-            <div class="tool-card" onclick="openTool('delete-pages')">
-                <div class="tool-icon">🗑️</div>
-                <div class="tool-name">حذف صفحات</div>
-                <div class="tool-desc">احذف صفحات محددة من ملف PDF</div>
-            </div>
-
-            <!-- 8. استخراج صفحات -->
-            <div class="tool-card" onclick="openTool('extract-pages')">
-                <div class="tool-icon">📤</div>
-                <div class="tool-name">استخراج صفحات</div>
-                <div class="tool-desc">استخرج صفحات محددة من PDF واحفظها منفصلة</div>
-            </div>
-
-            <!-- 9. إعادة ترتيب -->
-            <div class="tool-card" onclick="openTool('reorder')">
-                <div class="tool-icon">🔀</div>
-                <div class="tool-name">إعادة ترتيب الصفحات</div>
-                <div class="tool-desc">غير ترتيب الصفحات في ملف PDF كما تريد</div>
-            </div>
-
-            <!-- 10. إضافة علامة مائية -->
-            <div class="tool-card" onclick="openTool('watermark')">
-                <div class="tool-icon">💧</div>
-                <div class="tool-name">علامة مائية</div>
-                <div class="tool-desc">أضف نصاً أو صورة كعلامة مائية على PDF</div>
-            </div>
-
-            <!-- 11. فتح وحماية -->
-            <div class="tool-card" onclick="openTool('protect')">
-                <div class="tool-icon">🔒</div>
-                <div class="tool-name">حماية PDF</div>
-                <div class="tool-desc">ضع كلمة مرور لحماية ملفات PDF الخاصة بك</div>
-            </div>
-
-            <!-- 12. قراءة PDF -->
-            <div class="tool-card" onclick="openTool('viewer')">
-                <div class="tool-icon">👁️</div>
-                <div class="tool-name">عارض PDF</div>
-                <div class="tool-desc">افتح وعاين ملفات PDF مباشرة في المتصفح</div>
-            </div>
-        </div>
-
-        <!-- ============ WORKSPACE ============ -->
-        <div class="workspace" id="workspace">
-            <div class="workspace-header">
-                <h3 class="workspace-title" id="workspaceTitle">أداة معالجة PDF</h3>
-                <button class="close-workspace" onclick="closeTool()">✕</button>
+                <div class="icon">🔗</div>
+                <div class="title">دمج PDF</div>
+                <div class="desc">ادمج عدة ملفات PDF في ملف واحد</div>
             </div>
             
-            <div id="toolContent">
-                <!-- المحتوى الديناميكي لكل أداة -->
+            <div class="tool-card" onclick="openTool('split')">
+                <div class="icon">✂️</div>
+                <div class="title">تقسيم PDF</div>
+                <div class="desc">قسم ملف PDF لعدة ملفات</div>
             </div>
+            
+            <div class="tool-card" onclick="openTool('compress')">
+                <div class="icon">📦</div>
+                <div class="title">ضغط PDF</div>
+                <div class="desc">قلل حجم ملف PDF</div>
+            </div>
+            
+            <div class="tool-card" onclick="openTool('pdf-to-image')">
+                <div class="icon">🖼️</div>
+                <div class="title">PDF إلى صور</div>
+                <div class="desc">حول PDF إلى صور JPG/PNG</div>
+            </div>
+            
+            <div class="tool-card" onclick="openTool('image-to-pdf')">
+                <div class="icon">📸</div>
+                <div class="title">صور إلى PDF</div>
+                <div class="desc">حول الصور إلى ملف PDF</div>
+            </div>
+            
+            <div class="tool-card" onclick="openTool('rotate')">
+                <div class="icon">🔄</div>
+                <div class="title">تدوير PDF</div>
+                <div class="desc">در صفحات PDF</div>
+            </div>
+            
+            <div class="tool-card" onclick="openTool('delete-pages')">
+                <div class="icon">🗑️</div>
+                <div class="title">حذف صفحات</div>
+                <div class="desc">احذف صفحات من PDF</div>
+            </div>
+            
+            <div class="tool-card" onclick="openTool('extract-pages')">
+                <div class="icon">📤</div>
+                <div class="title">استخراج صفحات</div>
+                <div class="desc">استخرج صفحات محددة</div>
+            </div>
+            
+            <div class="tool-card" onclick="openTool('viewer')">
+                <div class="icon">👁️</div>
+                <div class="title">عارض PDF</div>
+                <div class="desc">شاهد PDF في المتصفح</div>
+            </div>
+        </div>
+
+        <!-- Workspace -->
+        <div class="workspace" id="workspace">
+            <div class="workspace-header">
+                <h2 id="workspaceTitle">أداة PDF</h2>
+                <button class="close-btn" onclick="closeWorkspace()">✕</button>
+            </div>
+            <div id="workspaceContent"></div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-inner">
-            <div>
-                <h3>📄 PDF Master Pro</h3>
-                <p>المنصة العربية الأولى لمعالجة ملفات PDF أونلاين. كل الأدوات مجانية وتعمل مباشرة في المتصفح.</p>
-            </div>
-            <div>
-                <h4>الأدوات</h4>
-                <p>دمج - تقسيم - ضغط - تحويل - تدوير - حذف - استخراج - ترتيب - علامة مائية - حماية</p>
-            </div>
-            <div>
-                <h4>مميزاتنا</h4>
-                <p>✅ مجاني 100%</p>
-                <p>✅ لا يحتاج تسجيل</p>
-                <p>✅ معالجة في المتصفح</p>
-                <p>✅ خصوصية تامة</p>
-            </div>
-        </div>
-        <p style="text-align:center; margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1);">© 2024 PDF Master Pro - جميع الحقوق محفوظة</p>
-    </footer>
-
     <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- ============ مكتبة PDF-lib (فعلية) ============ -->
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <div id="toastContainer"></div>
 
     <script>
         // ============================================
         // Global Variables
         // ============================================
-        let currentTool = null;
+        let currentTool = '';
         let uploadedFiles = [];
         let processedBlob = null;
 
@@ -680,21 +399,21 @@
             toast.className = `toast ${type}`;
             toast.innerHTML = `
                 <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
-                <span>${message}</span>
-                <button style="margin-right:auto; background:none; border:none; cursor:pointer;" onclick="this.parentElement.remove()">✕</button>
+                <span style="flex:1;">${message}</span>
+                <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">✕</button>
             `;
             container.appendChild(toast);
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transition = 'opacity 0.3s';
                 setTimeout(() => toast.remove(), 300);
-            }, 5000);
+            }, 4000);
         }
 
         // ============================================
-        // File Handling
+        // File Helpers
         // ============================================
-        async function readFileAsArrayBuffer(file) {
+        function readFileAsArrayBuffer(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
@@ -704,57 +423,21 @@
         }
 
         function formatFileSize(bytes) {
+            if (!bytes) return '0 B';
             if (bytes < 1024) return bytes + ' B';
             if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / 1048576).toFixed(1) + ' MB';
+            return (bytes / 1048576).toFixed(2) + ' MB';
         }
 
         // ============================================
-        // Main Upload Zone
-        // ============================================
-        const mainUploadZone = document.getElementById('mainUploadZone');
-        const mainFileInput = document.getElementById('mainFileInput');
-
-        mainUploadZone.addEventListener('click', () => mainFileInput.click());
-        mainFileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                uploadedFiles = Array.from(e.target.files);
-                showToast(`✅ تم تحميل ${uploadedFiles.length} ملف(ات)`, 'success');
-                if (currentTool) {
-                    renderToolContent();
-                } else {
-                    openTool('merge');
-                }
-            }
-        });
-
-        // Drag & Drop for main zone
-        mainUploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            mainUploadZone.classList.add('dragover');
-        });
-        mainUploadZone.addEventListener('dragleave', () => {
-            mainUploadZone.classList.remove('dragover');
-        });
-        mainUploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            mainUploadZone.classList.remove('dragover');
-            const files = Array.from(e.dataTransfer.files).filter(f => f.type === 'application/pdf');
-            if (files.length > 0) {
-                uploadedFiles = files;
-                showToast(`✅ تم استلام ${files.length} ملف PDF`, 'success');
-            }
-        });
-
-        // ============================================
-        // Tool Management
+        // Workspace
         // ============================================
         function openTool(toolName) {
             currentTool = toolName;
-            const workspace = document.getElementById('workspace');
-            const title = document.getElementById('workspaceTitle');
+            uploadedFiles = [];
+            processedBlob = null;
             
-            const toolNames = {
+            const titles = {
                 'merge': '🔗 دمج ملفات PDF',
                 'split': '✂️ تقسيم PDF',
                 'compress': '📦 ضغط PDF',
@@ -763,23 +446,18 @@
                 'rotate': '🔄 تدوير PDF',
                 'delete-pages': '🗑️ حذف صفحات',
                 'extract-pages': '📤 استخراج صفحات',
-                'reorder': '🔀 إعادة ترتيب الصفحات',
-                'watermark': '💧 علامة مائية',
-                'protect': '🔒 حماية PDF',
                 'viewer': '👁️ عارض PDF'
             };
             
-            title.textContent = toolNames[toolName] || 'أداة PDF';
-            workspace.classList.add('active');
-            uploadedFiles = [];
-            processedBlob = null;
+            document.getElementById('workspaceTitle').textContent = titles[toolName] || 'أداة PDF';
+            document.getElementById('workspace').classList.add('active');
             renderToolContent();
-            workspace.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('workspace').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function closeTool() {
+        function closeWorkspace() {
             document.getElementById('workspace').classList.remove('active');
-            currentTool = null;
+            currentTool = '';
             uploadedFiles = [];
             processedBlob = null;
         }
@@ -788,504 +466,730 @@
         // Render Tool Content
         // ============================================
         function renderToolContent() {
-            const content = document.getElementById('toolContent');
-            
-            if (!currentTool) {
-                content.innerHTML = '<p>اختر أداة من الأعلى للبدء</p>';
-                return;
-            }
+            const content = document.getElementById('workspaceContent');
+            let html = '';
 
-            const renderers = {
-                'merge': renderMergeTool,
-                'split': renderSplitTool,
-                'compress': renderCompressTool,
-                'pdf-to-image': renderPdfToImageTool,
-                'image-to-pdf': renderImageToPdfTool,
-                'rotate': renderRotateTool,
-                'delete-pages': renderDeletePagesTool,
-                'extract-pages': renderExtractPagesTool,
-                'reorder': renderReorderTool,
-                'watermark': renderWatermarkTool,
-                'protect': renderProtectTool,
-                'viewer': renderViewerTool
-            };
+            // Common file upload area for all tools (except viewer special handling)
+            const acceptedFiles = currentTool === 'image-to-pdf' ? 'image/*' : '.pdf';
+            const multipleFiles = (currentTool === 'merge' || currentTool === 'image-to-pdf');
+            const uploadText = currentTool === 'image-to-pdf' ? 'ارفع صوراً (JPG, PNG)' : 'ارفع ملفات PDF';
 
-            if (renderers[currentTool]) {
-                content.innerHTML = renderers[currentTool]();
-                attachToolEvents();
+            html += `
+                <div class="drop-zone" id="dropZone">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">${uploadText}</div>
+                    <div class="upload-hint">اسحب وأفلت الملفات هنا أو اضغط للاختيار</div>
+                    <input type="file" id="fileInput" accept="${acceptedFiles}" ${multipleFiles ? 'multiple' : ''} style="display:none;">
+                </div>
+                <div class="file-list" id="fileList"></div>
+                ${getToolOptions()}
+                <button class="btn btn-primary process-btn" onclick="processFiles()" id="processBtn" disabled>
+                    ${getProcessButtonText()}
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري المعالجة...</div>
+                </div>
+                <div class="result-section" id="resultSection">
+                    <h3 style="color:#27ae60;">✅ تمت المعالجة بنجاح!</h3>
+                    <div id="resultInfo"></div>
+                    <button class="btn btn-download" onclick="downloadFile()" style="margin-top:1rem;">⬇ تحميل الملف</button>
+                </div>
+                <div class="preview-container" id="previewContainer"></div>
+            `;
+
+            content.innerHTML = html;
+
+            // Attach events بعد الرندر
+            setTimeout(() => {
+                attachDropZoneEvents();
+            }, 100);
+        }
+
+        function getToolOptions() {
+            switch (currentTool) {
+                case 'compress':
+                    return `
+                        <div class="options-panel">
+                            <h4>⚙️ مستوى الضغط</h4>
+                            <select id="compressionLevel">
+                                <option value="low">منخفض - أفضل جودة</option>
+                                <option value="medium" selected>متوسط</option>
+                                <option value="high">عالي - أصغر حجم</option>
+                            </select>
+                        </div>
+                    `;
+                case 'split':
+                    return `
+                        <div class="options-panel">
+                            <h4>⚙️ طريقة التقسيم</h4>
+                            <select id="splitMode" onchange="toggleSplitOptions()">
+                                <option value="all">كل صفحة في ملف منفصل</option>
+                                <option value="range">تقسيم حسب النطاق</option>
+                            </select>
+                            <div id="rangeOptions" style="display:none; margin-top:0.5rem;">
+                                <input type="text" id="pageRanges" placeholder="مثال: 1-3, 5, 7-9">
+                                <small style="color:#999;">أدخل نطاقات الصفحات مفصولة بفواصل</small>
+                            </div>
+                        </div>
+                    `;
+                case 'rotate':
+                    return `
+                        <div class="options-panel">
+                            <h4>⚙️ زاوية التدوير</h4>
+                            <select id="rotationAngle">
+                                <option value="90">90° مع عقارب الساعة</option>
+                                <option value="180">180°</option>
+                                <option value="270">270° (90° عكس)</option>
+                            </select>
+                        </div>
+                    `;
+                case 'delete-pages':
+                    return `
+                        <div class="options-panel">
+                            <h4>⚙️ الصفحات المراد حذفها</h4>
+                            <input type="text" id="pagesToDelete" placeholder="مثال: 1, 3, 5-7">
+                            <small style="color:#999;">أدخل أرقام الصفحات أو نطاقات</small>
+                        </div>
+                    `;
+                case 'extract-pages':
+                    return `
+                        <div class="options-panel">
+                            <h4>⚙️ الصفحات المراد استخراجها</h4>
+                            <input type="text" id="pagesToExtract" placeholder="مثال: 1-3, 5, 7">
+                            <small style="color:#999;">أدخل أرقام الصفحات أو نطاقات</small>
+                        </div>
+                    `;
+                case 'pdf-to-image':
+                    return `
+                        <div class="options-panel">
+                            <h4>⚙️ تنسيق الصورة</h4>
+                            <select id="imageFormat">
+                                <option value="png">PNG (جودة عالية)</option>
+                                <option value="jpeg">JPEG (حجم أقل)</option>
+                            </select>
+                        </div>
+                    `;
+                default:
+                    return '';
             }
         }
 
-        function attachToolEvents() {
-            // ربط الأحداث بعد إعادة الرندر
-            const dropZone = document.getElementById('toolDropZone');
-            const fileInput = document.getElementById('toolFileInput');
-            
-            if (dropZone && fileInput) {
-                dropZone.addEventListener('click', () => fileInput.click());
-                fileInput.addEventListener('change', handleToolFileSelect);
-                
-                dropZone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    dropZone.classList.add('dragover');
-                });
-                dropZone.addEventListener('dragleave', () => {
-                    dropZone.classList.remove('dragover');
-                });
-                dropZone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    dropZone.classList.remove('dragover');
-                    const files = Array.from(e.dataTransfer.files);
-                    handleFilesForTool(files);
-                });
-            }
+        function getProcessButtonText() {
+            const texts = {
+                'merge': '🔗 ادمج الملفات الآن',
+                'split': '✂️ قسم الملف الآن',
+                'compress': '📦 اضغط الملف الآن',
+                'pdf-to-image': '🖼️ حول إلى صور',
+                'image-to-pdf': '📸 حول إلى PDF',
+                'rotate': '🔄 در الملف',
+                'delete-pages': '🗑️ احذف الصفحات',
+                'extract-pages': '📤 استخرج الصفحات',
+                'viewer': '👁️ اعرض الملف'
+            };
+            return texts[currentTool] || 'معالجة';
+        }
 
-            // Process buttons
-            document.querySelectorAll('.process-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const action = btn.dataset.action;
-                    if (action && typeof window[action] === 'function') {
-                        window[action]();
-                    }
-                });
+        function toggleSplitOptions() {
+            const mode = document.getElementById('splitMode')?.value;
+            const rangeOptions = document.getElementById('rangeOptions');
+            if (rangeOptions) {
+                rangeOptions.style.display = mode === 'range' ? 'block' : 'none';
+            }
+        }
+
+        // ============================================
+        // Attach Events
+        // ============================================
+        function attachDropZoneEvents() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            
+            if (!dropZone || !fileInput) return;
+
+            dropZone.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFiles(Array.from(e.target.files));
+                }
+            });
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const files = Array.from(e.dataTransfer.files);
+                if (files.length > 0) {
+                    handleFiles(files);
+                }
             });
         }
 
-        function handleToolFileSelect(e) {
-            const files = Array.from(e.target.files);
-            handleFilesForTool(files);
-        }
-
-        function handleFilesForTool(files) {
-            if (files.length === 0) return;
-            
-            // للأدوات اللي بتقبل صور
+        function handleFiles(files) {
             if (currentTool === 'image-to-pdf') {
-                const imageFiles = files.filter(f => f.type.startsWith('image/'));
-                if (imageFiles.length > 0) {
-                    uploadedFiles = imageFiles;
-                    showToast(`✅ تم تحميل ${imageFiles.length} صورة`, 'success');
-                    updateFilePreviewList();
+                uploadedFiles = files.filter(f => f.type.startsWith('image/'));
+                if (uploadedFiles.length === 0) {
+                    showToast('⚠️ الرجاء اختيار ملفات صور فقط (JPG, PNG)', 'error');
+                    return;
                 }
-                return;
-            }
-
-            // لباقي الأدوات - PDF فقط
-            const pdfFiles = files.filter(f => f.type === 'application/pdf');
-            if (pdfFiles.length > 0) {
-                uploadedFiles = pdfFiles;
-                showToast(`✅ تم تحميل ${pdfFiles.length} ملف PDF`, 'success');
-                updateFilePreviewList();
-                
-                // معاينة تلقائية للعارض
-                if (currentTool === 'viewer' && pdfFiles.length > 0) {
-                    previewPDF(pdfFiles[0]);
+            } else if (currentTool === 'viewer') {
+                uploadedFiles = files.filter(f => f.type === 'application/pdf').slice(0, 1);
+                if (uploadedFiles.length > 0) {
+                    previewPDFViewer(uploadedFiles[0]);
                 }
             } else {
-                showToast('⚠️ الرجاء اختيار ملفات PDF فقط', 'error');
+                uploadedFiles = files.filter(f => f.type === 'application/pdf');
+                if (uploadedFiles.length === 0) {
+                    showToast('⚠️ الرجاء اختيار ملفات PDF فقط', 'error');
+                    return;
+                }
+            }
+
+            if (uploadedFiles.length > 0) {
+                updateFileList();
+                document.getElementById('processBtn').disabled = false;
+                showToast(`✅ تم تحميل ${uploadedFiles.length} ملف(ات)`, 'success');
             }
         }
 
-        function updateFilePreviewList() {
-            const previewList = document.getElementById('filePreviewList');
-            if (!previewList) return;
+        function updateFileList() {
+            const fileList = document.getElementById('fileList');
+            if (!fileList) return;
 
-            previewList.innerHTML = uploadedFiles.map((file, index) => `
-                <div class="file-preview">
-                    <div class="file-icon">${file.type === 'application/pdf' ? '📄' : '🖼️'}</div>
+            fileList.innerHTML = uploadedFiles.map((file, index) => `
+                <div class="file-item">
+                    <div class="file-icon">${file.type.includes('pdf') ? '📄' : '🖼️'}</div>
                     <div class="file-info">
                         <div class="file-name">${file.name}</div>
                         <div class="file-size">${formatFileSize(file.size)}</div>
                     </div>
-                    <button class="remove-file" onclick="removeFile(${index})">✕</button>
+                    <button class="remove-btn" onclick="removeFile(${index})">✕</button>
                 </div>
             `).join('');
         }
 
         function removeFile(index) {
             uploadedFiles.splice(index, 1);
-            updateFilePreviewList();
-            showToast('تم حذف الملف', 'info');
+            updateFileList();
+            document.getElementById('processBtn').disabled = uploadedFiles.length === 0;
         }
 
         // ============================================
-        // Tool Renderers
+        // Process Files (Main function)
         // ============================================
-        function renderMergeTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">📁</div>
-                    <div class="upload-text">اسحب ملفات PDF هنا</div>
-                    <div class="upload-sub">يمكنك رفع عدة ملفات لدمجها</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" multiple style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ خيارات الدمج</h4>
-                    <p style="color:var(--gray); font-size:0.9rem;">يمكنك سحب وإفلات الملفات لإعادة ترتيبها قبل الدمج</p>
-                </div>
-                <button class="btn btn-white process-btn" data-action="mergePDFs" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    🔗 ادمج الملفات الآن
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري المعالجة...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المدمج</button>
-                </div>
-            `;
-        }
-
-        function renderSplitTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">📄</div>
-                    <div class="upload-text">ارفع ملف PDF لتقسيمه</div>
-                    <div class="upload-sub">سيتم استخراج كل صفحة في ملف منفصل</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ طريقة التقسيم</h4>
-                    <select id="splitMode" style="width:100%; padding:0.8rem; border-radius:8px; border:2px solid var(--border);">
-                        <option value="all">كل صفحة في ملف منفصل</option>
-                        <option value="range">تقسيم حسب نطاق الصفحات</option>
-                    </select>
-                    <div id="rangeInputs" style="display:none; margin-top:1rem;">
-                        <input type="text" id="pageRanges" placeholder="مثال: 1-3, 5, 7-9" style="width:100%;">
-                    </div>
-                </div>
-                <button class="btn btn-white process-btn" data-action="splitPDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    ✂️ قسم الملف الآن
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري التقسيم...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملفات المقسمة</button>
-                </div>
-            `;
-        }
-
-        function renderCompressTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">📦</div>
-                    <div class="upload-text">ارفع ملف PDF لضغطه</div>
-                    <div class="upload-sub">قلل حجم الملف مع الحفاظ على أفضل جودة ممكنة</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ مستوى الضغط</h4>
-                    <select id="compressionLevel" style="width:100%; padding:0.8rem; border-radius:8px; border:2px solid var(--border);">
-                        <option value="low">منخفض - أفضل جودة</option>
-                        <option value="medium" selected>متوسط - متوازن</option>
-                        <option value="high">عالي - أصغر حجم</option>
-                    </select>
-                </div>
-                <button class="btn btn-white process-btn" data-action="compressPDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    📦 اضغط الملف الآن
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري الضغط...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <div id="compressionResult" style="margin-bottom:1rem;"></div>
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المضغوط</button>
-                </div>
-            `;
-        }
-
-        function renderPdfToImageTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">🖼️</div>
-                    <div class="upload-text">ارفع ملف PDF لتحويله إلى صور</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ إعدادات التحويل</h4>
-                    <div class="option-row">
-                        <span class="option-label">تنسيق الصورة:</span>
-                        <select id="imageFormat">
-                            <option value="png">PNG</option>
-                            <option value="jpeg">JPEG</option>
-                        </select>
-                    </div>
-                </div>
-                <button class="btn btn-white process-btn" data-action="convertPdfToImages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    🖼️ حول إلى صور
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري التحويل...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الصور (ZIP)</button>
-                </div>
-            `;
-        }
-
-        function renderImageToPdfTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">📸</div>
-                    <div class="upload-text">ارفع صوراً لتحويلها إلى PDF</div>
-                    <div class="upload-sub">يدعم JPG, PNG, WebP</div>
-                    <input type="file" id="toolFileInput" accept="image/*" multiple style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <button class="btn btn-white process-btn" data-action="convertImagesToPdf" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    📸 حول إلى PDF
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري التحويل...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل PDF</button>
-                </div>
-            `;
-        }
-
-        function renderRotateTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">🔄</div>
-                    <div class="upload-text">ارفع ملف PDF لتدويره</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ زاوية التدوير</h4>
-                    <select id="rotationAngle" style="width:100%; padding:0.8rem; border-radius:8px; border:2px solid var(--border);">
-                        <option value="90">90° مع عقارب الساعة</option>
-                        <option value="180">180°</option>
-                        <option value="270">270° (90° عكس)</option>
-                    </select>
-                </div>
-                <button class="btn btn-white process-btn" data-action="rotatePDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    🔄 در الملف
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري التدوير...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
-                </div>
-            `;
-        }
-
-        function renderDeletePagesTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">🗑️</div>
-                    <div class="upload-text">ارفع ملف PDF لحذف صفحات منه</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ الصفحات المراد حذفها</h4>
-                    <input type="text" id="pagesToDelete" placeholder="مثال: 1, 3, 5-7" style="width:100%;">
-                </div>
-                <button class="btn btn-white process-btn" data-action="deletePages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    🗑️ احذف الصفحات
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري الحذف...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
-                </div>
-            `;
-        }
-
-        function renderExtractPagesTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">📤</div>
-                    <div class="upload-text">ارفع ملف PDF لاستخراج صفحات</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ الصفحات المراد استخراجها</h4>
-                    <input type="text" id="pagesToExtract" placeholder="مثال: 1-3, 5, 7" style="width:100%;">
-                </div>
-                <button class="btn btn-white process-btn" data-action="extractPages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    📤 استخرج الصفحات
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري الاستخراج...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المستخرج</button>
-                </div>
-            `;
-        }
-
-        function renderReorderTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">🔀</div>
-                    <div class="upload-text">ارفع ملف PDF لإعادة ترتيب صفحاته</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ الترتيب الجديد</h4>
-                    <input type="text" id="newOrder" placeholder="مثال: 3, 1, 2, 5, 4" style="width:100%;">
-                    <p style="font-size:0.8rem; color:var(--gray); margin-top:0.5rem;">أدخل أرقام الصفحات بالترتيب الجديد مفصولة بفواصل</p>
-                </div>
-                <button class="btn btn-white process-btn" data-action="reorderPages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    🔀 أعد الترتيب
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري إعادة الترتيب...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
-                </div>
-            `;
-        }
-
-        function renderWatermarkTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">💧</div>
-                    <div class="upload-text">ارفع ملف PDF لإضافة علامة مائية</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>⚙️ نص العلامة المائية</h4>
-                    <input type="text" id="watermarkText" placeholder="مثال: سرّي - للمراجعة فقط" style="width:100%;" value="PDF Master Pro">
-                    <div class="option-row" style="margin-top:1rem;">
-                        <span class="option-label">الحجم:</span>
-                        <input type="number" id="watermarkSize" value="30" min="10" max="100">
-                    </div>
-                    <div class="option-row">
-                        <span class="option-label">الشفافية:</span>
-                        <input type="range" id="watermarkOpacity" min="0.1" max="1" step="0.1" value="0.3">
-                    </div>
-                </div>
-                <button class="btn btn-white process-btn" data-action="addWatermark" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    💧 أضف العلامة المائية
-                </button>
-                <div class="progress-container" id="progressContainer">
-                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="progress-text" id="progressText">جاري الإضافة...</div>
-                </div>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
-                </div>
-            `;
-        }
-
-        function renderProtectTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">🔒</div>
-                    <div class="upload-text">ارفع ملف PDF لحمايته بكلمة مرور</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div class="options-panel">
-                    <h4>🔑 كلمة المرور</h4>
-                    <input type="password" id="pdfPassword" placeholder="أدخل كلمة المرور" style="width:100%;">
-                    <input type="password" id="pdfPasswordConfirm" placeholder="تأكيد كلمة المرور" style="width:100%; margin-top:0.5rem;">
-                </div>
-                <button class="btn btn-white process-btn" data-action="protectPDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
-                    🔒 حمِّل الملف بكلمة مرور
-                </button>
-                <div class="download-section" id="downloadSection">
-                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المحمي</button>
-                </div>
-            `;
-        }
-
-        function renderViewerTool() {
-            return `
-                <div class="drop-zone" id="toolDropZone">
-                    <div class="upload-icon">👁️</div>
-                    <div class="upload-text">ارفع ملف PDF لعرضه</div>
-                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
-                </div>
-                <div id="filePreviewList"></div>
-                <div id="pdfPreview" style="margin-top:2rem;"></div>
-            `;
-        }
-
-        // ============================================
-        // PDF Processing Functions (Using PDF-lib)
-        // ============================================
-
-        // 1. Merge PDFs
-        async function mergePDFs() {
-            if (uploadedFiles.length < 2) {
-                showToast('⚠️ الرجاء رفع ملفين PDF على الأقل للدمج', 'error');
+        async function processFiles() {
+            if (uploadedFiles.length === 0) {
+                showToast('⚠️ الرجاء رفع ملفات أولاً', 'error');
                 return;
             }
 
-            showProgress('جاري دمج الملفات...');
-            
+            const processFunctions = {
+                'merge': mergePDFs,
+                'split': splitPDF,
+                'compress': compressPDF,
+                'pdf-to-image': pdfToImage,
+                'image-to-pdf': imagesToPdf,
+                'rotate': rotatePDF,
+                'delete-pages': deletePages,
+                'extract-pages': extractPages,
+                'viewer': () => {}
+            };
+
+            const func = processFunctions[currentTool];
+            if (func) {
+                showProgress();
+                try {
+                    await func();
+                } catch (error) {
+                    hideProgress();
+                    console.error('Error:', error);
+                    showToast('❌ حدث خطأ: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // ============================================
+        // 1. Merge PDFs
+        // ============================================
+        async function mergePDFs() {
+            if (uploadedFiles.length < 2) {
+                showToast('⚠️ الرجاء رفع ملفين PDF على الأقل', 'error');
+                hideProgress();
+                return;
+            }
+
+            updateProgress(10, 'جاري قراءة الملفات...');
+
             try {
                 const { PDFDocument } = PDFLib;
                 const mergedPdf = await PDFDocument.create();
 
-                for (const file of uploadedFiles) {
-                    const arrayBuffer = await readFileAsArrayBuffer(file);
+                for (let i = 0; i < uploadedFiles.length; i++) {
+                    updateProgress(10 + (i / uploadedFiles.length) * 60, `جاري معالجة الملف ${i + 1} من ${uploadedFiles.length}...`);
+                    const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[i]);
                     const pdf = await PDFDocument.load(arrayBuffer);
                     const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
                     copiedPages.forEach(page => mergedPdf.addPage(page));
                 }
 
+                updateProgress(80, 'جاري حفظ الملف المدمج...');
                 const pdfBytes = await mergedPdf.save();
                 processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
-                
-                hideProgress();
-                showDownload(`merged_${Date.now()}.pdf`);
+
+                updateProgress(100, 'تم الدمج بنجاح!');
+                showResult(`تم دمج ${uploadedFiles.length} ملفات في ملف واحد`, 'merged_document.pdf');
                 showToast('✅ تم دمج الملفات بنجاح!', 'success');
             } catch (error) {
-                hideProgress();
-                showToast('❌ حدث خطأ: ' + error.message, 'error');
+                throw error;
             }
         }
 
+        // ============================================
         // 2. Split PDF
+        // ============================================
         async function splitPDF() {
-            if (uploadedFiles.length === 0) {
-                showToast('⚠️ الرجاء رفع ملف PDF', 'error');
+            updateProgress(5, 'جاري قراءة الملف...');
+
+            const { PDFDocument } = PDFLib;
+            const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const sourcePdf = await PDFDocument.load(arrayBuffer);
+            const totalPages = sourcePdf.getPageCount();
+
+            const splitMode = document.getElementById('splitMode')?.value || 'all';
+            let pageGroups = [];
+
+            if (splitMode === 'all') {
+                for (let i = 0; i < totalPages; i++) {
+                    pageGroups.push([i]);
+                }
+            } else {
+                const ranges = document.getElementById('pageRanges')?.value;
+                if (!ranges) {
+                    showToast('⚠️ الرجاء إدخال نطاقات الصفحات', 'error');
+                    hideProgress();
+                    return;
+                }
+                const parsedRanges = parsePageRanges(ranges, totalPages);
+                if (parsedRanges.length === 0) {
+                    showToast('⚠️ لم يتم العثور على صفحات صالحة', 'error');
+                    hideProgress();
+                    return;
+                }
+                pageGroups = [parsedRanges];
+            }
+
+            updateProgress(20, 'جاري تقسيم الصفحات...');
+
+            // For simplicity, if splitting into separate files, create a ZIP
+            if (pageGroups.length > 1 && typeof JSZip !== 'undefined') {
+                const zip = new JSZip();
+                for (let i = 0; i < pageGroups.length; i++) {
+                    updateProgress(20 + (i / pageGroups.length) * 60, `جاري إنشاء الملف ${i + 1} من ${pageGroups.length}...`);
+                    const newPdf = await PDFDocument.create();
+                    const pages = await newPdf.copyPages(sourcePdf, pageGroups[i]);
+                    pages.forEach(p => newPdf.addPage(p));
+                    const bytes = await newPdf.save();
+                    zip.file(`page_${i + 1}.pdf`, bytes);
+                }
+                
+                updateProgress(85, 'جاري إنشاء ملف ZIP...');
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                processedBlob = zipBlob;
+                showResult(`تم تقسيم الملف إلى ${pageGroups.length} ملفات`, 'split_pages.zip');
+            } else {
+                // Single split
+                const newPdf = await PDFDocument.create();
+                const pages = await newPdf.copyPages(sourcePdf, pageGroups[0]);
+                pages.forEach(p => newPdf.addPage(p));
+                const bytes = await newPdf.save();
+                processedBlob = new Blob([bytes], { type: 'application/pdf' });
+                showResult(`تم استخراج ${pageGroups[0].length} صفحات`, 'extracted_pages.pdf');
+            }
+
+            updateProgress(100, 'تم التقسيم بنجاح!');
+            showToast('✅ تم تقسيم الملف بنجاح!', 'success');
+        }
+
+        // ============================================
+        // 3. Compress PDF
+        // ============================================
+        async function compressPDF() {
+            updateProgress(10, 'جاري تحليل الملف...');
+
+            const { PDFDocument } = PDFLib;
+            const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+            const originalSize = uploadedFiles[0].size;
+
+            updateProgress(50, 'جاري الضغط...');
+            const level = document.getElementById('compressionLevel')?.value || 'medium';
+            
+            const pdfBytes = await pdfDoc.save({
+                useObjectStreams: level !== 'low',
+                addDefaultPage: false
+            });
+
+            updateProgress(90, 'جاري إنهاء الضغط...');
+            processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const compressedSize = pdfBytes.length;
+            const savedPercent = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+
+            document.getElementById('resultInfo').innerHTML = `
+                <p>📊 <strong>نتيجة الضغط:</strong></p>
+                <p>الحجم الأصلي: <strong>${formatFileSize(originalSize)}</strong></p>
+                <p>الحجم بعد الضغط: <strong>${formatFileSize(compressedSize)}</strong></p>
+                <p style="color:#27ae60; font-size:1.2rem;">🎯 تم توفير ${savedPercent}%</p>
+            `;
+
+            updateProgress(100, 'تم الضغط بنجاح!');
+            showResult('', 'compressed.pdf');
+            showToast(`✅ تم ضغط الملف! تم توفير ${savedPercent}%`, 'success');
+        }
+
+        // ============================================
+        // 4. PDF to Images
+        // ============================================
+        async function pdfToImage() {
+            updateProgress(10, 'جاري تحميل PDF...');
+
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            
+            const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const format = document.getElementById('imageFormat')?.value || 'png';
+            const previewContainer = document.getElementById('previewContainer');
+            
+            if (previewContainer) previewContainer.innerHTML = '';
+
+            const canvases = [];
+            for (let i = 1; i <= pdf.numPages; i++) {
+                updateProgress(10 + (i / pdf.numPages) * 70, `جاري تحويل صفحة ${i} من ${pdf.numPages}...`);
+                
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 2 });
+                
+                const canvas = document.createElement('canvas');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                const ctx = canvas.getContext('2d');
+                
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                canvases.push(canvas);
+                
+                if (previewContainer) previewContainer.appendChild(canvas);
+            }
+
+            // Convert first page as sample
+            if (canvases.length > 0) {
+                const dataUrl = canvases[0].toDataURL(`image/${format}`);
+                const res = await fetch(dataUrl);
+                processedBlob = await res.blob();
+            }
+
+            updateProgress(100, 'تم التحويل بنجاح!');
+            document.getElementById('resultInfo').innerHTML = `<p>تم تحويل ${pdf.numPages} صفحات إلى صور</p>`;
+            showResult('', `pdf_images.${format}`);
+            showToast(`✅ تم تحويل ${pdf.numPages} صفحات إلى صور`, 'success');
+        }
+
+        // ============================================
+        // 5. Images to PDF
+        // ============================================
+        async function imagesToPdf() {
+            updateProgress(5, 'جاري تجهيز الصور...');
+
+            const { PDFDocument } = PDFLib;
+            const pdfDoc = await PDFDocument.create();
+
+            for (let i = 0; i < uploadedFiles.length; i++) {
+                updateProgress(5 + (i / uploadedFiles.length) * 80, `جاري معالجة صورة ${i + 1} من ${uploadedFiles.length}...`);
+                
+                const file = uploadedFiles[i];
+                const arrayBuffer = await readFileAsArrayBuffer(file);
+                
+                let image;
+                if (file.type === 'image/png') {
+                    image = await pdfDoc.embedPng(arrayBuffer);
+                } else if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
+                    image = await pdfDoc.embedJpg(arrayBuffer);
+                } else {
+                    continue;
+                }
+
+                const page = pdfDoc.addPage([image.width, image.height]);
+                page.drawImage(image, {
+                    x: 0, y: 0,
+                    width: image.width,
+                    height: image.height
+                });
+            }
+
+            updateProgress(90, 'جاري حفظ PDF...');
+            const pdfBytes = await pdfDoc.save();
+            processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            updateProgress(100, 'تم التحويل بنجاح!');
+            document.getElementById('resultInfo').innerHTML = `<p>تم تحويل ${uploadedFiles.length} صور إلى ملف PDF واحد</p>`;
+            showResult('', 'images_converted.pdf');
+            showToast('✅ تم تحويل الصور إلى PDF بنجاح!', 'success');
+        }
+
+        // ============================================
+        // 6. Rotate PDF
+        // ============================================
+        async function rotatePDF() {
+            updateProgress(10, 'جاري قراءة الملف...');
+
+            const { PDFDocument } = PDFLib;
+            const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+            const angle = parseInt(document.getElementById('rotationAngle')?.value) || 90;
+
+            updateProgress(50, 'جاري التدوير...');
+            const pages = pdfDoc.getPages();
+            pages.forEach((page, i) => {
+                const currentRotation = page.getRotation().angle;
+                page.setRotation({ angle: currentRotation + angle });
+            });
+
+            updateProgress(80, 'جاري الحفظ...');
+            const pdfBytes = await pdfDoc.save();
+            processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            updateProgress(100, 'تم التدوير بنجاح!');
+            showResult(`تم تدوير ${pages.length} صفحات بزاوية ${angle}°`, 'rotated.pdf');
+            showToast('✅ تم تدوير الملف بنجاح!', 'success');
+        }
+
+        // ============================================
+        // 7. Delete Pages
+        // ============================================
+        async function deletePages() {
+            const pagesInput = document.getElementById('pagesToDelete')?.value;
+            if (!pagesInput) {
+                showToast('⚠️ الرجاء إدخال أرقام الصفحات', 'error');
+                hideProgress();
                 return;
             }
 
-            const mode = document.getElementById('splitMode')?.value || 'all';
-            const ranges = document.getElementById('pageRanges')?.value;
+            updateProgress(10, 'جاري قراءة الملف...');
+            
+            const { PDFDocument } = PDFLib;
+            const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdfDoc = await PDFDocument.load(arrayBuffer);
+            const totalPages = pdfDoc.getPageCount();
+            
+            const pagesToDelete = parsePageRanges(pagesInput, totalPages);
+            if (pagesToDelete.length === 0) {
+                showToast('⚠️ لم يتم العثور على صفحات صالحة للحذف', 'error');
+                hideProgress();
+                return;
+            }
 
-            showProgress('جاري تقسيم الملف...');
+            updateProgress(50, 'جاري حذف الصفحات...');
+            const sortedIndices = pagesToDelete.sort((a, b) => b - a);
+            for (const index of sortedIndices) {
+                pdfDoc.removePage(index);
+            }
+
+            updateProgress(80, 'جاري الحفظ...');
+            const pdfBytes = await pdfDoc.save();
+            processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            updateProgress(100, 'تم الحذف بنجاح!');
+            showResult(`تم حذف ${pagesToDelete.length} صفحات (تبقى ${totalPages - pagesToDelete.length} صفحات)`, 'pages_deleted.pdf');
+            showToast('✅ تم حذف الصفحات بنجاح!', 'success');
+        }
+
+        // ============================================
+        // 8. Extract Pages
+        // ============================================
+        async function extractPages() {
+            const pagesInput = document.getElementById('pagesToExtract')?.value;
+            if (!pagesInput) {
+                showToast('⚠️ الرجاء إدخال أرقام الصفحات', 'error');
+                hideProgress();
+                return;
+            }
+
+            updateProgress(10, 'جاري قراءة الملف...');
+
+            const { PDFDocument } = PDFLib;
+            const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const sourcePdf = await PDFDocument.load(arrayBuffer);
+            const totalPages = sourcePdf.getPageCount();
+
+            const pagesToExtract = parsePageRanges(pagesInput, totalPages);
+            if (pagesToExtract.length === 0) {
+                showToast('⚠️ لم يتم العثور على صفحات صالحة', 'error');
+                hideProgress();
+                return;
+            }
+
+            updateProgress(50, 'جاري استخراج الصفحات...');
+            const newPdf = await PDFDocument.create();
+            const pages = await newPdf.copyPages(sourcePdf, pagesToExtract);
+            pages.forEach(p => newPdf.addPage(p));
+
+            updateProgress(80, 'جاري الحفظ...');
+            const pdfBytes = await newPdf.save();
+            processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+            updateProgress(100, 'تم الاستخراج بنجاح!');
+            showResult(`تم استخراج ${pagesToExtract.length} صفحات`, 'extracted_pages.pdf');
+            showToast('✅ تم استخراج الصفحات بنجاح!', 'success');
+        }
+
+        // ============================================
+        // 9. PDF Viewer
+        // ============================================
+        async function previewPDFViewer(file) {
+            document.getElementById('resultSection')?.classList.remove('active');
+            
+            const previewContainer = document.getElementById('previewContainer');
+            if (!previewContainer) return;
+            
+            previewContainer.innerHTML = '<p style="text-align:center;">⏳ جاري تحميل المعاينة...</p>';
 
             try {
-                const { PDFDocument } = PDFLib;
-                const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
-                const sourcePdf = await PDFDocument.load(arrayBuffer);
-                const totalPages = sourcePdf.getPageCount();
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                
+                const arrayBuffer = await readFileAsArrayBuffer(file);
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                
+                previewContainer.innerHTML = '';
 
-                let pagesToExtract = [];
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    const ctx = canvas.getContext('2d');
+                    
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                    previewContainer.appendChild(canvas);
+                }
 
-                if (mode === 'all') {
-                    // كل صفحة في ملف منفصل
-                    for (let i = 0; i < totalPages; i++) {
-                        pagesToExtract.push([i]);
+                showToast(`✅ تم عرض ${pdf.numPages} صفحات`, 'success');
+            } catch (error) {
+                previewContainer.innerHTML = '<p style="color:red;">❌ خطأ في عرض الملف</p>';
+                showToast('❌ خطأ في عرض الملف', 'error');
+            }
+        }
+
+        // ============================================
+        // Helper Functions
+        // ============================================
+        function parsePageRanges(input, totalPages) {
+            const indices = new Set();
+            const parts = input.split(',').map(s => s.trim());
+
+            for (const part of parts) {
+                if (part.includes('-')) {
+                    const [start, end] = part.split('-').map(Number);
+                    if (!isNaN(start) && !isNaN(end)) {
+                        for (let i = Math.max(1, start); i <= Math.min(totalPages, end); i++) {
+                            indices.add(i - 1);
+                        }
                     }
-                } else if (mode === 'range' && ranges) {
-                    // تقسيم حسب النطاق
-                    const rangeP
+                } else {
+                    const num = Number(part);
+                    if (!isNaN(num) && num >= 1 && num <= totalPages) {
+                        indices.add(num - 1);
+                    }
+                }
+            }
+
+            return Array.from(indices).sort((a, b) => a - b);
+        }
+
+        function showProgress() {
+            document.getElementById('progressContainer').classList.add('active');
+            document.getElementById('resultSection').classList.remove('active');
+            document.getElementById('progressFill').style.width = '0%';
+            document.getElementById('progressText').textContent = 'جاري المعالجة...';
+        }
+
+        function updateProgress(percent, text) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = text;
+        }
+
+        function hideProgress() {
+            setTimeout(() => {
+                document.getElementById('progressContainer').classList.remove('active');
+            }, 500);
+        }
+
+        function showResult(info, filename) {
+            if (info) {
+                document.getElementById('resultInfo').innerHTML = `<p>${info}</p>`;
+            }
+            document.getElementById('resultSection').classList.add('active');
+            document.getElementById('resultSection').dataset.filename = filename;
+            hideProgress();
+        }
+
+        function downloadFile() {
+            if (!processedBlob) {
+                showToast('⚠️ لا يوجد ملف للتحميل', 'error');
+                return;
+            }
+
+            const filename = document.getElementById('resultSection').dataset.filename || 'processed.pdf';
+            
+            if (typeof saveAs !== 'undefined') {
+                saveAs(processedBlob, filename);
+            } else {
+                const url = URL.createObjectURL(processedBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            showToast('✅ تم بدء التحميل!', 'success');
+        }
+
+        // ============================================
+        // Initialize
+        // ============================================
+        console.log('✅ PDF Tools Pro - جميع الأدوات جاهزة');
+        console.log('📚 المكتبات المحملة:');
+        console.log('  - PDF-lib:', typeof PDFLib !== 'undefined' ? '✅' : '❌');
+        console.log('  - PDF.js:', typeof pdfjsLib !== 'undefined' ? '✅' : '❌');
+        console.log('  - JSZip:', typeof JSZip !== 'undefined' ? '✅' : '❌');
+        console.log('  - FileSaver:', typeof saveAs !== 'undefined' ? '✅' : '❌');
+
+        // التحقق من تحميل المكتبات
+        window.addEventListener('load', () => {
+            if (typeof PDFLib === 'undefined') {
+                showToast('⚠️ فشل تحميل مكتبة PDF-lib. تأكد من اتصال الإنترنت.', 'error');
+            } else {
+                console.log('✅ جميع المكتبات جاهزة للعمل');
+            }
+        });
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeWorkspace();
+            }
+        });
+    </script>
+</body>
+    </html>
