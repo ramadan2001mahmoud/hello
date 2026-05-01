@@ -1,11 +1,26 @@
+// ============================================
+// أداة العلامة المائية
+// ============================================
+
 async function doWatermark() {
-    updateProgress(30, 'جاري إضافة العلامة المائية...');
+    updateProgress(30, 'جاري اضافة العلامة المائية...');
+    
     try {
         const { PDFDocument, rgb, StandardFonts } = PDFLib;
         const buf = await readFileAB(files[0]);
         const pdf = await PDFDocument.load(buf);
-        const text = document.getElementById('wmText')?.value || 'PDF Master Pro';
+        
+        // استخدام نص إنجليزي فقط للعلامة المائية
+        // لأن WinAnsi لا يدعم العربية في الـ embedding
+        let text = document.getElementById('wmText')?.value || 'PDF Master Pro';
         const size = parseInt(document.getElementById('wmSize')?.value) || 30;
+        
+        // إزالة أي حروف غير إنجليزية من النص
+        text = text.replace(/[^\x00-\x7F]/g, '');
+        if (!text || text.length === 0) {
+            text = 'PDF Master Pro';
+        }
+        
         const font = await pdf.embedFont(StandardFonts.Helvetica);
         
         pdf.getPages().forEach(page => {
@@ -27,10 +42,18 @@ async function doWatermark() {
         
         const bytes = await pdf.save();
         resultBlob = new Blob([bytes], { type: 'application/pdf' });
-        updateProgress(100, 'تمت الإضافة!');
-        showResult('<p>💧 تمت إضافة العلامة المائية</p>', 'watermarked.pdf');
-    } catch(e) {
+        updateProgress(100, 'تمت الاضافة!');
+        showResult('<p>تمت اضافة العلامة المائية بنجاح</p><p style="color:#666;">النص: ' + text + '</p>', 'watermarked.pdf');
+        showToast('تمت اضافة العلامة المائية', 'success');
+        
+    } catch (e) {
         hideProgress();
-        showToast('❌ خطأ: ' + e.message, 'error');
+        console.error('Watermark error:', e);
+        
+        if (e.message && e.message.includes('WinAnsi')) {
+            showToast('استخدم حروف إنجليزية فقط في نص العلامة المائية', 'error');
+        } else {
+            showToast('خطا: ' + e.message, 'error');
+        }
     }
 }
