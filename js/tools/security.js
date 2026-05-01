@@ -35,76 +35,107 @@ async function doProtect() {
     updateProgress(20, 'جاري قراءة الملف...');
     
     try {
-        const { PDFDocument } = PDFLib;
+        const { PDFDocument, StandardFonts, rgb } = PDFLib;
         const buf = await readFileAB(files[0]);
         const pdfDoc = await PDFDocument.load(buf);
         
         updateProgress(50, 'جاري تطبيق الحماية...');
         
         let bytes;
-        let success = false;
         
-        // 4 محاولات للتشفير
+        // ============ طريقة التشفير المتوافقة مع PDF-lib 1.17 ============
+        // PDF-lib 1.17 يستخدم طريقة محددة للتشفير عبر كائن options
+        
+        const encryptOptions = {
+            userPassword: pw,
+            ownerPassword: pw + '_owner_' + Date.now()
+        };
+        
+        // إضافة الصلاحيات بشكل متوافق
+        const permissions = {
+            printing: 'lowResolution',
+            copying: false,
+            modifying: false,
+            annotating: false,
+            fillingForms: true,
+            contentAccessibility: true,
+            documentAssembly: false
+        };
+        
         try {
-            pdfDoc.encrypt({
-                userPassword: pw,
-                ownerPassword: pw + '_owner_' + Date.now(),
-                permissions: { printing: 'lowResolution', copying: false, modifying: false, annotating: false, fillingForms: true, contentAccessibility: true, documentAssembly: false }
-            });
+            // محاولة التشفير مع الصلاحيات الكاملة
+            pdfDoc.encrypt({ ...encryptOptions, permissions });
             bytes = await pdfDoc.save();
-            success = true;
-        } catch(e1) {}
-        
-        if (!success) {
+            console.log('Encryption with full permissions succeeded');
+        } catch (e1) {
+            console.warn('Full permissions failed:', e1.message);
+            
             try {
-                const tempBytes = await pdfDoc.save({ useObjectStreams: true });
-                const newDoc = await PDFDocument.load(tempBytes);
-                newDoc.encrypt({ userPassword: pw, ownerPassword: pw + '_owner_' + Date.now() });
-                bytes = await newDoc.save();
-                success = true;
-            } catch(e2) {}
+                // محاولة التشفير مع صلاحيات أقل
+                pdfDoc.encrypt({
+                    userPassword: pw,
+                    ownerPassword: pw + '_owner_' + Date.now(),
+                    permissions: {
+                        printing: 'lowResolution',
+                        copying: false,
+                        modifying: false
+                    }
+                });
+                bytes = await pdfDoc.save();
+                console.log('Encryption with basic permissions succeeded');
+            } catch (e2) {
+                console.warn('Basic permissions failed:', e2.message);
+                
+                try {
+                    // محاولة التشفير بدون صلاحيات
+                    pdfDoc.encrypt({
+                        userPassword: pw,
+                        ownerPassword: pw + '_owner_' + Date.now()
+                    });
+                    bytes = await pdfDoc.save();
+                    console.log('Encryption without permissions succeeded');
+                } catch (e3) {
+                    console.warn('No permissions failed:', e3.message);
+                    
+                    try {
+                        // محاولة أخيرة - استخدام setEncryption لو موجودة
+                        if (typeof pdfDoc.setEncryption === 'function') {
+                            pdfDoc.setEncryption({
+                                userPassword: pw,
+                                ownerPassword: pw + '_owner_' + Date.now()
+                            });
+                            bytes = await pdfDoc.save();
+                            console.log('setEncryption succeeded');
+                        } else {
+                            throw new Error('setEncryption not available');
+                        }
+                    } catch (e4) {
+                        console.error('All encryption methods failed');
+                        hideProgress();
+                        showToast('المتصفح لا يدعم تشفير PDF. استخدم برنامج Adobe Acrobat.', 'error');
+                        return;
+                    }
+                }
+            }
         }
         
-        if (!success) {
-            try {
-                const newDoc = await PDFDocument.create();
-                const pages = await newDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
-                pages.forEach(p => newDoc.addPage(p));
-                newDoc.encrypt({ userPassword: pw, ownerPassword: pw + '_owner_' + Date.now() });
-                bytes = await newDoc.save();
-                success = true;
-            } catch(e3) {}
-        }
-        
-        if (!success) {
-            try {
-                const newDoc = await PDFDocument.create();
-                const pages = await newDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
-                pages.forEach(p => newDoc.addPage(p));
-                newDoc.encrypt({ userPassword: pw, ownerPassword: pw + '_owner_' + Date.now() });
-                bytes = await newDoc.save({ useObjectStreams: true });
-                success = true;
-            } catch(e4) {}
-        }
-        
-        if (!success) {
-            hideProgress();
-            showToast('فشل تطبيق التشفير - جرب ملف PDF مختلف', 'error');
-            return;
-        }
-        
+        // نجاح - إنشاء الملف
         resultBlob = new Blob([bytes], { type: 'application/pdf' });
+        
         updateProgress(100, 'تمت الحماية بنجاح!');
+        
         showResult(
             '<p style="font-size:1.1rem;">تمت حماية الملف بنجاح</p>' +
             '<p style="color:#e74c3c;font-weight:700;">Password: ' + pw + '</p>' +
             '<p style="color:#f39c12;font-size:0.85rem;">احفظ كلمة المرور في مكان امن</p>',
             'protected.pdf'
         );
+        
         showToast('تمت حماية الملف بنجاح', 'success');
         
     } catch (error) {
         hideProgress();
+        console.error('Protect error:', error);
         showToast('Error: ' + error.message, 'error');
     }
 }
