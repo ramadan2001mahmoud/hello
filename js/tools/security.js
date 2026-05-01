@@ -4,7 +4,7 @@
 
 // إزالة كلمة المرور من PDF
 async function doUnlock() {
-    const pw = document.getElementById('unlockPass')?.value;
+    const pw = document.getElementById('up')?.value;
     if (!pw) { 
         showToast('ادخل كلمة المرور', 'error'); 
         hideProgress(); 
@@ -25,7 +25,11 @@ async function doUnlock() {
         resultBlob = new Blob([bytes], { type: 'application/pdf' });
         
         updateProgress(100, 'تم فك الحماية!');
-        showResult('<p>تم فك حماية الملف بنجاح</p><p style="color:#27ae60;">الملف الان بدون كلمة مرور</p>', 'unlocked.pdf');
+        showResult(
+            '<p>تم فك حماية الملف بنجاح</p>' +
+            '<p style="color:#27ae60;">الملف الان بدون كلمة مرور</p>',
+            'unlocked.pdf'
+        );
         showToast('تم فك الحماية بنجاح', 'success');
         
     } catch (error) {
@@ -33,23 +37,21 @@ async function doUnlock() {
         console.error('Unlock error:', error);
         
         if (error.message && error.message.includes('password')) {
-            showToast('❌ كلمة المرور غير صحيحة', 'error');
-        } else if (error.message && error.message.includes('encrypted')) {
-            showToast('❌ الملف مشفر بطريقة غير مدعومة', 'error');
+            showToast('كلمة المرور غير صحيحة', 'error');
         } else {
-            showToast('❌ حدث خطأ: ' + error.message, 'error');
+            showToast('Error: ' + error.message, 'error');
         }
     }
 }
 
 // حماية PDF بكلمة مرور
 async function doProtect() {
-    const pw = document.getElementById('pdfPass')?.value;
-    const pw2 = document.getElementById('pdfPass2')?.value;
+    const pw = document.getElementById('pp')?.value;
+    const pw2 = document.getElementById('pp2')?.value;
     
     // التحقق من كلمة المرور
     if (!pw || pw.length < 3) { 
-        showToast('كلمة المرور قصيرة - يجب أن تكون 3 أحرف على الأقل', 'error'); 
+        showToast('كلمة المرور قصيرة - 3 احرف على الاقل', 'error'); 
         hideProgress(); 
         return; 
     }
@@ -69,10 +71,10 @@ async function doProtect() {
         updateProgress(50, 'جاري تطبيق الحماية...');
         
         // محاولة التشفير
+        let bytes;
         let encrypted = false;
         
         try {
-            // الطريقة الأولى: استخدام encrypt مباشرة
             if (typeof pdfDoc.encrypt === 'function') {
                 pdfDoc.encrypt({
                     userPassword: pw,
@@ -88,37 +90,29 @@ async function doProtect() {
                     }
                 });
                 encrypted = true;
+                bytes = await pdfDoc.save();
             }
         } catch (e1) {
             console.warn('First encrypt method failed:', e1.message);
         }
         
-        // حفظ الملف
-        let bytes;
-        if (encrypted) {
-            bytes = await pdfDoc.save();
-        } else {
-            // الطريقة الثانية: إنشاء مستند جديد مع التشفير
+        if (!encrypted) {
+            // الطريقة البديلة: نسخ المحتوى لمستند جديد مع محاولة التشفير
             try {
                 const newDoc = await PDFDocument.create();
                 const copiedPages = await newDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
                 
                 if (copiedPages.length === 0) {
-                    // إذا كان المستند فارغ، أضف صفحة
                     const page = newDoc.addPage([595, 842]);
                     const font = await newDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-                    // استخدام حروف إنجليزية فقط لتجنب مشكلة WinAnsi
                     page.drawText('PDF Protected Document', {
-                        x: 50, y: 700,
-                        size: 20,
-                        font: font,
+                        x: 50, y: 700, size: 20, font: font,
                         color: PDFLib.rgb(0, 0, 0)
                     });
                 } else {
                     copiedPages.forEach(p => newDoc.addPage(p));
                 }
                 
-                // محاولة التشفير على المستند الجديد
                 if (typeof newDoc.encrypt === 'function') {
                     newDoc.encrypt({
                         userPassword: pw,
@@ -129,7 +123,6 @@ async function doProtect() {
                 bytes = await newDoc.save({ useObjectStreams: true });
             } catch (e2) {
                 console.warn('Second method failed:', e2.message);
-                // الطريقة الثالثة: حفظ بسيط مع ضغط
                 bytes = await pdfDoc.save({ useObjectStreams: true });
             }
         }
@@ -138,7 +131,7 @@ async function doProtect() {
         
         updateProgress(100, 'تمت الحماية بنجاح!');
         
-        // عرض النتيجة - استخدام نصوص إنجليزية للعرض
+        // عرض النتيجة
         const origSize = files[0].size;
         const newSize = resultBlob.size;
         const sizeInfo = (origSize && newSize) ? 
@@ -159,7 +152,6 @@ async function doProtect() {
         console.error('Protect error:', error);
         
         let errorMsg = 'حدث خطأ أثناء حماية الملف';
-        
         if (error.message) {
             if (error.message.includes('WinAnsi') || error.message.includes('encode')) {
                 errorMsg = 'Error: Text encoding issue. Please use English characters only.';
@@ -173,47 +165,3 @@ async function doProtect() {
         showToast('Error: ' + errorMsg, 'error');
     }
 }
-
-// دالة مساعدة للتحقق من قوة كلمة المرور
-function checkPasswordStrength(password) {
-    if (!password) return { score: 0, label: 'Weak', color: '#e74c3c' };
-    
-    let score = 0;
-    if (password.length >= 8) score++;
-    if (password.length >= 12) score++;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
-    if (/\d/.test(password)) score++;
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
-    
-    if (score >= 4) return { score, label: 'Strong', color: '#27ae60' };
-    if (score >= 2) return { score, label: 'Medium', color: '#f39c12' };
-    return { score, label: 'Weak', color: '#e74c3c' };
-}
-
-// إضافة مستمع لتحسين تجربة إدخال كلمة المرور
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const passInput = document.getElementById('pdfPass');
-        const pass2Input = document.getElementById('pdfPass2');
-        
-        if (passInput) {
-            passInput.addEventListener('input', function() {
-                const strength = checkPasswordStrength(this.value);
-                // يمكن إضافة مؤشر قوة هنا
-            });
-        }
-        
-        if (pass2Input) {
-            pass2Input.addEventListener('input', function() {
-                const pass1 = document.getElementById('pdfPass')?.value;
-                if (pass1 && this.value && pass1 !== this.value) {
-                    this.style.borderColor = '#e74c3c';
-                } else if (pass1 && this.value && pass1 === this.value) {
-                    this.style.borderColor = '#27ae60';
-                } else {
-                    this.style.borderColor = '#e0e0e0';
-                }
-            });
-        }
-    }, 500);
-});
