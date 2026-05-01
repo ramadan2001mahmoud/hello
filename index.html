@@ -3,1463 +3,1289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI-VidMaster Pro - أول منصة عربية متكاملة لإنشاء الفيديوهات بالذكاء الاصطناعي مع نظام تعليمي وتحليلات متقدم">
-    <title>AI-VidMaster Pro | منصة صناعة الفيديو بالذكاء الاصطناعي</title>
+    <meta name="description" content="PDF Master Pro - أقوى منصة عربية لمعالجة ملفات PDF أونلاين. دمج، تقسيم، ضغط، تحويل، تعديل والمزيد - مجاني وسريع">
+    <title>PDF Master Pro | المنصة العربية الأولى لمعالجة PDF</title>
     
     <style>
-        /* ============================================
-           CSS Custom Properties & Global Styles
-           ============================================ */
         :root {
-            --primary: #6c5ce7;
-            --primary-dark: #5a4bd1;
-            --secondary: #00cec9;
-            --accent: #fd79a8;
-            --warning: #fdcb6e;
-            --danger: #e17055;
-            --success: #00b894;
-            --dark: #2d3436;
-            --darker: #1a1a2e;
-            --light: #f5f6fa;
-            --white: #ffffff;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-400: #ced4da;
-            --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
-            --gray-900: #212529;
-            
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.15);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.2);
-            --shadow-xl: 0 20px 60px rgba(0,0,0,0.3);
-            --shadow-2xl: 0 30px 80px rgba(0,0,0,0.4);
-            
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --radius-xl: 30px;
-            --radius-full: 50%;
-            
-            --transition-fast: 0.2s ease;
-            --transition-base: 0.3s ease;
-            --transition-slow: 0.5s ease;
-            
-            --font-main: 'Segoe UI', Tahoma, 'Cairo', sans-serif;
-            --font-heading: 'Segoe UI', Tahoma, sans-serif;
-            --font-mono: 'Courier New', monospace;
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary: #2ecc71;
+            --blue: #3498db;
+            --dark: #2c3e50;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --border: #e1e8ed;
+            --text: #333333;
+            --gray: #7f8c8d;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --radius: 16px;
+            --transition: all 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: var(--font-main);
-            background: var(--gray-100);
-            color: var(--gray-900);
-            line-height: 1.7;
+            font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: var(--gray-200); }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, var(--primary-dark), var(--secondary));
-        }
-
-        /* ============================================
-           Header & Navigation System
-           ============================================ */
-        .app-header {
-            background: rgba(26, 26, 46, 0.97);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        /* Header */
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
-            z-index: 9999;
-            padding: 0.8rem 2rem;
-            transition: var(--transition-base);
+            z-index: 1000;
         }
 
-        .header-container {
-            max-width: 1600px;
+        .header-inner {
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo-container {
+        .logo {
             display: flex;
             align-items: center;
             gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
         }
 
         .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: var(--radius-md);
+            font-size: 2rem;
+        }
+
+        .nav-links {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            animation: logoGlow 3s infinite;
-        }
-
-        @keyframes logoGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(108, 92, 231, 0.8); }
-        }
-
-        .logo-text {
-            font-size: 1.6rem;
-            font-weight: 900;
-            background: linear-gradient(to right, #fff, var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .main-nav {
-            display: flex;
+            gap: 2rem;
             list-style: none;
-            gap: 0.5rem;
         }
 
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            color: var(--white);
+        .nav-links a {
             text-decoration: none;
-            padding: 0.7rem 1.2rem;
-            border-radius: 30px;
+            color: var(--text);
             font-weight: 600;
-            transition: var(--transition-base);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            white-space: nowrap;
-        }
-
-        .nav-link:hover {
-            background: rgba(255,255,255,0.1);
-            color: var(--secondary);
-        }
-
-        .nav-link.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            border: none;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition-base);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        .btn-outline:hover {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .btn-gradient {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: var(--white);
-        }
-        .btn-gradient:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        /* ============================================
-           Hero Section - Main
-           ============================================ */
-        .hero-section {
-            background: var(--darker);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
+            transition: var(--transition);
+            padding: 0.5rem 0;
             position: relative;
-            overflow: hidden;
-            padding: 4rem 2rem;
         }
 
-        .hero-bg-animation {
+        .nav-links a:hover { color: var(--primary); }
+        
+        .nav-links a::after {
+            content: '';
             position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(108,92,231,0.3), transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0,206,201,0.2), transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(253,121,168,0.25), transparent 50%);
-            animation: bgPulse 8s infinite;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
         }
 
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
+        .nav-links a:hover::after { width: 100%; }
 
-        .hero-grid {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 4rem;
-            font-weight: 900;
-            background: linear-gradient(to right, #fff, var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.3;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-description {
-            font-size: 1.3rem;
-            color: var(--gray-400);
-            margin-bottom: 2rem;
-            line-height: 1.9;
-        }
-
-        .hero-stats-row {
-            display: flex;
-            gap: 3rem;
-            margin: 3rem 0;
-        }
-
-        .hero-stat-item {
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 5rem 2rem;
             text-align: center;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
+        .hero h1 {
+            font-size: 3rem;
             font-weight: 900;
-            color: var(--secondary);
-            display: block;
+            margin-bottom: 1rem;
         }
 
-        .stat-label {
-            color: var(--gray-500);
-            font-size: 0.9rem;
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto 2rem;
         }
 
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .video-preview-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            width: 100%;
-            max-width: 550px;
+        .upload-zone {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: rgba(255,255,255,0.15);
+            border: 3px dashed rgba(255,255,255,0.5);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            cursor: pointer;
+            transition: var(--transition);
             backdrop-filter: blur(10px);
         }
 
-        .preview-screen {
-            background: var(--gray-900);
-            border-radius: var(--radius-md);
-            aspect-ratio: 16/9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .upload-zone:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: white;
+        }
+
+        .upload-zone.dragover {
+            background: rgba(255,255,255,0.35);
+            border-color: white;
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
             margin-bottom: 1rem;
-            border: 2px solid var(--primary);
-            position: relative;
-            overflow: hidden;
         }
 
-        .preview-play-btn {
-            width: 80px;
-            height: 80px;
-            background: var(--primary);
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
+        .upload-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .upload-sub {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
-            animation: pulse 2s infinite;
+            border: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(108,92,231,0.7); }
-            70% { box-shadow: 0 0 0 30px rgba(108,92,231,0); }
-            100% { box-shadow: 0 0 0 0 rgba(108,92,231,0); }
+        .btn-white {
+            background: white;
+            color: var(--primary);
         }
 
-        /* ============================================
-           Main Dashboard Layout
-           ============================================ */
-        .dashboard-container {
-            max-width: 1600px;
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Tools Grid */
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
-        }
-
-        .section-block {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 3rem;
-            margin: 3rem 0;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-base);
-        }
-
-        .section-block:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-5px);
-        }
-
-        .section-header {
-            margin-bottom: 2rem;
-            position: relative;
         }
 
         .section-title {
             font-size: 2.5rem;
             font-weight: 900;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 0;
-            width: 70%;
-            height: 4px;
-            background: linear-gradient(to left, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        /* ============================================
-           Video Creation Studio
-           ============================================ */
-        .studio-layout {
-            display: grid;
-            grid-template-columns: 350px 1fr 300px;
-            gap: 2rem;
-            min-height: 700px;
-        }
-
-        .studio-sidebar {
-            background: var(--gray-100);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            overflow-y: auto;
-            max-height: 700px;
-        }
-
-        .studio-main {
-            background: var(--gray-900);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .studio-panel {
-            background: var(--gray-100);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            overflow-y: auto;
-            max-height: 700px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--gray-800);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            transition: var(--transition-fast);
-            font-family: var(--font-main);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
-        }
-
-        .form-textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
-            font-size: 1rem;
-            min-height: 120px;
-            resize: vertical;
-            transition: var(--transition-fast);
-        }
-
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(108,92,231,0.1);
-        }
-
-        .style-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            margin: 1rem 0;
-        }
-
-        .style-card {
-            padding: 1rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
             text-align: center;
+            margin: 4rem 0 2rem;
+            color: var(--dark);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            border: 2px solid var(--border);
+            transition: var(--transition);
             cursor: pointer;
-            transition: var(--transition-fast);
-        }
-
-        .style-card:hover, .style-card.selected {
-            border-color: var(--primary);
-            background: rgba(108,92,231,0.05);
-        }
-
-        /* ============================================
-           Timeline / Keyframes
-           ============================================ */
-        .timeline-container {
-            background: var(--gray-100);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            margin: 2rem 0;
-            overflow-x: auto;
-        }
-
-        .timeline-track {
-            display: flex;
-            gap: 0.3rem;
-            min-width: 1000px;
-            padding: 1rem;
-            background: var(--gray-200);
-            border-radius: var(--radius-sm);
+            text-align: center;
             position: relative;
         }
 
-        .timeline-frame {
-            width: 60px;
-            height: 40px;
-            background: var(--white);
-            border: 1px solid var(--gray-400);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition-fast);
-            flex-shrink: 0;
-        }
-
-        .timeline-frame:hover {
-            background: var(--primary);
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             border-color: var(--primary);
         }
 
-        .timeline-frame.active {
-            background: var(--primary);
-            border-color: var(--primary-dark);
+        .tool-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
         }
 
-        /* ============================================
-           Analytics Dashboard
-           ============================================ */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .analytics-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 1.8rem;
-            border: 1px solid var(--gray-200);
-            transition: var(--transition-base);
-        }
-
-        .analytics-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: translateY(-5px);
-        }
-
-        .analytics-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin: 0.5rem 0;
-        }
-
-        .analytics-change {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-weight: 700;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-
-        .change-positive {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .change-negative {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .chart-container {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid var(--gray-200);
-        }
-
-        .bar-chart-horizontal {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .bar-row {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .bar-label-text {
-            width: 150px;
-            font-weight: 600;
-            text-align: left;
-        }
-
-        .bar-fill-container {
-            flex: 1;
-            height: 30px;
-            background: var(--gray-200);
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 15px;
-            background: linear-gradient(to left, var(--primary), var(--secondary));
-            transition: width 1.5s ease;
-        }
-
-        .bar-value-text {
-            width: 60px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* ============================================
-           Learning Academy Section
-           ============================================ */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .course-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            border: 1px solid var(--gray-200);
-            transition: var(--transition-base);
-        }
-
-        .course-card:hover {
-            box-shadow: var(--shadow-xl);
-            transform: translateY(-8px);
-        }
-
-        .course-header {
-            height: 180px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .course-body {
-            padding: 1.5rem;
-        }
-
-        .course-title {
+        .tool-name {
             font-size: 1.3rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
         }
 
-        .course-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray-600);
-            font-size: 0.9rem;
-            margin: 1rem 0;
+        .tool-desc {
+            color: var(--gray);
+            font-size: 0.95rem;
         }
 
-        .progress-bar {
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--success);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        /* ============================================
-           Template Marketplace
-           ============================================ */
-        .templates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .template-card {
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--gray-200);
-            transition: var(--transition-base);
-            background: var(--white);
-        }
-
-        .template-card:hover {
-            box-shadow: var(--shadow-lg);
-            transform: scale(1.03);
-        }
-
-        .template-preview {
-            height: 180px;
-            background: var(--gray-300);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            position: relative;
-        }
-
-        .template-badge {
+        .tool-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--accent);
-            color: var(--white);
+            top: 15px;
+            left: 15px;
+            background: var(--secondary);
+            color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
         }
 
-        .template-info {
-            padding: 1rem;
+        /* Workspace */
+        .workspace {
+            background: white;
+            border-radius: var(--radius);
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            display: none;
         }
 
-        /* ============================================
-           Collaboration Hub
-           ============================================ */
-        .collab-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 2rem;
-            min-height: 600px;
+        .workspace.active {
+            display: block;
         }
 
-        .user-list {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--gray-200);
-            overflow-y: auto;
-            max-height: 600px;
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
         }
 
-        .user-item {
+        .workspace-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+
+        .close-workspace {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Drop Zone */
+        .drop-zone {
+            border: 3px dashed var(--primary);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            cursor: pointer;
+            transition: var(--transition);
+            background: #fff5f5;
+        }
+
+        .drop-zone.active {
+            border-color: var(--secondary);
+            background: #f0fff4;
+        }
+
+        .drop-zone.dragover {
+            background: #ffeaea;
+            border-color: var(--primary-dark);
+        }
+
+        /* File Preview */
+        .file-preview {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-            cursor: pointer;
-            transition: var(--transition-fast);
         }
 
-        .user-item:hover {
-            background: var(--gray-100);
+        .file-icon {
+            font-size: 2.5rem;
         }
 
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: var(--radius-full);
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
             font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .file-size {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .remove-file {
+            background: #ff4444;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
             font-size: 1.2rem;
         }
 
-        .chat-area {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--gray-200);
-            display: flex;
-            flex-direction: column;
+        /* Progress Bar */
+        .progress-container {
+            margin: 2rem 0;
+            display: none;
         }
 
-        .chat-messages {
-            flex: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            max-height: 500px;
+        .progress-container.active {
+            display: block;
         }
 
-        .chat-message {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            max-width: 70%;
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .chat-message.sent {
-            background: var(--primary);
-            color: var(--white);
-            margin-right: auto;
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            width: 0;
+            transition: width 0.3s;
         }
 
-        .chat-message.received {
-            background: var(--gray-100);
-            margin-left: auto;
-        }
-
-        .chat-input-area {
-            display: flex;
-            gap: 0.5rem;
-            padding: 1rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        /* ============================================
-           Pricing Section
-           ============================================ */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .pricing-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem 2rem;
-            border: 2px solid var(--gray-200);
+        .progress-text {
             text-align: center;
-            transition: var(--transition-base);
-            position: relative;
+            margin-top: 0.5rem;
+            font-weight: 600;
         }
 
-        .pricing-card.featured {
-            border-color: var(--primary);
-            transform: scale(1.05);
-            box-shadow: var(--shadow-xl);
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 2rem;
+            display: none;
         }
 
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-xl);
+        .download-section.active {
+            display: block;
         }
 
-        .pricing-badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: var(--white);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
+        .download-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
             font-weight: 700;
-            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .price-amount {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin: 1.5rem 0;
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(46,204,113,0.4);
         }
 
-        .price-period {
-            color: var(--gray-600);
-            font-size: 1rem;
-        }
-
-        .feature-list {
-            list-style: none;
-            text-align: right;
+        /* Preview Canvas */
+        #pdfPreview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
             margin: 2rem 0;
         }
 
-        .feature-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--gray-200);
+        canvas {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            width: 100%;
+            box-shadow: var(--shadow);
         }
 
-        .feature-list li::before {
-            content: '✓ ';
-            color: var(--success);
-            font-weight: 700;
+        /* Options Panel */
+        .options-panel {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
         }
 
-        /* ============================================
-           Modal System
-           ============================================ */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-overlay.active {
+        .option-row {
             display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
 
-        .modal {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-2xl);
-            animation: modalSlideIn 0.3s ease;
+        .option-label {
+            font-weight: 700;
+            min-width: 100px;
         }
 
-        @keyframes modalSlideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        select, input[type="number"], input[type="text"] {
+            padding: 0.7rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
         }
 
-        .modal-close {
-            float: left;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: var(--gray-600);
-        }
-
-        /* ============================================
-           Notification System
-           ============================================ */
-        .notification-container {
+        /* Toast Notifications */
+        .toast-container {
             position: fixed;
-            bottom: 20px;
+            top: 20px;
             left: 20px;
             z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
         }
 
-        .notification {
-            background: var(--white);
-            border-radius: var(--radius-md);
+        .toast {
+            background: white;
+            border-radius: 12px;
             padding: 1rem 1.5rem;
-            box-shadow: var(--shadow-lg);
+            margin-bottom: 0.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
             gap: 1rem;
-            animation: notifSlideIn 0.4s ease;
+            animation: slideInRight 0.4s ease;
             min-width: 300px;
         }
 
-        @keyframes notifSlideIn {
-            from { transform: translateX(100%); opacity: 0; }
+        .toast.success { border-right: 4px solid #2ecc71; }
+        .toast.error { border-right: 4px solid #e74c3c; }
+        .toast.info { border-right: 4px solid #3498db; }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
-        .notification.success { border-right: 4px solid var(--success); }
-        .notification.warning { border-right: 4px solid var(--warning); }
-        .notification.error { border-right: 4px solid var(--danger); }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
 
-        /* ============================================
-           Footer
-           ============================================ */
-        .app-footer {
-            background: var(--darker);
-            color: var(--gray-400);
-            padding: 5rem 2rem 2rem;
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
             margin-top: 5rem;
         }
 
-        .footer-grid {
+        .footer-inner {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 3rem;
         }
-
-        .footer-col h4 {
-            color: var(--white);
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-links a {
-            color: var(--gray-500);
-            text-decoration: none;
-            transition: var(--transition-fast);
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* ============================================
-           Responsive Design
-           ============================================ */
-        @media (max-width: 1200px) {
-            .studio-layout {
-                grid-template-columns: 1fr;
-            }
-            .hero-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-stats-row {
-                justify-content: center;
-            }
-            .collab-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            .main-nav {
-                display: none;
-            }
-            .analytics-grid {
-                grid-template-columns: 1fr;
-            }
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-            .pricing-card.featured {
-                transform: none;
-            }
-        }
-
-        /* ============================================
-           Utility Classes
-           ============================================ */
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mt-3 { margin-top: 1.5rem; }
-        .mt-4 { margin-top: 2rem; }
-        .mt-5 { margin-top: 3rem; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mb-3 { margin-bottom: 1.5rem; }
-        .mb-4 { margin-bottom: 2rem; }
-        .mb-5 { margin-bottom: 3rem; }
-        .p-2 { padding: 1rem; }
-        .p-3 { padding: 1.5rem; }
-        .p-4 { padding: 2rem; }
-        .flex { display: flex; }
-        .flex-center { display: flex; align-items: center; justify-content: center; }
-        .gap-1 { gap: 0.5rem; }
-        .gap-2 { gap: 1rem; }
-        .gap-3 { gap: 1.5rem; }
-        .gap-4 { gap: 2rem; }
-        .w-full { width: 100%; }
-        .hidden { display: none; }
-        .visible { display: block; }
     </style>
 </head>
 <body>
 
-    <!-- ============================================
-         HEADER
-         ============================================ -->
-    <header class="app-header">
-        <div class="header-container">
-            <div class="logo-container">
-                <div class="logo-icon">🎬</div>
-                <span class="logo-text">AI-VidMaster Pro</span>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <span class="logo-icon">📄</span>
+                <span>PDF Master Pro</span>
             </div>
-            
-            <ul class="main-nav">
-                <li class="nav-item"><a href="#studio" class="nav-link active">🎥 استوديو الإنشاء</a></li>
-                <li class="nav-item"><a href="#learn" class="nav-link">📚 الأكاديمية</a></li>
-                <li class="nav-item"><a href="#templates" class="nav-link">🎨 القوالب</a></li>
-                <li class="nav-item"><a href="#analytics" class="nav-link">📊 التحليلات</a></li>
-                <li class="nav-item"><a href="#collab" class="nav-link">👥 التعاون</a></li>
-                <li class="nav-item"><a href="#pricing" class="nav-link">💎 الأسعار</a></li>
+            <ul class="nav-links">
+                <li><a href="#tools">الأدوات</a></li>
+                <li><a href="#merge">دمج PDF</a></li>
+                <li><a href="#split">تقسيم PDF</a></li>
+                <li><a href="#compress">ضغط PDF</a></li>
+                <li><a href="#convert">تحويل</a></li>
             </ul>
-
-            <div class="user-menu">
-                <button class="btn btn-outline" onclick="openModal('loginModal')">تسجيل الدخول</button>
-                <button class="btn btn-gradient" onclick="openModal('registerModal')">ابدأ مجاناً</button>
-            </div>
         </div>
     </header>
 
-    <!-- ============================================
-         HERO SECTION
-         ============================================ -->
-    <section class="hero-section">
-        <div class="hero-bg-animation"></div>
-        <div class="hero-grid">
-            <div class="hero-text">
-                <h1>اصنع فيديوهات احترافية بالذكاء الاصطناعي في ثوانٍ</h1>
-                <p class="hero-description">
-                    أول منصة عربية متكاملة تجمع بين توليد الفيديو بالذكاء الاصطناعي، نظام تعليمي متكامل، وأدوات تحليل متقدمة. اكتب فكرتك وشاهدها تتحول إلى فيديو مذهل.
-                </p>
-                <div class="flex gap-2">
-                    <button class="btn btn-gradient" style="font-size: 1.1rem; padding: 1rem 2.5rem;" onclick="scrollToSection('studio')">
-                        🚀 جرب الآن مجاناً
-                    </button>
-                    <button class="btn btn-outline" style="font-size: 1.1rem; padding: 1rem 2.5rem;" onclick="openModal('demoModal')">
-                        ▶ شاهد العرض التوضيحي
-                    </button>
-                </div>
-                <div class="hero-stats-row">
-                    <div class="hero-stat-item">
-                        <span class="stat-number" id="totalVideos">0</span>
-                        <span class="stat-label">فيديو تم إنشاؤه</span>
-                    </div>
-                    <div class="hero-stat-item">
-                        <span class="stat-number" id="totalUsers">0</span>
-                        <span class="stat-label">مستخدم نشط</span>
-                    </div>
-                    <div class="hero-stat-item">
-                        <span class="stat-number">98%</span>
-                        <span class="stat-label">تقييم رضا المستخدمين</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="video-preview-card">
-                    <div class="preview-screen">
-                        <div class="preview-play-btn" onclick="playDemoVideo()">▶</div>
-                    </div>
-                    <div class="flex gap-2" style="justify-content: center;">
-                        <span style="color: var(--gray-400);">🎬 4K</span>
-                        <span style="color: var(--gray-400);">⚡ 30 ثانية</span>
-                        <span style="color: var(--gray-400);">🎵 صوت محيطي</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Hero -->
+    <section class="hero">
+        <h1>📄 المنصة العربية الأولى لمعالجة PDF</h1>
+        <p>كل الأدوات اللي تحتاجها لملفات PDF في مكان واحد - مجاني، سريع، وآمن 100%</p>
+        <div class="upload-zone" id="mainUploadZone">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">اسحب وأفلت ملفات PDF هنا</div>
+            <div class="upload-sub">أو اضغط للاختيار من جهازك</div>
+            <input type="file" id="mainFileInput" accept=".pdf" multiple style="display:none;">
         </div>
     </section>
 
-    <!-- ============================================
-         MAIN CONTENT
-         ============================================ -->
-    <main class="dashboard-container">
+    <!-- Main Container -->
+    <div class="container" id="tools">
+        
+        <!-- الأدوات المتاحة -->
+        <h2 class="section-title">🔧 جميع الأدوات المتاحة</h2>
+        <div class="tools-grid">
+            <!-- 1. دمج PDF -->
+            <div class="tool-card" onclick="openTool('merge')">
+                <span class="tool-badge">🔥 الأكثر استخداماً</span>
+                <div class="tool-icon">🔗</div>
+                <div class="tool-name">دمج PDF</div>
+                <div class="tool-desc">ادمج عدة ملفات PDF في ملف واحد بترتيب حسب رغبتك</div>
+            </div>
 
-        <!-- ========== VIDEO STUDIO ========== -->
-        <section class="section-block" id="studio">
-            <div class="section-header">
-                <h2 class="section-title">🎥 استوديو إنشاء الفيديو</h2>
-                <p style="color: var(--gray-600); font-size: 1.1rem;">أدخل وصفك وشاهد السحر يحدث. ذكاء اصطناعي متطور يفهم رؤيتك ويحولها إلى فيديو احترافي.</p>
+            <!-- 2. تقسيم PDF -->
+            <div class="tool-card" onclick="openTool('split')">
+                <div class="tool-icon">✂️</div>
+                <div class="tool-name">تقسيم PDF</div>
+                <div class="tool-desc">قسم ملف PDF إلى عدة ملفات منفصلة بسهولة</div>
+            </div>
+
+            <!-- 3. ضغط PDF -->
+            <div class="tool-card" onclick="openTool('compress')">
+                <span class="tool-badge">💡 موفر للمساحة</span>
+                <div class="tool-icon">📦</div>
+                <div class="tool-name">ضغط PDF</div>
+                <div class="tool-desc">قلل حجم ملف PDF مع الحفاظ على الجودة</div>
+            </div>
+
+            <!-- 4. PDF إلى صور -->
+            <div class="tool-card" onclick="openTool('pdf-to-image')">
+                <div class="tool-icon">🖼️</div>
+                <div class="tool-name">PDF إلى صور</div>
+                <div class="tool-desc">حول كل صفحة من PDF إلى صورة JPG أو PNG</div>
+            </div>
+
+            <!-- 5. صور إلى PDF -->
+            <div class="tool-card" onclick="openTool('image-to-pdf')">
+                <div class="tool-icon">📸</div>
+                <div class="tool-name">صور إلى PDF</div>
+                <div class="tool-desc">حول مجموعة صور إلى ملف PDF واحد</div>
+            </div>
+
+            <!-- 6. تدوير PDF -->
+            <div class="tool-card" onclick="openTool('rotate')">
+                <div class="tool-icon">🔄</div>
+                <div class="tool-name">تدوير PDF</div>
+                <div class="tool-desc">قم بتدوير صفحات PDF بالزاوية الصحيحة</div>
+            </div>
+
+            <!-- 7. حذف صفحات -->
+            <div class="tool-card" onclick="openTool('delete-pages')">
+                <div class="tool-icon">🗑️</div>
+                <div class="tool-name">حذف صفحات</div>
+                <div class="tool-desc">احذف صفحات محددة من ملف PDF</div>
+            </div>
+
+            <!-- 8. استخراج صفحات -->
+            <div class="tool-card" onclick="openTool('extract-pages')">
+                <div class="tool-icon">📤</div>
+                <div class="tool-name">استخراج صفحات</div>
+                <div class="tool-desc">استخرج صفحات محددة من PDF واحفظها منفصلة</div>
+            </div>
+
+            <!-- 9. إعادة ترتيب -->
+            <div class="tool-card" onclick="openTool('reorder')">
+                <div class="tool-icon">🔀</div>
+                <div class="tool-name">إعادة ترتيب الصفحات</div>
+                <div class="tool-desc">غير ترتيب الصفحات في ملف PDF كما تريد</div>
+            </div>
+
+            <!-- 10. إضافة علامة مائية -->
+            <div class="tool-card" onclick="openTool('watermark')">
+                <div class="tool-icon">💧</div>
+                <div class="tool-name">علامة مائية</div>
+                <div class="tool-desc">أضف نصاً أو صورة كعلامة مائية على PDF</div>
+            </div>
+
+            <!-- 11. فتح وحماية -->
+            <div class="tool-card" onclick="openTool('protect')">
+                <div class="tool-icon">🔒</div>
+                <div class="tool-name">حماية PDF</div>
+                <div class="tool-desc">ضع كلمة مرور لحماية ملفات PDF الخاصة بك</div>
+            </div>
+
+            <!-- 12. قراءة PDF -->
+            <div class="tool-card" onclick="openTool('viewer')">
+                <div class="tool-icon">👁️</div>
+                <div class="tool-name">عارض PDF</div>
+                <div class="tool-desc">افتح وعاين ملفات PDF مباشرة في المتصفح</div>
+            </div>
+        </div>
+
+        <!-- ============ WORKSPACE ============ -->
+        <div class="workspace" id="workspace">
+            <div class="workspace-header">
+                <h3 class="workspace-title" id="workspaceTitle">أداة معالجة PDF</h3>
+                <button class="close-workspace" onclick="closeTool()">✕</button>
             </div>
             
-            <div class="studio-layout">
-                <!-- الشريط الجانبي -->
-                <div class="studio-sidebar">
-                    <h3 style="margin-bottom: 1rem;">⚙️ إعدادات التوليد</h3>
-                    
-                    <div class="form-group">
-                        <label class="form-label">🎯 الأسلوب الفني</label>
-                        <select class="form-input" id="videoStyle">
-                            <option value="cinematic">سينمائي</option>
-                            <option value="anime">أنمي</option>
-                            <option value="3d">ثلاثي الأبعاد</option>
-                            <option value="realistic">واقعي</option>
-                            <option value="cartoon">كرتوني</option>
-                            <option value="watercolor">ألوان مائية</option>
-                            <option value="pixel">بكسل آرت</option>
-                            <option value="minimalist">بسيط</option>
+            <div id="toolContent">
+                <!-- المحتوى الديناميكي لكل أداة -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <h3>📄 PDF Master Pro</h3>
+                <p>المنصة العربية الأولى لمعالجة ملفات PDF أونلاين. كل الأدوات مجانية وتعمل مباشرة في المتصفح.</p>
+            </div>
+            <div>
+                <h4>الأدوات</h4>
+                <p>دمج - تقسيم - ضغط - تحويل - تدوير - حذف - استخراج - ترتيب - علامة مائية - حماية</p>
+            </div>
+            <div>
+                <h4>مميزاتنا</h4>
+                <p>✅ مجاني 100%</p>
+                <p>✅ لا يحتاج تسجيل</p>
+                <p>✅ معالجة في المتصفح</p>
+                <p>✅ خصوصية تامة</p>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1);">© 2024 PDF Master Pro - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ============ مكتبة PDF-lib (فعلية) ============ -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+
+    <script>
+        // ============================================
+        // Global Variables
+        // ============================================
+        let currentTool = null;
+        let uploadedFiles = [];
+        let processedBlob = null;
+
+        // ============================================
+        // Toast Notifications
+        // ============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                <span>${message}</span>
+                <button style="margin-right:auto; background:none; border:none; cursor:pointer;" onclick="this.parentElement.remove()">✕</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        }
+
+        // ============================================
+        // File Handling
+        // ============================================
+        async function readFileAsArrayBuffer(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        // ============================================
+        // Main Upload Zone
+        // ============================================
+        const mainUploadZone = document.getElementById('mainUploadZone');
+        const mainFileInput = document.getElementById('mainFileInput');
+
+        mainUploadZone.addEventListener('click', () => mainFileInput.click());
+        mainFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                uploadedFiles = Array.from(e.target.files);
+                showToast(`✅ تم تحميل ${uploadedFiles.length} ملف(ات)`, 'success');
+                if (currentTool) {
+                    renderToolContent();
+                } else {
+                    openTool('merge');
+                }
+            }
+        });
+
+        // Drag & Drop for main zone
+        mainUploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            mainUploadZone.classList.add('dragover');
+        });
+        mainUploadZone.addEventListener('dragleave', () => {
+            mainUploadZone.classList.remove('dragover');
+        });
+        mainUploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            mainUploadZone.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type === 'application/pdf');
+            if (files.length > 0) {
+                uploadedFiles = files;
+                showToast(`✅ تم استلام ${files.length} ملف PDF`, 'success');
+            }
+        });
+
+        // ============================================
+        // Tool Management
+        // ============================================
+        function openTool(toolName) {
+            currentTool = toolName;
+            const workspace = document.getElementById('workspace');
+            const title = document.getElementById('workspaceTitle');
+            
+            const toolNames = {
+                'merge': '🔗 دمج ملفات PDF',
+                'split': '✂️ تقسيم PDF',
+                'compress': '📦 ضغط PDF',
+                'pdf-to-image': '🖼️ تحويل PDF إلى صور',
+                'image-to-pdf': '📸 تحويل الصور إلى PDF',
+                'rotate': '🔄 تدوير PDF',
+                'delete-pages': '🗑️ حذف صفحات',
+                'extract-pages': '📤 استخراج صفحات',
+                'reorder': '🔀 إعادة ترتيب الصفحات',
+                'watermark': '💧 علامة مائية',
+                'protect': '🔒 حماية PDF',
+                'viewer': '👁️ عارض PDF'
+            };
+            
+            title.textContent = toolNames[toolName] || 'أداة PDF';
+            workspace.classList.add('active');
+            uploadedFiles = [];
+            processedBlob = null;
+            renderToolContent();
+            workspace.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeTool() {
+            document.getElementById('workspace').classList.remove('active');
+            currentTool = null;
+            uploadedFiles = [];
+            processedBlob = null;
+        }
+
+        // ============================================
+        // Render Tool Content
+        // ============================================
+        function renderToolContent() {
+            const content = document.getElementById('toolContent');
+            
+            if (!currentTool) {
+                content.innerHTML = '<p>اختر أداة من الأعلى للبدء</p>';
+                return;
+            }
+
+            const renderers = {
+                'merge': renderMergeTool,
+                'split': renderSplitTool,
+                'compress': renderCompressTool,
+                'pdf-to-image': renderPdfToImageTool,
+                'image-to-pdf': renderImageToPdfTool,
+                'rotate': renderRotateTool,
+                'delete-pages': renderDeletePagesTool,
+                'extract-pages': renderExtractPagesTool,
+                'reorder': renderReorderTool,
+                'watermark': renderWatermarkTool,
+                'protect': renderProtectTool,
+                'viewer': renderViewerTool
+            };
+
+            if (renderers[currentTool]) {
+                content.innerHTML = renderers[currentTool]();
+                attachToolEvents();
+            }
+        }
+
+        function attachToolEvents() {
+            // ربط الأحداث بعد إعادة الرندر
+            const dropZone = document.getElementById('toolDropZone');
+            const fileInput = document.getElementById('toolFileInput');
+            
+            if (dropZone && fileInput) {
+                dropZone.addEventListener('click', () => fileInput.click());
+                fileInput.addEventListener('change', handleToolFileSelect);
+                
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('dragover');
+                });
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.classList.remove('dragover');
+                });
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('dragover');
+                    const files = Array.from(e.dataTransfer.files);
+                    handleFilesForTool(files);
+                });
+            }
+
+            // Process buttons
+            document.querySelectorAll('.process-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const action = btn.dataset.action;
+                    if (action && typeof window[action] === 'function') {
+                        window[action]();
+                    }
+                });
+            });
+        }
+
+        function handleToolFileSelect(e) {
+            const files = Array.from(e.target.files);
+            handleFilesForTool(files);
+        }
+
+        function handleFilesForTool(files) {
+            if (files.length === 0) return;
+            
+            // للأدوات اللي بتقبل صور
+            if (currentTool === 'image-to-pdf') {
+                const imageFiles = files.filter(f => f.type.startsWith('image/'));
+                if (imageFiles.length > 0) {
+                    uploadedFiles = imageFiles;
+                    showToast(`✅ تم تحميل ${imageFiles.length} صورة`, 'success');
+                    updateFilePreviewList();
+                }
+                return;
+            }
+
+            // لباقي الأدوات - PDF فقط
+            const pdfFiles = files.filter(f => f.type === 'application/pdf');
+            if (pdfFiles.length > 0) {
+                uploadedFiles = pdfFiles;
+                showToast(`✅ تم تحميل ${pdfFiles.length} ملف PDF`, 'success');
+                updateFilePreviewList();
+                
+                // معاينة تلقائية للعارض
+                if (currentTool === 'viewer' && pdfFiles.length > 0) {
+                    previewPDF(pdfFiles[0]);
+                }
+            } else {
+                showToast('⚠️ الرجاء اختيار ملفات PDF فقط', 'error');
+            }
+        }
+
+        function updateFilePreviewList() {
+            const previewList = document.getElementById('filePreviewList');
+            if (!previewList) return;
+
+            previewList.innerHTML = uploadedFiles.map((file, index) => `
+                <div class="file-preview">
+                    <div class="file-icon">${file.type === 'application/pdf' ? '📄' : '🖼️'}</div>
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                    <button class="remove-file" onclick="removeFile(${index})">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            updateFilePreviewList();
+            showToast('تم حذف الملف', 'info');
+        }
+
+        // ============================================
+        // Tool Renderers
+        // ============================================
+        function renderMergeTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">اسحب ملفات PDF هنا</div>
+                    <div class="upload-sub">يمكنك رفع عدة ملفات لدمجها</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" multiple style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ خيارات الدمج</h4>
+                    <p style="color:var(--gray); font-size:0.9rem;">يمكنك سحب وإفلات الملفات لإعادة ترتيبها قبل الدمج</p>
+                </div>
+                <button class="btn btn-white process-btn" data-action="mergePDFs" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    🔗 ادمج الملفات الآن
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري المعالجة...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المدمج</button>
+                </div>
+            `;
+        }
+
+        function renderSplitTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-text">ارفع ملف PDF لتقسيمه</div>
+                    <div class="upload-sub">سيتم استخراج كل صفحة في ملف منفصل</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ طريقة التقسيم</h4>
+                    <select id="splitMode" style="width:100%; padding:0.8rem; border-radius:8px; border:2px solid var(--border);">
+                        <option value="all">كل صفحة في ملف منفصل</option>
+                        <option value="range">تقسيم حسب نطاق الصفحات</option>
+                    </select>
+                    <div id="rangeInputs" style="display:none; margin-top:1rem;">
+                        <input type="text" id="pageRanges" placeholder="مثال: 1-3, 5, 7-9" style="width:100%;">
+                    </div>
+                </div>
+                <button class="btn btn-white process-btn" data-action="splitPDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    ✂️ قسم الملف الآن
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري التقسيم...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملفات المقسمة</button>
+                </div>
+            `;
+        }
+
+        function renderCompressTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">📦</div>
+                    <div class="upload-text">ارفع ملف PDF لضغطه</div>
+                    <div class="upload-sub">قلل حجم الملف مع الحفاظ على أفضل جودة ممكنة</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ مستوى الضغط</h4>
+                    <select id="compressionLevel" style="width:100%; padding:0.8rem; border-radius:8px; border:2px solid var(--border);">
+                        <option value="low">منخفض - أفضل جودة</option>
+                        <option value="medium" selected>متوسط - متوازن</option>
+                        <option value="high">عالي - أصغر حجم</option>
+                    </select>
+                </div>
+                <button class="btn btn-white process-btn" data-action="compressPDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    📦 اضغط الملف الآن
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري الضغط...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <div id="compressionResult" style="margin-bottom:1rem;"></div>
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المضغوط</button>
+                </div>
+            `;
+        }
+
+        function renderPdfToImageTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">🖼️</div>
+                    <div class="upload-text">ارفع ملف PDF لتحويله إلى صور</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ إعدادات التحويل</h4>
+                    <div class="option-row">
+                        <span class="option-label">تنسيق الصورة:</span>
+                        <select id="imageFormat">
+                            <option value="png">PNG</option>
+                            <option value="jpeg">JPEG</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label">⏱ المدة (ثواني)</label>
-                        <input type="range" min="5" max="60" value="15" class="w-full" id="durationSlider" oninput="updateDurationLabel()">
-                        <span id="durationLabel" style="font-weight: 700; color: var(--primary);">15 ثانية</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">📐 الدقة</label>
-                        <select class="form-input" id="resolution">
-                            <option value="1080p">Full HD (1080p)</option>
-                            <option value="4k">4K Ultra HD</option>
-                            <option value="720p">HD (720p)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">🎵 نوع الموسيقى</label>
-                        <select class="form-input" id="musicGenre">
-                            <option value="epic">ملحمي</option>
-                            <option value="calm">هادئ</option>
-                            <option value="upbeat">مبهج</option>
-                            <option value="dramatic">درامي</option>
-                            <option value="electronic">إلكتروني</option>
-                            <option value="none">بدون موسيقى</option>
-                        </select>
-                    </div>
-
-                    <button class="btn btn-gradient w-full mt-3" style="padding: 1rem;" onclick="generateVideo()">
-                        ⚡ توليد الفيديو الآن
-                    </button>
                 </div>
-
-                <!-- منطقة العرض الرئيسية -->
-                <div class="studio-main" id="studioPreview">
-                    <div style="text-align: center; color: var(--gray-500);">
-                        <div style="font-size: 5rem;">🎬</div>
-                        <p style="font-size: 1.2rem;">أدخل الوصف واضغط توليد</p>
-                        <p style="font-size: 0.9rem; color: var(--gray-600);">سيظهر الفيديو هنا بعد التوليد</p>
-                    </div>
+                <button class="btn btn-white process-btn" data-action="convertPdfToImages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    🖼️ حول إلى صور
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري التحويل...</div>
                 </div>
-
-                <!-- لوحة التحكم -->
-                <div class="studio-panel">
-                    <h3 style="margin-bottom: 1rem;">📝 وصف الفيديو</h3>
-                    <textarea class="form-textarea" id="videoPrompt" placeholder="اكتب وصفاً مفصلاً للفيديو الذي تريد إنشاءه... مثلاً: قطة ترتدي قبعة تستكشف مدينة مستقبلية، أسلوب سينمائي، إضاءة نيون، حركة بطيئة"></textarea>
-                    
-                    <div class="form-group mt-2">
-                        <label class="form-label">🏷 الكلمات المفتاحية (اختياري)</label>
-                        <input type="text" class="form-input" id="keywords" placeholder="قطة، مدينة، مستقبل، نيون">
-                    </div>
-
-                    <div class="style-grid mt-2">
-                        <div class="style-card selected" onclick="selectStyle(this, 'cinematic')">🎥 سينمائي</div>
-                        <div class="style-card" onclick="selectStyle(this, 'anime')">🌸 أنمي</div>
-                        <div class="style-card" onclick="selectStyle(this, '3d')">🎮 3D</div>
-                        <div class="style-card" onclick="selectStyle(this, 'realistic')">📸 واقعي</div>
-                    </div>
-
-                    <div id="generationHistory" class="mt-3" style="max-height: 200px; overflow-y: auto;">
-                        <h4 style="margin-bottom: 0.8rem;">📋 سجل التوليد</h4>
-                        <!-- يتم ملؤه ديناميكياً -->
-                    </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الصور (ZIP)</button>
                 </div>
-            </div>
-        </section>
+            `;
+        }
 
-        <!-- ========== LEARNING ACADEMY ========== -->
-        <section class="section-block" id="learn">
-            <div class="section-header">
-                <h2 class="section-title">📚 أكاديمية AI-VidMaster</h2>
-                <p style="color: var(--gray-600);">تعلم كل شيء عن صناعة الفيديو بالذكاء الاصطناعي من خلال دوراتنا التفاعلية المصممة خصيصاً لك.</p>
-            </div>
-
-            <div class="courses-grid">
-                <!-- دورة 1 -->
-                <div class="course-card">
-                    <div class="course-header">🎓</div>
-                    <div class="course-body">
-                        <h3 class="course-title">أساسيات الذكاء الاصطناعي في الفيديو</h3>
-                        <p style="color: var(--gray-600);">تعلم كيف يعمل الذكاء الاصطناعي التوليدي للفيديو من الصفر.</p>
-                        <div class="course-meta">
-                            <span>📚 12 درس</span>
-                            <span>⏱ 6 ساعات</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%;"></div>
-                        </div>
-                        <button class="btn btn-primary w-full mt-2">استكمال التعلم</button>
-                    </div>
+        function renderImageToPdfTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">📸</div>
+                    <div class="upload-text">ارفع صوراً لتحويلها إلى PDF</div>
+                    <div class="upload-sub">يدعم JPG, PNG, WebP</div>
+                    <input type="file" id="toolFileInput" accept="image/*" multiple style="display:none;">
                 </div>
-
-                <!-- دورة 2 -->
-                <div class="course-card">
-                    <div class="course-header" style="background: linear-gradient(135deg, var(--secondary), var(--primary));">🎨</div>
-                    <div class="course-body">
-                        <h3 class="course-title">تصميم الفيديو الإبداعي</h3>
-                        <p style="color: var(--gray-600);">أتقن فن كتابة الأوصاف الإبداعية للحصول على فيديوهات مذهلة.</p>
-                        <div class="course-meta">
-                            <span>📚 18 درس</span>
-                            <span>⏱ 10 ساعات</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 30%;"></div>
-                        </div>
-                        <button class="btn btn-outline w-full mt-2">بدء الدورة</button>
-                    </div>
+                <div id="filePreviewList"></div>
+                <button class="btn btn-white process-btn" data-action="convertImagesToPdf" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    📸 حول إلى PDF
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري التحويل...</div>
                 </div>
-
-                <!-- دورة 3 -->
-                <div class="course-card">
-                    <div class="course-header" style="background: linear-gradient(135deg, var(--accent), var(--warning));">💰</div>
-                    <div class="course-body">
-                        <h3 class="course-title">الربح من فيديوهات الذكاء الاصطناعي</h3>
-                        <p style="color: var(--gray-600);">حول شغفك إلى مصدر دخل من خلال استراتيجيات تحقيق الربح.</p>
-                        <div class="course-meta">
-                            <span>📚 15 درس</span>
-                            <span>⏱ 8 ساعات</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%;"></div>
-                        </div>
-                        <button class="btn btn-outline w-full mt-2">ابدأ الآن</button>
-                    </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل PDF</button>
                 </div>
-            </div>
-        </section>
+            `;
+        }
 
-        <!-- ========== TEMPLATES MARKETPLACE ========== -->
-        <section class="section-block" id="templates">
-            <div class="section-header">
-                <h2 class="section-title">🎨 سوق القوالب</h2>
-                <p style="color: var(--gray-600);">آلاف القوالب الجاهزة للاستخدام الفوري. اختر القالب المناسب وعدّل عليه بسهولة.</p>
-            </div>
-
-            <div class="templates-grid">
-                <div class="template-card">
-                    <div class="template-preview" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                        🎬
-                        <span class="template-badge">الأكثر مبيعاً</span>
-                    </div>
-                    <div class="template-info">
-                        <h4>قالب الإعلانات التجارية</h4>
-                        <p style="color: var(--gray-600); font-size: 0.9rem;">50+ مشهد قابل للتخصيص</p>
-                        <div class="flex" style="justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-                            <span style="font-weight: 700; color: var(--primary);">مجاني</span>
-                            <button class="btn btn-primary" style="padding: 0.4rem 1rem; font-size: 0.85rem;">استخدام</button>
-                        </div>
-                    </div>
+        function renderRotateTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">🔄</div>
+                    <div class="upload-text">ارفع ملف PDF لتدويره</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
                 </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ زاوية التدوير</h4>
+                    <select id="rotationAngle" style="width:100%; padding:0.8rem; border-radius:8px; border:2px solid var(--border);">
+                        <option value="90">90° مع عقارب الساعة</option>
+                        <option value="180">180°</option>
+                        <option value="270">270° (90° عكس)</option>
+                    </select>
+                </div>
+                <button class="btn btn-white process-btn" data-action="rotatePDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    🔄 در الملف
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري التدوير...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
+                </div>
+            `;
+        }
 
-                <div class="template-card">
-                    <div class="template-preview" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                        📱
-                        <span class="template-badge">جديد</span>
+        function renderDeletePagesTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">🗑️</div>
+                    <div class="upload-text">ارفع ملف PDF لحذف صفحات منه</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ الصفحات المراد حذفها</h4>
+                    <input type="text" id="pagesToDelete" placeholder="مثال: 1, 3, 5-7" style="width:100%;">
+                </div>
+                <button class="btn btn-white process-btn" data-action="deletePages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    🗑️ احذف الصفحات
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري الحذف...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
+                </div>
+            `;
+        }
+
+        function renderExtractPagesTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-text">ارفع ملف PDF لاستخراج صفحات</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ الصفحات المراد استخراجها</h4>
+                    <input type="text" id="pagesToExtract" placeholder="مثال: 1-3, 5, 7" style="width:100%;">
+                </div>
+                <button class="btn btn-white process-btn" data-action="extractPages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    📤 استخرج الصفحات
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري الاستخراج...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المستخرج</button>
+                </div>
+            `;
+        }
+
+        function renderReorderTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">🔀</div>
+                    <div class="upload-text">ارفع ملف PDF لإعادة ترتيب صفحاته</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ الترتيب الجديد</h4>
+                    <input type="text" id="newOrder" placeholder="مثال: 3, 1, 2, 5, 4" style="width:100%;">
+                    <p style="font-size:0.8rem; color:var(--gray); margin-top:0.5rem;">أدخل أرقام الصفحات بالترتيب الجديد مفصولة بفواصل</p>
+                </div>
+                <button class="btn btn-white process-btn" data-action="reorderPages" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    🔀 أعد الترتيب
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري إعادة الترتيب...</div>
+                </div>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
+                </div>
+            `;
+        }
+
+        function renderWatermarkTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">💧</div>
+                    <div class="upload-text">ارفع ملف PDF لإضافة علامة مائية</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>⚙️ نص العلامة المائية</h4>
+                    <input type="text" id="watermarkText" placeholder="مثال: سرّي - للمراجعة فقط" style="width:100%;" value="PDF Master Pro">
+                    <div class="option-row" style="margin-top:1rem;">
+                        <span class="option-label">الحجم:</span>
+                        <input type="number" id="watermarkSize" value="30" min="10" max="100">
                     </div>
-                    <div class="template-info">
-                        <h4>قالب محتوى تيك توك</h4>
-                        <p style="color: var(--gray-600); font-size: 0.9rem;">مُحسَّن للمنصات الاجتماعية</p>
-                        <div class="flex" style="justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-                            <span style="font-weight: 700; color: var(--primary);">$9.99</span>
-                            <button class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;">معاينة</button>
-                        </div>
+                    <div class="option-row">
+                        <span class="option-label">الشفافية:</span>
+                        <input type="range" id="watermarkOpacity" min="0.1" max="1" step="0.1" value="0.3">
                     </div>
                 </div>
-
-                <div class="template-card">
-                    <div class="template-preview" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
-                        🎓
-                    </div>
-                    <div class="template-info">
-                        <h4>قالب الفيديوهات التعليمية</h4>
-                        <p style="color: var(--gray-600); font-size: 0.9rem;">شرح تفاعلي مع رسوم متحركة</p>
-                        <div class="flex" style="justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-                            <span style="font-weight: 700; color: var(--primary);">$14.99</span>
-                            <button class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;">شراء</button>
-                        </div>
-                    </div>
+                <button class="btn btn-white process-btn" data-action="addWatermark" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    💧 أضف العلامة المائية
+                </button>
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <div class="progress-text" id="progressText">جاري الإضافة...</div>
                 </div>
-            </div>
-        </section>
-
-        <!-- ========== ANALYTICS DASHBOARD ========== -->
-        <section class="section-block" id="analytics">
-            <div class="section-header">
-                <h2 class="section-title">📊 لوحة التحليلات</h2>
-                <p style="color: var(--gray-600);">تتبع أداء فيديوهاتك وحلل بيانات المشاهدة والتفاعل بشكل لحظي.</p>
-            </div>
-
-            <div class="analytics-grid">
-                <div class="analytics-card">
-                    <h4>👁 إجمالي المشاهدات</h4>
-                    <div class="analytics-value" id="totalViews">0</div>
-                    <span class="analytics-change change-positive">↑ 23.5%</span>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف</button>
                 </div>
-                <div class="analytics-card">
-                    <h4>💬 التعليقات</h4>
-                    <div class="analytics-value" id="totalComments">0</div>
-                    <span class="analytics-change change-positive">↑ 12.8%</span>
-                </div>
-                <div class="analytics-card">
-                    <h4>❤ الإعجابات</h4>
-                    <div class="analytics-value" id="totalLikes">0</div>
-                    <span class="analytics-change change-positive">↑ 31.2%</span>
-                </div>
-                <div class="analytics-card">
-                    <h4>🔄 المشاركات</h4>
-                    <div class="analytics-value" id="totalShares">0</div>
-                    <span class="analytics-change change-negative">↓ 5.1%</span>
-                </div>
-            </div>
+            `;
+        }
 
-            <div class="chart-container">
-                <h3 style="margin-bottom: 1.5rem;">📈 الفيديوهات الأكثر شعبية</h3>
-                <div class="bar-chart-horizontal" id="popularVideosChart">
-                    <!-- يتم ملؤها ديناميكياً -->
+        function renderProtectTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">🔒</div>
+                    <div class="upload-text">ارفع ملف PDF لحمايته بكلمة مرور</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
                 </div>
-            </div>
-        </section>
-
-        <!-- ========== COLLABORATION HUB ========== -->
-        <section class="section-block" id="collab">
-            <div class="section-header">
-                <h2 class="section-title">👥 مركز التعاون</h2>
-                <p style="color: var(--gray-600);">تعاون مع فريقك في الوقت الحقيقي. شارك المشاريع، ناقش الأفكار، وابنوا معاً.</p>
-            </div>
-
-            <div class="collab-container">
-                <div class="user-list" id="teamMembers">
-                    <div style="padding: 1rem; background: var(--primary); color: var(--white); border-radius: 8px; margin-bottom: 0.5rem;">
-                        <strong>فريق المشروع</strong> (5 أعضاء)
-                    </div>
-                    <!-- يتم ملؤها ديناميكياً -->
+                <div id="filePreviewList"></div>
+                <div class="options-panel">
+                    <h4>🔑 كلمة المرور</h4>
+                    <input type="password" id="pdfPassword" placeholder="أدخل كلمة المرور" style="width:100%;">
+                    <input type="password" id="pdfPasswordConfirm" placeholder="تأكيد كلمة المرور" style="width:100%; margin-top:0.5rem;">
                 </div>
-                <div class="chat-area">
-                    <div class="chat-messages" id="chatMessages">
-                        <!-- يتم ملؤها ديناميكياً -->
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" class="form-input" id="chatInput" placeholder="اكتب رسالتك هنا..." style="flex: 1;">
-                        <button class="btn btn-primary" onclick="sendMessage()">إرسال</button>
-                    </div>
+                <button class="btn btn-white process-btn" data-action="protectPDF" style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem; background:var(--primary); color:white;">
+                    🔒 حمِّل الملف بكلمة مرور
+                </button>
+                <div class="download-section" id="downloadSection">
+                    <button class="download-btn" onclick="downloadProcessedFile()">⬇ تحميل الملف المحمي</button>
                 </div>
-            </div>
-        </section>
+            `;
+        }
 
-        <!-- ========== PRICING ========== -->
-        <section class="section-block" id="pricing">
-            <div class="section-header text-center">
-                <h2 class="section-title">💎 خطط الأسعار</h2>
-                <p style="color: var(--gray-600);">اختر الخطة المناسبة لاحتياجاتك. جميع الخطط تشمل تحديثات مجانية ودعماً فنياً.</p>
-            </div>
+        function renderViewerTool() {
+            return `
+                <div class="drop-zone" id="toolDropZone">
+                    <div class="upload-icon">👁️</div>
+                    <div class="upload-text">ارفع ملف PDF لعرضه</div>
+                    <input type="file" id="toolFileInput" accept=".pdf" style="display:none;">
+                </div>
+                <div id="filePreviewList"></div>
+                <div id="pdfPreview" style="margin-top:2rem;"></div>
+            `;
+        }
 
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>🆓 البداية</h3>
-                    <p style="color: var(--gray-600);">للمبتدئين</p>
-                    <div class="p
+        // ============================================
+        // PDF Processing Functions (Using PDF-lib)
+        // ============================================
+
+        // 1. Merge PDFs
+        async function mergePDFs() {
+            if (uploadedFiles.length < 2) {
+                showToast('⚠️ الرجاء رفع ملفين PDF على الأقل للدمج', 'error');
+                return;
+            }
+
+            showProgress('جاري دمج الملفات...');
+            
+            try {
+                const { PDFDocument } = PDFLib;
+                const mergedPdf = await PDFDocument.create();
+
+                for (const file of uploadedFiles) {
+                    const arrayBuffer = await readFileAsArrayBuffer(file);
+                    const pdf = await PDFDocument.load(arrayBuffer);
+                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    copiedPages.forEach(page => mergedPdf.addPage(page));
+                }
+
+                const pdfBytes = await mergedPdf.save();
+                processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+                
+                hideProgress();
+                showDownload(`merged_${Date.now()}.pdf`);
+                showToast('✅ تم دمج الملفات بنجاح!', 'success');
+            } catch (error) {
+                hideProgress();
+                showToast('❌ حدث خطأ: ' + error.message, 'error');
+            }
+        }
+
+        // 2. Split PDF
+        async function splitPDF() {
+            if (uploadedFiles.length === 0) {
+                showToast('⚠️ الرجاء رفع ملف PDF', 'error');
+                return;
+            }
+
+            const mode = document.getElementById('splitMode')?.value || 'all';
+            const ranges = document.getElementById('pageRanges')?.value;
+
+            showProgress('جاري تقسيم الملف...');
+
+            try {
+                const { PDFDocument } = PDFLib;
+                const arrayBuffer = await readFileAsArrayBuffer(uploadedFiles[0]);
+                const sourcePdf = await PDFDocument.load(arrayBuffer);
+                const totalPages = sourcePdf.getPageCount();
+
+                let pagesToExtract = [];
+
+                if (mode === 'all') {
+                    // كل صفحة في ملف منفصل
+                    for (let i = 0; i < totalPages; i++) {
+                        pagesToExtract.push([i]);
+                    }
+                } else if (mode === 'range' && ranges) {
+                    // تقسيم حسب النطاق
+                    const rangeP
