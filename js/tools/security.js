@@ -26,6 +26,7 @@ async function doUnlock() {
         
     } catch (error) {
         hideProgress();
+        console.error('Unlock error:', error);
         if (error.message && error.message.includes('password')) {
             showToast('كلمة المرور غير صحيحة', 'error');
         } else {
@@ -59,14 +60,12 @@ async function doProtect() {
         
         updateProgress(50, 'جاري تطبيق الحماية...');
         
-        // ============ طريقة التشفير الصحيحة ============
-        // PDF-lib 1.17 يستخدم setEncryption أو encrypt حسب الإصدار
-        
         let bytes;
         let success = false;
         
-        // الطريقة 1: استخدام encrypt مباشرة
+        // الطريقة 1: encrypt على المستند الأصلي
         try {
+            console.log('Trying encryption method 1...');
             pdfDoc.encrypt({
                 userPassword: pw,
                 ownerPassword: pw + '_owner_' + Date.now(),
@@ -82,81 +81,77 @@ async function doProtect() {
             });
             bytes = await pdfDoc.save();
             success = true;
-            console.log('Encryption method 1 succeeded');
+            console.log('Method 1 succeeded');
         } catch (e1) {
             console.warn('Method 1 failed:', e1.message);
         }
         
-        // الطريقة 2: لو الطريقة الأولى فشلت
+        // الطريقة 2: حفظ ثم تحميل ثم تشفير
         if (!success) {
             try {
-                // حفظ المستند الأصلي أولاً
-                const origBytes = await pdfDoc.save({ useObjectStreams: true });
+                console.log('Trying encryption method 2...');
+                const tempBytes = await pdfDoc.save({ useObjectStreams: true });
+                const newDoc = await PDFDocument.load(tempBytes);
                 
-                // تحميل المستند المحفوظ وتطبيق التشفير
-                const newDoc = await PDFDocument.load(origBytes);
-                
-                // تطبيق التشفير باستخدام الخيارات المتاحة
-                const encryptOptions = {
+                newDoc.encrypt({
                     userPassword: pw,
                     ownerPassword: pw + '_owner_' + Date.now()
-                };
+                });
                 
-                // إضافة الصلاحيات لو مدعومة
-                try {
-                    encryptOptions.permissions = {
-                        printing: 'lowResolution',
-                        copying: false,
-                        modifying: false
-                    };
-                } catch (permErr) {
-                    console.warn('Permissions not fully supported');
-                }
-                
-                newDoc.encrypt(encryptOptions);
                 bytes = await newDoc.save();
                 success = true;
-                console.log('Encryption method 2 succeeded');
+                console.log('Method 2 succeeded');
             } catch (e2) {
                 console.warn('Method 2 failed:', e2.message);
             }
         }
         
-        // الطريقة 3: إنشاء مستند جديد بالكامل مع التشفير
+        // الطريقة 3: مستند جديد + نسخ صفحات + تشفير
         if (!success) {
             try {
-                const freshDoc = await PDFDocument.create();
-                const pages = await freshDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
-                pages.forEach(p => freshDoc.addPage(p));
+                console.log('Trying encryption method 3...');
+                const newDoc = await PDFDocument.create();
+                const pages = await newDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                pages.forEach(p => newDoc.addPage(p));
                 
-                freshDoc.encrypt({
+                newDoc.encrypt({
                     userPassword: pw,
                     ownerPassword: pw + '_owner_' + Date.now()
                 });
                 
-                bytes = await freshDoc.save();
+                bytes = await newDoc.save();
                 success = true;
-                console.log('Encryption method 3 succeeded');
+                console.log('Method 3 succeeded');
             } catch (e3) {
                 console.warn('Method 3 failed:', e3.message);
             }
         }
         
-        // لو كل الطرق فشلت، نبلغ المستخدم
+        // الطريقة 4: محاولة أخيرة بدون صلاحيات
         if (!success) {
-            // حفظ بدون تشفير مع رسالة تحذير
-            bytes = await pdfDoc.save({ useObjectStreams: true });
-            resultBlob = new Blob([bytes], { type: 'application/pdf' });
-            
+            try {
+                console.log('Trying encryption method 4...');
+                const newDoc = await PDFDocument.create();
+                const pages = await newDoc.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                pages.forEach(p => newDoc.addPage(p));
+                
+                // استخدام encrypt بدون كائن permissions (أساسي فقط)
+                newDoc.encrypt({
+                    userPassword: pw,
+                    ownerPassword: pw + '_owner_' + Date.now()
+                });
+                
+                bytes = await newDoc.save({ useObjectStreams: true });
+                success = true;
+                console.log('Method 4 succeeded');
+            } catch (e4) {
+                console.warn('Method 4 failed:', e4.message);
+            }
+        }
+        
+        if (!success) {
             hideProgress();
-            showToast('تعذر تطبيق التشفير الكامل - تم حفظ الملف مع حماية جزئية', 'warning');
-            
-            showResult(
-                '<p style="color:#f39c12;">تم حفظ الملف مع تشفير جزئي</p>' +
-                '<p>قد لا تعمل الحماية مع جميع برامج قراءة PDF</p>' +
-                '<p style="color:#e74c3c;">ننصح باستخدام برنامج Adobe Acrobat للحماية الكاملة</p>',
-                'protected_partial.pdf'
-            );
+            showToast('فشل تطبيق التشفير - جرب ملف PDF مختلف', 'error');
             return;
         }
         
@@ -165,9 +160,15 @@ async function doProtect() {
         
         updateProgress(100, 'تمت الحماية بنجاح!');
         
+        const origSize = files[0].size;
+        const newSize = resultBlob.size;
+        const sizeInfo = (origSize && newSize) ? 
+            '<p style="color:#666;font-size:0.9rem;">Size: ' + formatSize(origSize) + ' -> ' + formatSize(newSize) + '</p>' : '';
+        
         showResult(
             '<p style="font-size:1.1rem;">تمت حماية الملف بنجاح</p>' +
             '<p style="color:#e74c3c;font-weight:700;">Password: ' + pw + '</p>' +
+            sizeInfo +
             '<p style="color:#f39c12;font-size:0.85rem;">احفظ كلمة المرور في مكان امن</p>',
             'protected.pdf'
         );
