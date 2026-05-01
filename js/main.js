@@ -43,13 +43,23 @@ function openTool(toolName) {
     resultBlobs = [];
 
     const titles = {
-        'merge': 'دمج PDF', 'split': 'تقسيم PDF', 'compress': 'ضغط PDF',
-        'pdf2image': 'PDF الي صور', 'image2pdf': 'صور الي PDF', 'rotate': 'تدوير PDF',
-        'unlock': 'ازالة كلمة المرور', 'protect': 'حماية PDF',
-        'signature': 'توقيع الكتروني', 'watermark': 'علامة مائية',
-        'word2pdf': 'Word الي PDF', 'excel2pdf': 'Excel الي PDF',
-        'ppt2pdf': 'PowerPoint الي PDF', 'pdf2text': 'PDF الي نص',
-        'ocr-image': 'OCR من صورة', 'ocr-pdf': 'OCR من PDF', 'viewer': 'عارض PDF'
+        'merge': 'دمج PDF',
+        'split': 'تقسيم PDF',
+        'compress': 'ضغط PDF',
+        'pdf2image': 'PDF الي صور',
+        'image2pdf': 'صور الي PDF',
+        'rotate': 'تدوير PDF',
+        'unlock': 'ازالة كلمة المرور',
+        'protect': 'حماية PDF',
+        'signature': 'توقيع الكتروني',
+        'watermark': 'علامة مائية',
+        'word2pdf': 'Word الي PDF',
+        'excel2pdf': 'Excel الي PDF',
+        'ppt2pdf': 'PowerPoint الي PDF',
+        'pdf2text': 'PDF الي نص',
+        'ocr-image': 'OCR من صورة',
+        'ocr-pdf': 'OCR من PDF',
+        'viewer': 'عارض PDF'
     };
 
     document.getElementById('workspaceTitle').textContent = titles[toolName] || 'اداة';
@@ -96,7 +106,6 @@ function buildWorkspace() {
             <div style="font-size:4rem;">✅</div>
             <h3 style="color:#27ae60;">تم بنجاح!</h3>
             <div id="resultInfo"></div>
-            <a id="downloadLink" href="#" download style="display:none;"></a>
             <button class="btn btn-download" id="downloadBtn" onclick="downloadNow()">⬇ تحميل الملف</button>
         </div>
         <div class="preview-grid" id="previewGrid"></div>
@@ -187,57 +196,41 @@ function showResult(info, filename) {
         const rb = document.getElementById('resultBox');
         const ri = document.getElementById('resultInfo');
         const db = document.getElementById('downloadBtn');
-        const dl = document.getElementById('downloadLink');
         
-        if (rb) rb.classList.add('active');
+        if (rb) {
+            rb.classList.add('active');
+            rb.setAttribute('data-filename', filename || 'result.pdf');
+        }
         if (ri && info) ri.innerHTML = info;
         if (db) db.style.display = 'inline-flex';
-        
-        // تحميل تلقائي بعد النتيجة
-        if (resultBlob && dl) {
-            const url = URL.createObjectURL(resultBlob);
-            dl.href = url;
-            dl.download = filename || 'result.pdf';
-            dl.style.display = 'none';
-            
-            // تحميل تلقائي مباشر
-            setTimeout(() => {
-                dl.click();
-                URL.revokeObjectURL(url);
-            }, 300);
-        }
         
         showToast('تم بنجاح!', 'success');
     }, 500);
 }
 
 function downloadNow() {
-    if (resultBlob) {
-        const url = URL.createObjectURL(resultBlob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = document.getElementById('resultBox')?.getAttribute('data-filename') || 'result.pdf';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        showToast('تم التحميل!', 'success');
-    } else if (resultBlobs.length > 0) {
-        resultBlobs.forEach((rb, i) => {
-            setTimeout(() => {
-                const url = URL.createObjectURL(rb.blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = rb.name;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                setTimeout(() => URL.revokeObjectURL(url), 1000);
-            }, i * 300);
-        });
+    const fn = document.getElementById('resultBox')?.getAttribute('data-filename') || 'result.pdf';
+    
+    function save(blob, name) {
+        if (!blob) { showToast('لا يوجد ملف للتحميل', 'error'); return; }
+        if (typeof saveAs !== 'undefined') {
+            saveAs(blob, name);
+        } else {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = name;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    }
+
+    if (resultBlob) save(resultBlob, fn);
+    else if (resultBlobs.length > 0) {
+        resultBlobs.forEach((rb, i) => setTimeout(() => save(rb.blob, rb.name), i * 300));
         showToast('تم تحميل ' + resultBlobs.length + ' ملفات', 'success');
     } else {
-        showToast('لا يوجد ملف للتحميل', 'error');
+        showToast('لا يوجد ملفات للتحميل', 'error');
     }
 }
 
@@ -250,9 +243,6 @@ function openCloudPicker() {
     inp.click();
 }
 
-// ============================================
-// SIGNATURE
-// ============================================
 function initSig() {
     const c = document.getElementById('sigCanvas');
     if (!c || typeof SignaturePad === 'undefined') return;
@@ -263,29 +253,45 @@ function initSig() {
 function clearSig() { if (sigPad) sigPad.clear(); }
 
 // ============================================
-// ROUTER
+// PROCESS ROUTER
 // ============================================
 async function processNow() {
     if (!files.length) { showToast('ارفع ملفات اولا', 'error'); return; }
     showProgress();
+    
     const routes = {
-        'merge': doMerge, 'split': doSplit, 'compress': doCompress,
-        'pdf2image': doPdf2Image, 'image2pdf': doImages2Pdf, 'rotate': doRotate,
-        'unlock': doUnlock, 'protect': doProtect, 'signature': doSignature,
-        'watermark': doWatermark, 'word2pdf': doOffice2Pdf, 'excel2pdf': doOffice2Pdf,
-        'ppt2pdf': doOffice2Pdf, 'pdf2text': doPdf2Text, 'ocr-image': doOcrImage, 'ocr-pdf': doOcrPdf
+        'merge': doMerge,
+        'split': doSplit,
+        'compress': doCompress,
+        'pdf2image': doPdf2Image,
+        'image2pdf': doImages2Pdf,
+        'rotate': doRotate,
+        'unlock': doUnlock,
+        'protect': doProtect,
+        'signature': doSignature,
+        'watermark': doWatermark,
+        'word2pdf': doOffice2Pdf,
+        'excel2pdf': doOffice2Pdf,
+        'ppt2pdf': doOffice2Pdf,
+        'pdf2text': doPdf2Text,
+        'ocr-image': doOcrImage,
+        'ocr-pdf': doOcrPdf
     };
+    
     const fn = routes[currentTool];
     if (fn) {
         try { 
             console.log('Processing:', currentTool);
             await fn(); 
-            console.log('Done - resultBlob:', resultBlob?.size, 'bytes');
+            console.log('Done!');
         } catch (e) {
             hideProgress();
             showToast('خطا: ' + e.message, 'error');
             console.error(e);
         }
+    } else {
+        hideProgress();
+        showToast('الاداة غير متوفرة', 'error');
     }
 }
 
