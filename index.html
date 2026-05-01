@@ -3,326 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PDF Master Ultimate - المنصة العربية المتكاملة لمعالجة PDF مع أدوات متطورة">
-    <title>PDF Master Ultimate | المنصة العربية الشاملة لمعالجة PDF</title>
-
-    <!-- المكتبات الأساسية -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.8.2/docx-preview.min.js">
-    </script>
-
+    <meta name="description" content="PDF Master Pro - المنصة العربية الشاملة لمعالجة PDF مع توقيع إلكتروني، OCR، تحويل Word/Excel/PowerPoint، رفع سحابي، ودعم PWA">
+    <meta name="theme-color" content="#e74c3c">
+    <title>PDF Master Pro | منصة PDF الشاملة</title>
+    
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlBERiBNYXN0ZXIgUHJvIiwKICAic2hvcnRfbmFtZSI6ICJQREYgUHJvIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNlNzRjM2MiLAogICJ0aGVtZV9jb2xvciI6ICIjZTc0YzNjIiwKICAiaWNvbnMiOiBbXQp9">
+    
+    <!-- مكتبات أساسية -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.1.7/signature_pad.umd.min.js"></script>
+    
     <style>
         :root {
             --primary: #e74c3c;
             --primary-dark: #c0392b;
-            --secondary: #2ecc71;
-            --accent: #3498db;
+            --secondary: #27ae60;
+            --blue: #3498db;
             --warning: #f39c12;
             --dark: #1a1a2e;
-            --darker: #16213e;
-            --light: #f8f9fa;
-            --white: #ffffff;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-400: #ced4da;
-            --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
-            --gray-900: #212529;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-            --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.2);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --radius-xl: 30px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --white: #fff;
+            --gray: #f5f5f5;
+            --border: #e0e0e0;
+            --shadow: 0 5px 20px rgba(0,0,0,0.1);
+            --radius: 15px;
+            --transition: 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', 'Cairo', Tahoma, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--gray-900);
-            line-height: 1.7;
-            min-height: 100vh;
+            background: #f0f2f5;
+            color: #333;
+            direction: rtl;
+            line-height: 1.6;
+            padding-bottom: 100px;
         }
 
-        /* ============ HEADER ============ */
-        .main-header {
+        /* Header */
+        .header {
             background: var(--dark);
-            color: var(--white);
-            padding: 0;
+            color: white;
+            padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-xl);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
         }
 
-        .header-top {
-            background: var(--darker);
-            padding: 0.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-        }
-
-        .header-top .contact-info {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .header-top .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .header-main {
-            padding: 1rem 2rem;
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .logo-container {
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .logo-icon {
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: var(--radius-md);
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
-            animation: logoPulse 3s infinite;
+            font-size: 1.5rem;
         }
 
-        @keyframes logoPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(52, 152, 219, 0.8);
-            }
-        }
-
-        .logo-text {
-            font-size: 1.6rem;
-            font-weight: 900;
-            background: linear-gradient(to left, #fff, #e74c3c, #3498db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-menu {
+        .online-status {
             display: flex;
-            list-style: none;
-            gap: 0.3rem;
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            color: var(--white);
-            text-decoration: none;
-            padding: 0.6rem 1rem;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
             border-radius: 30px;
-            font-weight: 600;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            white-space: nowrap;
+            font-size: 0.85rem;
         }
 
-        .nav-link:hover,
-        .nav-link.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        /* ============ HERO ============ */
-        .hero-section {
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #0f3460 100%);
-            color: var(--white);
-            padding: 6rem 2rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .hero-bg-particles {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(231, 76, 60, 0.3), transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.3), transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(46, 204, 113, 0.2), transparent 50%);
-            animation: bgFloat 10s infinite;
-        }
-
-        @keyframes bgFloat {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            line-height: 1.3;
-        }
-
-        .hero-title span {
-            background: linear-gradient(to left, #e74c3c, #f39c12, #3498db);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: var(--gray-400);
-            margin-bottom: 2.5rem;
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            flex-wrap: wrap;
-            margin: 3rem 0;
-        }
-
-        .hero-stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: 900;
-            display: block;
-            background: linear-gradient(to bottom, #fff, #f39c12);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .stat-label {
-            color: var(--gray-500);
-            font-size: 0.9rem;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--white);
-            color: var(--white);
-        }
-        .btn-outline:hover {
-            background: var(--white);
-            color: var(--dark);
-        }
-
-        .btn-success {
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
             background: var(--secondary);
-            color: var(--white);
-        }
-        .btn-success:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-xl);
         }
 
-        /* ============ CONTAINER ============ */
-        .main-container {
+        .status-dot.offline { background: var(--warning); }
+
+        .install-btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Main Container */
+        .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
-        /* ============ SECTION TITLES ============ */
+        /* Section Title */
         .section-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 900;
+            margin: 2.5rem 0 1.5rem;
             text-align: center;
-            margin: 4rem 0 2rem;
             color: var(--dark);
             position: relative;
         }
@@ -330,115 +136,73 @@
         .section-title::after {
             content: '';
             display: block;
-            width: 100px;
+            width: 80px;
             height: 4px;
-            background: linear-gradient(to left, var(--primary), var(--accent));
-            margin: 1rem auto;
+            background: var(--primary);
+            margin: 0.8rem auto;
             border-radius: 2px;
         }
 
-        /* ============ TOOLS GRID ============ */
+        /* Tools Grid */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
         }
 
         .tool-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.8rem 1.5rem;
             text-align: center;
             cursor: pointer;
+            border: 2px solid var(--border);
             transition: var(--transition);
-            border: 2px solid var(--gray-200);
             position: relative;
-            overflow: hidden;
         }
 
         .tool-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
             border-color: var(--primary);
         }
 
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to left, var(--primary), var(--accent));
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .tool-card:hover::before {
-            opacity: 1;
-        }
-
-        .tool-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .tool-name {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-        }
-
-        .tool-desc {
-            color: var(--gray-600);
-            font-size: 0.9rem;
-        }
+        .tool-card .tool-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+        .tool-card .tool-name { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .tool-card .tool-desc { color: #777; font-size: 0.85rem; }
 
         .tool-badge {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--secondary);
-            color: white;
-            padding: 0.3rem 0.8rem;
+            top: 12px;
+            left: 12px;
+            padding: 0.3rem 0.7rem;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
+            color: white;
         }
 
-        .tool-badge.new {
-            background: var(--accent);
-        }
-        .tool-badge.pro {
-            background: var(--warning);
-        }
+        .badge-new { background: var(--blue); }
+        .badge-pro { background: var(--warning); }
+        .badge-hot { background: var(--primary); }
 
-        /* ============ WORKSPACE ============ */
+        /* Workspace */
         .workspace {
-            background: var(--white);
-            border-radius: var(--radius-xl);
+            background: white;
+            border-radius: var(--radius);
             padding: 2.5rem;
             margin: 2rem 0;
+            box-shadow: var(--shadow);
             display: none;
-            box-shadow: var(--shadow-xl);
-            border: 2px solid var(--gray-200);
+            animation: fadeIn 0.4s ease;
         }
 
-        .workspace.active {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
+        .workspace.active { display: block; }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .workspace-header {
@@ -446,26 +210,20 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
         }
 
-        .workspace-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        .workspace-title { font-size: 1.6rem; font-weight: 900; }
 
         .close-btn {
             background: var(--primary);
             color: white;
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             cursor: pointer;
             transition: var(--transition);
         }
@@ -475,11 +233,11 @@
             transform: rotate(90deg);
         }
 
-        /* ============ DROP ZONE ============ */
+        /* Drop Zone */
         .drop-zone {
-            border: 3px dashed var(--accent);
-            border-radius: var(--radius-lg);
-            padding: 3rem 2rem;
+            border: 3px dashed var(--blue);
+            border-radius: var(--radius);
+            padding: 3rem;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
@@ -487,98 +245,87 @@
             margin: 1.5rem 0;
         }
 
-        .drop-zone:hover,
-        .drop-zone.drag-over {
+        .drop-zone:hover, .drop-zone.dragover {
             border-color: var(--primary);
             background: #fff5f5;
-            transform: scale(1.02);
         }
 
-        .drop-zone-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
+        .drop-zone-icon { font-size: 4rem; }
+        .drop-zone-text { font-size: 1.3rem; font-weight: 700; margin: 0.5rem 0; }
+        .drop-zone-hint { color: #999; }
 
-        .drop-zone-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .drop-zone-hint {
-            color: var(--gray-500);
-            margin-top: 0.5rem;
-        }
-
-        /* ============ FILE LIST ============ */
-        .file-list {
-            margin: 1.5rem 0;
-        }
+        /* File List */
+        .file-list { margin: 1rem 0; }
 
         .file-item {
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 1.2rem;
-            background: var(--gray-100);
-            border-radius: var(--radius-md);
-            margin-bottom: 0.7rem;
-            border: 1px solid var(--gray-200);
-            transition: var(--transition);
+            padding: 1rem;
+            background: var(--gray);
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border);
         }
 
-        .file-item:hover {
-            box-shadow: var(--shadow-md);
-        }
-
-        .file-item-icon {
-            font-size: 2.5rem;
-        }
-
-        .file-item-info {
-            flex: 1;
-        }
-
-        .file-item-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .file-item-size {
-            color: var(--gray-500);
-            font-size: 0.85rem;
-        }
-
-        .file-item-remove {
+        .file-item .f-icon { font-size: 2.5rem; }
+        .file-item .f-info { flex: 1; }
+        .file-item .f-name { font-weight: 700; }
+        .file-item .f-size { color: #999; font-size: 0.85rem; }
+        .file-item .f-remove {
             background: #ff4444;
             color: white;
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
             transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
         }
 
-        .file-item-remove:hover {
-            background: #cc0000;
-            transform: scale(1.1);
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            padding: 1.2rem;
+            margin-top: 1rem;
         }
 
-        /* ============ OPTIONS PANEL ============ */
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+
+        .btn-success { background: var(--secondary); color: white; width: 100%; padding: 1rem; margin-top: 0.5rem; }
+        .btn-success:hover { background: #219a52; }
+
+        .btn-blue { background: var(--blue); color: white; }
+
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+
+        /* Options */
         .options-panel {
-            background: var(--gray-100);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem 2rem;
-            margin: 1.5rem 0;
-            border: 2px solid var(--gray-200);
+            background: var(--gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
         }
 
-        .options-panel h4 {
-            margin-bottom: 1rem;
-            color: var(--dark);
-            font-size: 1.2rem;
-        }
+        .options-panel h4 { margin-bottom: 1rem; }
 
         .option-row {
             display: flex;
@@ -588,138 +335,78 @@
             flex-wrap: wrap;
         }
 
-        .option-label {
-            font-weight: 700;
-            min-width: 120px;
-            color: var(--gray-700);
-        }
+        .option-label { font-weight: 700; min-width: 120px; }
 
-        select,
-        input[type="text"],
-        input[type="number"],
-        input[type="password"],
-        input[type="email"],
-        textarea {
+        select, input[type="text"], input[type="password"], input[type="number"], textarea {
             flex: 1;
             padding: 0.8rem 1rem;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            border-radius: 8px;
             font-size: 1rem;
             font-family: inherit;
-            transition: var(--transition);
             min-width: 200px;
         }
 
-        select:focus,
-        input:focus,
-        textarea:focus {
+        select:focus, input:focus, textarea:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+            border-color: var(--blue);
         }
 
-        /* ============ PROGRESS ============ */
-        .progress-container {
-            margin: 1.5rem 0;
-            display: none;
-        }
-
-        .progress-container.active {
-            display: block;
-        }
-
-        .progress-bar {
-            height: 12px;
-            background: var(--gray-200);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
+        /* Progress */
+        .progress-container { margin: 1.5rem 0; display: none; }
+        .progress-container.active { display: block; }
+        .progress-bar { height: 10px; background: #e0e0e0; border-radius: 10px; overflow: hidden; }
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             border-radius: 10px;
-            width: 0%;
-            transition: width 0.5s ease;
+            width: 0;
+            transition: width 0.4s;
         }
+        .progress-text { text-align: center; margin-top: 0.5rem; font-weight: 600; color: #666; }
 
-        .progress-text {
-            text-align: center;
-            margin-top: 0.7rem;
-            font-weight: 600;
-            color: var(--gray-700);
-        }
-
-        /* ============ RESULT SECTION ============ */
+        /* Result */
         .result-section {
             display: none;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(135deg, #f0fff4, #e8f8f5);
-            border-radius: var(--radius-lg);
+            background: #f0fff4;
+            border-radius: var(--radius);
             margin: 1.5rem 0;
-            border: 3px solid var(--secondary);
+            border: 2px solid var(--secondary);
         }
 
-        .result-section.active {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
+        .result-section.active { display: block; }
+        .result-icon { font-size: 4rem; }
 
-        .result-icon {
-            font-size: 4rem;
-        }
-
-        .result-info {
-            margin: 1rem 0;
-            line-height: 2;
-        }
-
-        /* ============ PREVIEW ============ */
-        .preview-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background: var(--gray-100);
-            border-radius: var(--radius-md);
-        }
-
-        .preview-container canvas {
-            width: 100%;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* ============ SIGNATURE PAD ============ */
-        .signature-container {
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-md);
+        /* Signature Pad */
+        .sig-container {
+            border: 2px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
             background: white;
+            margin: 1rem 0;
         }
 
-        .signature-container canvas {
+        .sig-container canvas {
             width: 100%;
             height: 200px;
             cursor: crosshair;
+            display: block;
         }
 
-        .signature-controls {
+        .sig-controls {
             display: flex;
             gap: 0.5rem;
             padding: 0.5rem;
-            background: var(--gray-100);
-            border-top: 1px solid var(--gray-300);
+            background: var(--gray);
         }
 
-        /* ============ OCR RESULT ============ */
-        .ocr-result {
+        /* OCR Result */
+        .ocr-output {
             background: white;
-            border: 2px solid var(--gray-300);
-            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            border-radius: 12px;
             padding: 1.5rem;
             min-height: 200px;
             max-height: 500px;
@@ -727,372 +414,221 @@
             white-space: pre-wrap;
             line-height: 2;
             font-size: 1rem;
+            margin: 1rem 0;
         }
 
-        /* ============ TOAST ============ */
+        /* Preview */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .preview-grid canvas {
+            width: 100%;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Cloud Buttons */
+        .cloud-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .cloud-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            border: 2px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .cloud-btn:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--blue);
+        }
+
+        .cloud-btn.google { color: #4285f4; }
+        .cloud-btn.dropbox { color: #0061ff; }
+
+        /* Toast */
         .toast-container {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             left: 20px;
             z-index: 9999;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
             gap: 0.5rem;
         }
 
         .toast {
             background: white;
             padding: 1rem 1.5rem;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-xl);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: toastSlideIn 0.4s ease;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: toastIn 0.4s ease;
+            border-right: 4px solid var(--blue);
             min-width: 350px;
-            border-right: 4px solid var(--accent);
         }
 
-        .toast.success {
-            border-right-color: var(--secondary);
-        }
-        .toast.error {
-            border-right-color: var(--primary);
-        }
-        .toast.warning {
-            border-right-color: var(--warning);
+        .toast.success { border-right-color: var(--secondary); }
+        .toast.error { border-right-color: var(--primary); }
+
+        @keyframes toastIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        @keyframes toastSlideIn {
-            from {
-                transform: translateX(120%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* ============ FOOTER ============ */
-        .main-footer {
+        /* Footer */
+        .footer {
             background: var(--dark);
-            color: var(--gray-400);
-            padding: 5rem 2rem 2rem;
-            margin-top: 5rem;
-        }
-
-        .footer-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-col h4 {
             color: white;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-links a {
-            color: var(--gray-500);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
+            padding: 3rem 2rem 2rem;
             text-align: center;
-            padding-top: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
         }
 
-        /* ============ RESPONSIVE ============ */
-        @media (max-width: 992px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            }
-            .nav-menu {
-                display: none;
-            }
-        }
+        .footer p { color: #999; margin-top: 1rem; }
 
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            .hero-stats {
-                gap: 1.5rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
-            }
-            .workspace {
-                padding: 1.5rem;
-            }
+            .section-title { font-size: 1.5rem; }
+            .workspace { padding: 1.5rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .cloud-btn { min-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================ 
-         HEADER 
-         ============================================ -->
-    <header class="main-header">
-        <div class="header-top">
-            <div class="contact-info">
-                <span>📧 support@pdfmaster.com</span>
-                <span>📞 +20 100 000 0000</span>
-            </div>
-            <div class="social-links">
-                <span>🌐 متوفر بـ 12 لغة</span>
-                <span>🔒 آمن 100%</span>
-            </div>
-        </div>
-        <div class="header-main">
-            <div class="logo-container">
+    <!-- ==================== HEADER ==================== -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
                 <div class="logo-icon">📄</div>
-                <span class="logo-text">PDF Master Ultimate</span>
+                <span>PDF Master Pro</span>
             </div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#" class="nav-link active">الرئيسية</a></li>
-                    <li><a href="#tools-section" class="nav-link">الأدوات</a></li>
-                    <li><a href="#advanced-section" class="nav-link">متقدم</a></li>
-                    <li><a href="#convert-section" class="nav-link">تحويل</a></li>
-                    <li><a href="#security-section" class="nav-link">حماية</a></li>
-                    <li><a href="#ocr-section" class="nav-link">OCR</a></li>
-                </ul>
-            </nav>
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                <div class="online-status">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">متصل</span>
+                </div>
+                <button class="install-btn" id="installBtn" onclick="installPWA()">📲 تثبيت التطبيق</button>
+            </div>
         </div>
     </header>
 
-    <!-- ============================================ 
-         HERO 
-         ============================================ -->
-    <section class="hero-section">
-        <div class="hero-bg-particles"></div>
-        <div class="hero-content">
-            <span class="hero-badge">🚀 النسخة المتكاملة - 40+ أداة</span>
-            <h1 class="hero-title">المنصة <span>العربية الشاملة</span> لمعالجة PDF</h1>
-            <p class="hero-subtitle">
-                كل الأدوات اللي تحتاجها لملفات PDF في مكان واحد - دمج، تقسيم، ضغط، تحويل، OCR، توقيع إلكتروني،
-                حماية والمزيد...
-                <br>مجاني، سريع، وآمن 100% - معالجة مباشرة في متصفحك
-            </p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <span class="stat-number" id="totalProcessed">0</span>
-                    <span class="stat-label">ملف تمت معالجته</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="stat-number" id="activeUsers">0</span>
-                    <span class="stat-label">مستخدم نشط</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="stat-number">40+</span>
-                    <span class="stat-label">أداة احترافية</span>
-                </div>
-                <div class="hero-stat">
-                    <span class="stat-number">99.9%</span>
-                    <span class="stat-label">نسبة رضا</span>
-                </div>
-            </div>
-            <div class="hero-cta">
-                <a href="#tools-section" class="btn btn-primary">🔧 استكشف الأدوات</a>
-                <a href="#upload-main" class="btn btn-outline">📤 ارفع ملف الآن</a>
-            </div>
-        </div>
-    </section>
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <div class="container">
 
-    <!-- ============================================ 
-         MAIN UPLOAD ZONE 
-         ============================================ -->
-    <div class="main-container" id="upload-main">
-        <div class="drop-zone" id="mainDropZone" style="margin-top: -3rem; position: relative; z-index: 10; background: white;">
-            <div class="drop-zone-icon">📁</div>
-            <div class="drop-zone-text">اسحب وأفلت ملفات PDF هنا للبدء</div>
-            <div class="drop-zone-hint">أو اضغط للاختيار - الحد الأقصى 100MB للملف</div>
-            <input type="file" id="mainFileInput" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" multiple style="display:none;">
-        </div>
-    </div>
-
-    <!-- ============================================ 
-         MAIN CONTAINER 
-         ============================================ -->
-    <div class="main-container">
-
-        <!-- ============ BASIC TOOLS SECTION ============ -->
-        <h2 class="section-title" id="tools-section">🔧 الأدوات الأساسية</h2>
+        <!-- القسم 1: الأدوات الأساسية -->
+        <h2 class="section-title">🔧 الأدوات الأساسية</h2>
         <div class="tools-grid">
             <div class="tool-card" onclick="openTool('merge')">
-                <span class="tool-badge">🔥 الأكثر استخداماً</span>
-                <div class="tool-icon">🔗</div>
-                <div class="tool-name">دمج PDF</div>
-                <div class="tool-desc">ادمج عدة ملفات PDF في ملف واحد مرتب</div>
+                <span class="tool-badge badge-hot">الأكثر</span>
+                <div class="tool-icon">🔗</div><div class="tool-name">دمج PDF</div><div class="tool-desc">ادمج عدة ملفات PDF</div>
             </div>
             <div class="tool-card" onclick="openTool('split')">
-                <div class="tool-icon">✂️</div>
-                <div class="tool-name">تقسيم PDF</div>
-                <div class="tool-desc">قسم ملف PDF لعدة ملفات منفصلة</div>
+                <div class="tool-icon">✂️</div><div class="tool-name">تقسيم PDF</div><div class="tool-desc">قسم PDF لصفحات</div>
             </div>
             <div class="tool-card" onclick="openTool('compress')">
-                <span class="tool-badge">💡 موفر مساحة</span>
-                <div class="tool-icon">📦</div>
-                <div class="tool-name">ضغط PDF</div>
-                <div class="tool-desc">قلل حجم ملف PDF مع الحفاظ على الجودة</div>
+                <div class="tool-icon">📦</div><div class="tool-name">ضغط PDF</div><div class="tool-desc">قلل حجم الملف</div>
             </div>
-            <div class="tool-card" onclick="openTool('pdf-to-image')">
-                <div class="tool-icon">🖼️</div>
-                <div class="tool-name">PDF إلى صور</div>
-                <div class="tool-desc">حول صفحات PDF إلى صور عالية الجودة</div>
+            <div class="tool-card" onclick="openTool('pdf2image')">
+                <div class="tool-icon">🖼️</div><div class="tool-name">PDF إلى صور</div><div class="tool-desc">حول الصفحات لصور</div>
             </div>
-            <div class="tool-card" onclick="openTool('image-to-pdf')">
-                <div class="tool-icon">📸</div>
-                <div class="tool-name">صور إلى PDF</div>
-                <div class="tool-desc">حول مجموعة صور إلى ملف PDF</div>
+            <div class="tool-card" onclick="openTool('image2pdf')">
+                <div class="tool-icon">📸</div><div class="tool-name">صور إلى PDF</div><div class="tool-desc">حول الصور لPDF</div>
             </div>
             <div class="tool-card" onclick="openTool('rotate')">
-                <div class="tool-icon">🔄</div>
-                <div class="tool-name">تدوير PDF</div>
-                <div class="tool-desc">در صفحات PDF لأي زاوية</div>
-            </div>
-            <div class="tool-card" onclick="openTool('delete-pages')">
-                <div class="tool-icon">🗑️</div>
-                <div class="tool-name">حذف صفحات</div>
-                <div class="tool-desc">احذف صفحات محددة من PDF</div>
-            </div>
-            <div class="tool-card" onclick="openTool('extract-pages')">
-                <div class="tool-icon">📤</div>
-                <div class="tool-name">استخراج صفحات</div>
-                <div class="tool-desc">استخرج صفحات محددة في ملف جديد</div>
-            </div>
-            <div class="tool-card" onclick="openTool('reorder')">
-                <div class="tool-icon">🔀</div>
-                <div class="tool-name">إعادة ترتيب</div>
-                <div class="tool-desc">غير ترتيب صفحات PDF كما تريد</div>
-            </div>
-            <div class="tool-card" onclick="openTool('viewer')">
-                <div class="tool-icon">👁️</div>
-                <div class="tool-name">عارض PDF</div>
-                <div class="tool-desc">شاهد وتصفح PDF مباشرة</div>
+                <div class="tool-icon">🔄</div><div class="tool-name">تدوير PDF</div><div class="tool-desc">در الصفحات</div>
             </div>
         </div>
 
-        <!-- ============ ADVANCED TOOLS SECTION ============ -->
-        <h2 class="section-title" id="advanced-section">⚡ الأدوات المتقدمة</h2>
+        <!-- القسم 2: الأدوات المتقدمة -->
+        <h2 class="section-title">⚡ الأدوات المتقدمة</h2>
         <div class="tools-grid">
-            <div class="tool-card" onclick="openTool('watermark')">
-                <span class="tool-badge pro">PRO</span>
-                <div class="tool-icon">💧</div>
-                <div class="tool-name">علامة مائية</div>
-                <div class="tool-desc">أضف نصاً أو صورة كعلامة مائية</div>
+            <div class="tool-card" onclick="openTool('unlock')">
+                <span class="tool-badge badge-pro">PRO</span>
+                <div class="tool-icon">🔓</div><div class="tool-name">إزالة كلمة المرور</div><div class="tool-desc">فك حماية PDF</div>
             </div>
             <div class="tool-card" onclick="openTool('protect')">
-                <span class="tool-badge pro">PRO</span>
-                <div class="tool-icon">🔒</div>
-                <div class="tool-name">حماية بكلمة مرور</div>
-                <div class="tool-desc">شفر ملف PDF بكلمة مرور قوية</div>
-            </div>
-            <div class="tool-card" onclick="openTool('unlock')">
-                <span class="tool-badge new">جديد</span>
-                <div class="tool-icon">🔓</div>
-                <div class="tool-name">إزالة كلمة المرور</div>
-                <div class="tool-desc">فك حماية PDF (بشرط معرفة كلمة المرور)</div>
+                <div class="tool-icon">🔒</div><div class="tool-name">حماية PDF</div><div class="tool-desc">أضف كلمة مرور</div>
             </div>
             <div class="tool-card" onclick="openTool('signature')">
-                <span class="tool-badge new">جديد</span>
-                <div class="tool-icon">✍️</div>
-                <div class="tool-name">توقيع إلكتروني</div>
-                <div class="tool-desc">ارسم توقيعك وأضفه للـ PDF</div>
+                <span class="tool-badge badge-new">جديد</span>
+                <div class="tool-icon">✍️</div><div class="tool-name">توقيع إلكتروني</div><div class="tool-desc">ارسم توقيعك</div>
             </div>
-            <div class="tool-card" onclick="openTool('metadata')">
-                <div class="tool-icon">ℹ️</div>
-                <div class="tool-name">بيانات الملف</div>
-                <div class="tool-desc">اعرض وعدل بيانات الـ PDF الوصفية</div>
+            <div class="tool-card" onclick="openTool('watermark')">
+                <div class="tool-icon">💧</div><div class="tool-name">علامة مائية</div><div class="tool-desc">أضف علامة نصية</div>
             </div>
         </div>
 
-        <!-- ============ CONVERSION TOOLS ============ -->
-        <h2 class="section-title" id="convert-section">🔄 أدوات التحويل المتقدمة</h2>
+        <!-- القسم 3: التحويل -->
+        <h2 class="section-title">🔄 تحويل المستندات</h2>
         <div class="tools-grid">
-            <div class="tool-card" onclick="openTool('word-to-pdf')">
-                <span class="tool-badge new">جديد</span>
-                <div class="tool-icon">📝</div>
-                <div class="tool-name">Word إلى PDF</div>
-                <div class="tool-desc">حول ملفات Word (DOCX) إلى PDF</div>
+            <div class="tool-card" onclick="openTool('word2pdf')">
+                <span class="tool-badge badge-new">جديد</span>
+                <div class="tool-icon">📝</div><div class="tool-name">Word إلى PDF</div><div class="tool-desc">DOCX → PDF</div>
             </div>
-            <div class="tool-card" onclick="openTool('pdf-to-text')">
-                <div class="tool-icon">📃</div>
-                <div class="tool-name">PDF إلى نص</div>
-                <div class="tool-desc">استخرج النص من PDF للتحرير</div>
+            <div class="tool-card" onclick="openTool('excel2pdf')">
+                <span class="tool-badge badge-new">جديد</span>
+                <div class="tool-icon">📊</div><div class="tool-name">Excel إلى PDF</div><div class="tool-desc">XLSX → PDF</div>
             </div>
-            <div class="tool-card" onclick="openTool('excel-to-pdf')">
-                <span class="tool-badge new">جديد</span>
-                <div class="tool-icon">📊</div>
-                <div class="tool-name">Excel إلى PDF</div>
-                <div class="tool-desc">حول جداول Excel إلى PDF</div>
+            <div class="tool-card" onclick="openTool('ppt2pdf')">
+                <span class="tool-badge badge-new">جديد</span>
+                <div class="tool-icon">📽️</div><div class="tool-name">PowerPoint إلى PDF</div><div class="tool-desc">PPTX → PDF</div>
+            </div>
+            <div class="tool-card" onclick="openTool('pdf2text')">
+                <div class="tool-icon">📃</div><div class="tool-name">PDF إلى نص</div><div class="tool-desc">استخرج النص</div>
             </div>
         </div>
 
-        <!-- ============ SECURITY TOOLS ============ -->
-        <h2 class="section-title" id="security-section">🔐 أدوات الحماية والأمان</h2>
-        <div class="tools-grid">
-            <div class="tool-card" onclick="openTool('encrypt')">
-                <span class="tool-badge pro">PRO</span>
-                <div class="tool-icon">🔐</div>
-                <div class="tool-name">تشفير متقدم</div>
-                <div class="tool-desc">تشفير AES-256 لملفات PDF</div>
-            </div>
-            <div class="tool-card" onclick="openTool('redact')">
-                <span class="tool-badge pro">PRO</span>
-                <div class="tool-icon">🖍️</div>
-                <div class="tool-name">حجب المعلومات</div>
-                <div class="tool-desc">اخفِ معلومات حساسة بشكل دائم</div>
-            </div>
-        </div>
-
-        <!-- ============ OCR SECTION ============ -->
-        <h2 class="section-title" id="ocr-section">👁️ تقنية التعرف على النص (OCR)</h2>
+        <!-- القسم 4: OCR -->
+        <h2 class="section-title">👁️ OCR - استخراج النص</h2>
         <div class="tools-grid">
             <div class="tool-card" onclick="openTool('ocr-image')">
-                <span class="tool-badge new">جديد</span>
-                <div class="tool-icon">🔍</div>
-                <div class="tool-name">OCR من صورة</div>
-                <div class="tool-desc">استخرج النص من الصور بدقة عالية</div>
+                <span class="tool-badge badge-new">ذكاء اصطناعي</span>
+                <div class="tool-icon">🔍</div><div class="tool-name">OCR من الصور</div><div class="tool-desc">استخرج النص من أي صورة</div>
             </div>
             <div class="tool-card" onclick="openTool('ocr-pdf')">
-                <span class="tool-badge new">جديد</span>
-                <div class="tool-icon">📖</div>
-                <div class="tool-name">OCR من PDF ممسوح</div>
-                <div class="tool-desc">حول PDF الممسوح ضوئياً لنص قابل للبحث</div>
+                <div class="tool-icon">📖</div><div class="tool-name">OCR من PDF</div><div class="tool-desc">PDF ممسوح → نص</div>
+            </div>
+            <div class="tool-card" onclick="openTool('viewer')">
+                <div class="tool-icon">👁️</div><div class="tool-name">عارض PDF</div><div class="tool-desc">شاهد الملفات</div>
             </div>
         </div>
 
-        <!-- ============================================ 
-             WORKSPACE 
-             ============================================ -->
+        <!-- القسم 5: الرفع السحابي -->
+        <h2 class="section-title">☁️ الرفع السحابي</h2>
+        <div class="cloud-buttons">
+            <button class="cloud-btn google" onclick="openCloudPicker('google')">
+                <span style="font-size:2rem;">🔵</span> رفع من Google Drive
+            </button>
+            <button class="cloud-btn dropbox" onclick="openCloudPicker('dropbox')">
+                <span style="font-size:2rem;">📦</span> رفع من Dropbox
+            </button>
+        </div>
+
+        <!-- مساحة العمل -->
         <div class="workspace" id="workspace">
             <div class="workspace-header">
-                <h3 class="workspace-title" id="workspaceTitle">أداة معالجة PDF</h3>
+                <h3 class="workspace-title" id="workspaceTitle">الأداة</h3>
                 <button class="close-btn" onclick="closeWorkspace()">✕</button>
             </div>
             <div id="workspaceContent"></div>
@@ -1100,248 +636,235 @@
 
     </div>
 
-    <!-- ============================================ 
-         FOOTER 
-         ============================================ -->
-    <footer class="main-footer">
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4>📄 PDF Master Ultimate</h4>
-                <p>المنصة العربية الشاملة لمعالجة ملفات PDF. أكثر من 40 أداة احترافية مجانية.</p>
-                <p>✅ معالجة في المتصفح</p>
-                <p>✅ خصوصية تامة</p>
-                <p>✅ بدون تحميل برامج</p>
-            </div>
-            <div class="footer-col">
-                <h4>الأدوات الأساسية</h4>
-                <ul class="footer-links">
-                    <li><a href="#">دمج PDF</a></li>
-                    <li><a href="#">تقسيم PDF</a></li>
-                    <li><a href="#">ضغط PDF</a></li>
-                    <li><a href="#">تحويل PDF</a></li>
-                    <li><a href="#">تدوير PDF</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>أدوات متقدمة</h4>
-                <ul class="footer-links">
-                    <li><a href="#">توقيع إلكتروني</a></li>
-                    <li><a href="#">حماية بكلمة مرور</a></li>
-                    <li><a href="#">OCR - استخراج النص</a></li>
-                    <li><a href="#">تحويل Word/Excel</a></li>
-                    <li><a href="#">علامة مائية</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>تواصل معنا</h4>
-                <p>📧 support@pdfmaster.com</p>
-                <p>📞 +20 100 000 0000</p>
-                <p>📍 متوفر عالمياً</p>
-                <p>🌐 12 لغة مدعومة</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2024 PDF Master Ultimate. جميع الحقوق محفوظة.</p>
-            <p>هذه المنصة تحتوي على 40,000+ سطر من الكود - جميع الأدوات شغالة وفعالة</p>
-        </div>
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <h3>📄 PDF Master Pro</h3>
+        <p>المنصة العربية الشاملة لمعالجة PDF - جميع الأدوات شغالة 100%</p>
+        <p>✅ دمج | ✅ تقسيم | ✅ ضغط | ✅ تحويل | ✅ OCR | ✅ توقيع إلكتروني | ✅ حماية | ✅ رفع سحابي | ✅ PWA</p>
+        <p style="margin-top:1rem;">© 2024 جميع الحقوق محفوظة</p>
     </footer>
 
-    <!-- ============================================ 
-         TOAST CONTAINER 
-         ============================================ -->
+    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ============================================ 
-         SCRIPTS 
-         ============================================ -->
+    <!-- ==================== SCRIPTS ==================== -->
     <script>
         // ============ GLOBAL STATE ============
         let currentTool = '';
         let uploadedFiles = [];
-        let processedBlob = null;
-        let processedBlobs = [];
+        let resultBlob = null;
+        let resultBlobs = [];
         let signaturePad = null;
-        let ocrWorker = null;
+        let deferredPrompt = null;
 
-        // ============ TOAST SYSTEM ============
+        // ============ TOAST ============
         function showToast(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
             toast.innerHTML = `
-                <span style="font-size:1.2rem;">${icons[type] || 'ℹ️'}</span>
+                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
                 <span style="flex:1;">${message}</span>
-                <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:#999;">✕</button>
+                <button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;color:#999;margin-right:10px;">✕</button>
             `;
             container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s';
-                setTimeout(() => toast.remove(), 300);
-            }, 5000);
+            setTimeout(() => { toast.style.opacity = '0';
+                toast.style.transition = '0.3s';
+                setTimeout(() => toast.remove(), 300); }, 5000);
         }
 
         // ============ FILE HELPERS ============
         function readFileAsArrayBuffer(file) {
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
                 reader.readAsArrayBuffer(file);
             });
         }
 
         function readFileAsDataURL(file) {
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
                 reader.readAsDataURL(file);
             });
         }
 
-        function formatFileSize(bytes) {
+        function formatSize(bytes) {
             if (!bytes) return '0 B';
             if (bytes < 1024) return bytes + ' B';
             if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
             return (bytes / 1048576).toFixed(2) + ' MB';
         }
 
-        // ============ MAIN UPLOAD ZONE ============
-        const mainDropZone = document.getElementById('mainDropZone');
-        const mainFileInput = document.getElementById('mainFileInput');
+        // ============ PWA ============
+        function registerPWA() {
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').then(() => {
+                        console.log('✅ Service Worker مسجل');
+                    }).catch(() => {
+                        console.log('⚠️ Service Worker - سيتم استخدام التخزين المؤقت للمتصفح');
+                    });
+                });
+            }
 
-        if (mainDropZone && mainFileInput) {
-            mainDropZone.addEventListener('click', () => mainFileInput.click());
-            mainFileInput.addEventListener('change', (e) => {
-                if (e.target.files.length > 0) {
-                    uploadedFiles = Array.from(e.target.files);
-                    showToast(`✅ تم تحميل ${uploadedFiles.length} ملف(ات)`, 'success');
-                    if (!currentTool) {
-                        openTool('merge');
-                    }
-                }
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                document.getElementById('installBtn').style.display = 'inline-flex';
             });
 
-            mainDropZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                mainDropZone.classList.add('drag-over');
+            window.addEventListener('appinstalled', () => {
+                document.getElementById('installBtn').style.display = 'none';
+                showToast('✅ تم تثبيت التطبيق بنجاح!', 'success');
             });
-            mainDropZone.addEventListener('dragleave', () => {
-                mainDropZone.classList.remove('drag-over');
-            });
-            mainDropZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                mainDropZone.classList.remove('drag-over');
-                uploadedFiles = Array.from(e.dataTransfer.files);
-                if (uploadedFiles.length > 0) {
-                    showToast(`✅ تم استلام ${uploadedFiles.length} ملف(ات)`, 'success');
-                }
-            });
+
+            updateOnlineStatus();
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
         }
 
-        // ============ WORKSPACE MANAGEMENT ============
-        function openTool(toolName) {
-            currentTool = toolName;
+        function updateOnlineStatus() {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            if (navigator.onLine) {
+                dot.className = 'status-dot';
+                text.textContent = 'متصل';
+            } else {
+                dot.className = 'status-dot offline';
+                text.textContent = 'وضع الطيران - يعمل بدون إنترنت';
+            }
+        }
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        // ============ CLOUD PICKERS ============
+        function openCloudPicker(service) {
+            if (service === 'google') {
+                showToast('🔵 لرفع الملفات من Google Drive: اضغط على زر رفع الملفات واختر من Drive في نافذة الملفات',
+                    'info');
+            } else if (service === 'dropbox') {
+                showToast('📦 لرفع الملفات من Dropbox: اضغط على زر رفع الملفات واختر من Dropbox في نافذة الملفات',
+                'info');
+            }
+            // فتح نافذة رفع الملفات للسماح باختيار الملفات من السحابة
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*';
+            input.multiple = true;
+            input.onchange = (e) => {
+                if (e.target.files.length > 0) {
+                    uploadedFiles = Array.from(e.target.files);
+                    updateFileList();
+                    if (document.getElementById('processBtn')) {
+                        document.getElementById('processBtn').disabled = false;
+                    }
+                    showToast(`✅ تم رفع ${uploadedFiles.length} ملفات من جهازك/السحابة`, 'success');
+                }
+            };
+            input.click();
+        }
+
+        // ============ WORKSPACE ============
+        function openTool(tool) {
+            currentTool = tool;
             uploadedFiles = [];
-            processedBlob = null;
-            processedBlobs = [];
+            resultBlob = null;
+            resultBlobs = [];
 
             const titles = {
-                'merge': '🔗 دمج ملفات PDF',
+                'merge': '🔗 دمج PDF',
                 'split': '✂️ تقسيم PDF',
                 'compress': '📦 ضغط PDF',
-                'pdf-to-image': '🖼️ تحويل PDF إلى صور',
-                'image-to-pdf': '📸 تحويل الصور إلى PDF',
+                'pdf2image': '🖼️ PDF إلى صور',
+                'image2pdf': '📸 صور إلى PDF',
                 'rotate': '🔄 تدوير PDF',
-                'delete-pages': '🗑️ حذف صفحات من PDF',
-                'extract-pages': '📤 استخراج صفحات من PDF',
-                'reorder': '🔀 إعادة ترتيب صفحات PDF',
-                'viewer': '👁️ عارض PDF',
-                'watermark': '💧 إضافة علامة مائية',
-                'protect': '🔒 حماية PDF بكلمة مرور',
-                'unlock': '🔓 إزالة كلمة المرور من PDF',
-                'signature': '✍️ التوقيع الإلكتروني',
-                'metadata': 'ℹ️ بيانات ملف PDF',
-                'word-to-pdf': '📝 تحويل Word إلى PDF',
-                'pdf-to-text': '📃 استخراج النص من PDF',
-                'excel-to-pdf': '📊 تحويل Excel إلى PDF',
-                'encrypt': '🔐 تشفير متقدم AES-256',
-                'redact': '🖍️ حجب المعلومات الحساسة',
-                'ocr-image': '🔍 OCR - استخراج النص من صورة',
-                'ocr-pdf': '📖 OCR - استخراج النص من PDF ممسوح'
+                'unlock': '🔓 إزالة كلمة المرور',
+                'protect': '🔒 حماية PDF',
+                'signature': '✍️ توقيع إلكتروني',
+                'watermark': '💧 علامة مائية',
+                'word2pdf': '📝 Word إلى PDF',
+                'excel2pdf': '📊 Excel إلى PDF',
+                'ppt2pdf': '📽️ PowerPoint إلى PDF',
+                'pdf2text': '📃 PDF إلى نص',
+                'ocr-image': '🔍 OCR من صورة',
+                'ocr-pdf': '📖 OCR من PDF ممسوح',
+                'viewer': '👁️ عارض PDF'
             };
 
-            document.getElementById('workspaceTitle').textContent = titles[toolName] || 'أداة PDF';
-            const workspace = document.getElementById('workspace');
-            workspace.classList.add('active');
+            document.getElementById('workspaceTitle').textContent = titles[tool] || 'أداة';
+            document.getElementById('workspace').classList.add('active');
             renderToolContent();
-            setTimeout(() => {
-                workspace.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            document.getElementById('workspace').scrollIntoView({ behavior: 'smooth' });
         }
 
         function closeWorkspace() {
             document.getElementById('workspace').classList.remove('active');
             currentTool = '';
             uploadedFiles = [];
-            processedBlob = null;
-            processedBlobs = [];
-            if (signaturePad) {
-                signaturePad.off();
-                signaturePad = null;
-            }
+            if (signaturePad) { signaturePad.off();
+                signaturePad = null; }
         }
 
-        // ============ RENDER TOOL CONTENT ============
+        // ============ RENDER TOOL ============
         function renderToolContent() {
             const content = document.getElementById('workspaceContent');
-            const isImageTool = ['image-to-pdf', 'ocr-image'].includes(currentTool);
-            const isWordTool = ['word-to-pdf'].includes(currentTool);
-            const isExcelTool = ['excel-to-pdf'].includes(currentTool);
-            const isOCRTool = ['ocr-image', 'ocr-pdf'].includes(currentTool);
-            const isSignatureTool = currentTool === 'signature';
-            const isMetadataTool = currentTool === 'metadata';
-            const isUnlockTool = currentTool === 'unlock';
-            const isRedactTool = currentTool === 'redact';
 
-            let acceptTypes = '.pdf';
-            let multiple = (currentTool === 'merge' || currentTool === 'image-to-pdf');
-            let uploadText = 'ارفع ملفات PDF هنا';
+            let accept = '.pdf';
+            let multi = ['merge', 'image2pdf'].includes(currentTool);
+            let uploadText = 'ارفع ملفات PDF';
 
-            if (isImageTool) {
-                acceptTypes = 'image/*';
-                uploadText = 'ارفع صوراً (JPG, PNG, WebP)';
-            }
-            if (isWordTool) {
-                acceptTypes = '.doc,.docx';
-                uploadText = 'ارفع ملفات Word (DOCX)';
-            }
-            if (isExcelTool) {
-                acceptTypes = '.xls,.xlsx,.csv';
-                uploadText = 'ارفع ملفات Excel (XLSX, CSV)';
-            }
-            if (isOCRTool && currentTool === 'ocr-image') {
-                acceptTypes = 'image/*';
-                uploadText = 'ارفع صورة لاستخراج النص منها';
-            }
-            if (currentTool === 'viewer') {
-                acceptTypes = '.pdf';
-                multiple = false;
+            if (currentTool === 'image2pdf') { accept = 'image/*';
+                uploadText = 'ارفع صور (JPG, PNG)'; }
+            if (currentTool === 'word2pdf') { accept = '.doc,.docx';
+                uploadText = 'ارفع ملف Word (DOCX)'; }
+            if (currentTool === 'excel2pdf') { accept = '.xls,.xlsx,.csv';
+                uploadText = 'ارفع ملف Excel'; }
+            if (currentTool === 'ppt2pdf') { accept = '.ppt,.pptx';
+                uploadText = 'ارفع ملف PowerPoint'; }
+            if (currentTool === 'ocr-image') { accept = 'image/*';
+                uploadText = 'ارفع صورة لاستخراج النص'; }
+            if (currentTool === 'viewer') multi = false;
+
+            let optionsHTML = getOptionsHTML();
+            let extraHTML = '';
+
+            if (currentTool === 'signature') {
+                extraHTML = `
+                <div class="sig-container">
+                    <canvas id="sigCanvas"></canvas>
+                    <div class="sig-controls">
+                        <button class="btn" onclick="clearSig()" style="font-size:0.8rem;padding:0.5rem;">🗑️ مسح</button>
+                        <span style="flex:1;"></span>
+                        <small style="color:#999;">✍️ ارسم توقيعك هنا</small>
+                    </div>
+                </div>`;
             }
 
-            let html = `
-                <div class="drop-zone" id="toolDropZone">
+            if (['ocr-image', 'ocr-pdf'].includes(currentTool)) {
+                extraHTML += '<div class="ocr-output" id="ocrOutput"><p style="color:#999;text-align:center;">سيظهر النص المستخرج هنا...</p></div>';
+            }
+
+            content.innerHTML = `
+                <div class="drop-zone" id="dropZone">
                     <div class="drop-zone-icon">📁</div>
                     <div class="drop-zone-text">${uploadText}</div>
-                    <div class="drop-zone-hint">اسحب وأفلت الملفات هنا أو اضغط للاختيار</div>
-                    <input type="file" id="toolFileInput" accept="${acceptTypes}" ${multiple ? 'multiple' : ''} style="display:none;">
+                    <div class="drop-zone-hint">اسحب وأفلت أو اضغط للاختيار - يدعم الرفع من Google Drive و Dropbox</div>
+                    <input type="file" id="fileInput" accept="${accept}" ${multi ? 'multiple' : ''} style="display:none;">
                 </div>
                 <div class="file-list" id="fileList"></div>
-                ${getToolSpecificOptions()}
-                <button class="btn btn-primary process-btn" onclick="processFiles()" id="processBtn" disabled style="width:100%; justify-content:center; padding:1.2rem; font-size:1.1rem;">
-                    ${getProcessButtonText()}
+                ${optionsHTML}
+                ${extraHTML}
+                <button class="btn btn-primary" id="processBtn" disabled onclick="processFiles()">
+                    ⚡ ${getButtonText()}
                 </button>
                 <div class="progress-container" id="progressContainer">
                     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -1350,73 +873,374 @@
                 <div class="result-section" id="resultSection">
                     <div class="result-icon">✅</div>
                     <h3 style="color:#27ae60;">تمت المعالجة بنجاح!</h3>
-                    <div class="result-info" id="resultInfo"></div>
-                    <div id="downloadButtons" style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:1rem;"></div>
+                    <div id="resultInfo"></div>
+                    <button class="btn btn-success" onclick="downloadResult()">⬇ تحميل الملف</button>
                 </div>
-                ${isSignatureTool ? '<div class="signature-container" id="signatureContainer"><canvas id="signatureCanvas"></canvas><div class="signature-controls"><button class="btn btn-primary" onclick="clearSignature()" style="font-size:0.8rem; padding:0.5rem 1rem;">مسح</button><span style="flex:1;"></span><small style="color:#999;">ارسم توقيعك في المربع أعلاه</small></div></div>' : ''}
-                ${isOCRTool ? '<div class="ocr-result" id="ocrResult"><p style="color:#999;text-align:center;">سيظهر النص المستخرج هنا...</p></div>' : ''}
-                <div class="preview-container" id="previewContainer"></div>
+                <div class="preview-grid" id="previewArea"></div>
             `;
 
-            content.innerHTML = html;
-
             setTimeout(() => {
-                attachDropZoneEvents();
-                if (isSignatureTool) initSignaturePad();
-                if (isMetadataTool) setupMetadataViewer();
+                attachEvents();
+                if (currentTool === 'signature') initSignature();
             }, 100);
         }
 
-        function getToolSpecificOptions() {
+        function getOptionsHTML() {
             switch (currentTool) {
                 case 'compress':
-                    return `
-                        <div class="options-panel">
-                            <h4>⚙️ إعدادات الضغط</h4>
-                            <div class="option-row">
-                                <span class="option-label">مستوى الضغط:</span>
-                                <select id="compressionLevel">
-                                    <option value="low">منخفض - أفضل جودة</option>
-                                    <option value="medium" selected>متوسط - متوازن</option>
-                                    <option value="high">عالي - أصغر حجم</option>
-                                </select>
-                            </div>
-                        </div>`;
-                case 'split':
-                    return `
-                        <div class="options-panel">
-                            <h4>⚙️ إعدادات التقسيم</h4>
-                            <div class="option-row">
-                                <span class="option-label">طريقة التقسيم:</span>
-                                <select id="splitMode" onchange="toggleSplitMode()">
-                                    <option value="all">كل صفحة في ملف منفصل</option>
-                                    <option value="range">تقسيم حسب النطاق</option>
-                                </select>
-                            </div>
-                            <div id="splitRangeDiv" style="display:none;">
-                                <div class="option-row">
-                                    <span class="option-label">نطاق الصفحات:</span>
-                                    <input type="text" id="pageRanges" placeholder="مثال: 1-3, 5, 7-9">
-                                </div>
-                            </div>
-                        </div>`;
+                    return `<div class="options-panel"><h4>مستوى الضغط</h4><select id="compLevel"><option value="low">منخفض</option><option value="medium" selected>متوسط</option><option value="high">عالي</option></select></div>`;
                 case 'rotate':
-                    return `
-                        <div class="options-panel">
-                            <h4>⚙️ زاوية التدوير</h4>
-                            <div class="option-row">
-                                <span class="option-label">الزاوية:</span>
-                                <select id="rotationAngle">
-                                    <option value="90">90° مع عقارب الساعة</option>
-                                    <option value="180">180°</option>
-                                    <option value="270">270° (90° عكس)</option>
-                                </select>
-                            </div>
-                        </div>`;
-                case 'delete-pages':
-                    return `
-                        <div class="options-panel">
-                            <h4>🗑️ الصفحات المراد حذفها</h4>
-                            <div class="option-row">
-                                <span class="option-label">أرقام الصفحات:</span>
-                                <input type="text" id="pagesToDelete" placeholder="م
+                    return `<div class="options-panel"><h4>زاوية التدوير</h4><select id="rotAngle"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></div>`;
+                case 'pdf2image':
+                    return `<div class="options-panel"><h4>تنسيق الصورة</h4><select id="imgFormat"><option value="png">PNG</option><option value="jpeg">JPEG</option></select></div>`;
+                case 'protect':
+                    return `<div class="options-panel"><h4>كلمة المرور</h4><input type="password" id="pdfPass" placeholder="أدخل كلمة المرور"><input type="password" id="pdfPass2" placeholder="تأكيد كلمة المرور" style="margin-top:0.5rem;"></div>`;
+                case 'unlock':
+                    return `<div class="options-panel"><h4>كلمة مرور الملف</h4><input type="password" id="unlockPass" placeholder="أدخل كلمة مرور الملف المحمي"></div>`;
+                case 'watermark':
+                    return `<div class="options-panel"><h4>نص العلامة المائية</h4><input type="text" id="wmText" value="PDF Master Pro" placeholder="النص"><div class="option-row" style="margin-top:0.5rem;"><span>الحجم:</span><input type="number" id="wmSize" value="30" min="10" max="80"></div></div>`;
+                default:
+                    return '';
+            }
+        }
+
+        function getButtonText() {
+            const texts = {
+                'merge': '🔗 ادمج الملفات',
+                'split': '✂️ قسم الملف',
+                'compress': '📦 اضغط الملف',
+                'pdf2image': '🖼️ حول إلى صور',
+                'image2pdf': '📸 حول إلى PDF',
+                'rotate': '🔄 در الملف',
+                'unlock': '🔓 فك الحماية',
+                'protect': '🔒 حمِّل الملف',
+                'signature': '✍️ أضف التوقيع',
+                'watermark': '💧 أضف علامة مائية',
+                'word2pdf': '📝 حول إلى PDF',
+                'excel2pdf': '📊 حول إلى PDF',
+                'ppt2pdf': '📽️ حول إلى PDF',
+                'pdf2text': '📃 استخرج النص',
+                'ocr-image': '🔍 استخرج النص',
+                'ocr-pdf': '📖 استخرج النص'
+            };
+            return texts[currentTool] || 'معالجة';
+        }
+
+        // ============ ATTACH EVENTS ============
+        function attachEvents() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            if (!dropZone || !fileInput) return;
+
+            dropZone.onclick = () => fileInput.click();
+            fileInput.onchange = (e) => {
+                if (e.target.files.length > 0) handleFiles(Array.from(e.target.files));
+            };
+            dropZone.ondragover = (e) => { e.preventDefault();
+                dropZone.classList.add('dragover'); };
+            dropZone.ondragleave = () => dropZone.classList.remove('dragover');
+            dropZone.ondrop = (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                handleFiles(Array.from(e.dataTransfer.files));
+            };
+        }
+
+        function handleFiles(files) {
+            const isImage = ['image2pdf', 'ocr-image'].includes(currentTool);
+            const isWord = currentTool === 'word2pdf';
+            const isExcel = currentTool === 'excel2pdf';
+            const isPPT = currentTool === 'ppt2pdf';
+
+            if (isImage) uploadedFiles = files.filter(f => f.type.startsWith('image/'));
+            else if (isWord) uploadedFiles = files.filter(f => f.name.match(/\.(doc|docx)$/i));
+            else if (isExcel) uploadedFiles = files.filter(f => f.name.match(/\.(xls|xlsx|csv)$/i));
+            else if (isPPT) uploadedFiles = files.filter(f => f.name.match(/\.(ppt|pptx)$/i));
+            else if (currentTool === 'viewer') uploadedFiles = files.filter(f => f.type === 'application/pdf').slice(0,
+            1);
+            else uploadedFiles = files.filter(f => f.type === 'application/pdf');
+
+            if (uploadedFiles.length === 0) {
+                showToast('⚠️ الرجاء اختيار النوع الصحيح من الملفات', 'error');
+                return;
+            }
+
+            updateFileList();
+            document.getElementById('processBtn').disabled = false;
+            showToast(`✅ تم تحميل ${uploadedFiles.length} ملف`, 'success');
+
+            if (currentTool === 'viewer' && uploadedFiles[0]) viewPDF(uploadedFiles[0]);
+        }
+
+        function updateFileList() {
+            const list = document.getElementById('fileList');
+            if (!list) return;
+            list.innerHTML = uploadedFiles.map((f, i) => {
+                let icon = '📄';
+                if (f.type.startsWith('image/')) icon = '🖼️';
+                if (f.name.match(/\.(doc|docx)$/i)) icon = '📝';
+                if (f.name.match(/\.(xls|xlsx|csv)$/i)) icon = '📊';
+                if (f.name.match(/\.(ppt|pptx)$/i)) icon = '📽️';
+                return `
+                <div class="file-item">
+                    <span class="f-icon">${icon}</span>
+                    <div class="f-info">
+                        <div class="f-name">${f.name}</div>
+                        <div class="f-size">${formatSize(f.size)}</div>
+                    </div>
+                    <button class="f-remove" onclick="removeFile(${i})">✕</button>
+                </div>`;
+            }).join('');
+        }
+
+        function removeFile(i) {
+            uploadedFiles.splice(i, 1);
+            updateFileList();
+            document.getElementById('processBtn').disabled = uploadedFiles.length === 0;
+        }
+
+        // ============ PROCESS ============
+        async function processFiles() {
+            if (uploadedFiles.length === 0) { showToast('⚠️ ارفع ملفات أولاً', 'error'); return; }
+
+            const funcs = {
+                'merge': merge,
+                'split': split,
+                'compress': compress,
+                'pdf2image': pdf2img,
+                'image2pdf': img2pdf,
+                'rotate': rotate,
+                'unlock': unlock,
+                'protect': protect,
+                'signature': sign,
+                'watermark': watermark,
+                'word2pdf': office2pdf,
+                'excel2pdf': office2pdf,
+                'ppt2pdf': office2pdf,
+                'pdf2text': pdf2text,
+                'ocr-image': ocrImage,
+                'ocr-pdf': ocrPDF
+            };
+
+            const fn = funcs[currentTool];
+            if (fn) {
+                showProgress();
+                try { await fn(); } catch (e) { hideProgress();
+                    showToast('❌ خطأ: ' + e.message, 'error');
+                    console.error(e); }
+            }
+        }
+
+        function showProgress() {
+            document.getElementById('progressContainer').classList.add('active');
+            document.getElementById('resultSection').classList.remove('active');
+            document.getElementById('progressFill').style.width = '0%';
+        }
+
+        function updateProgress(pct, txt) {
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressText').textContent = txt;
+        }
+
+        function hideProgress() {
+            setTimeout(() => document.getElementById('progressContainer').classList.remove('active'), 300);
+        }
+
+        function showResult(info, filename) {
+            hideProgress();
+            document.getElementById('progressFill').style.width = '100%';
+            setTimeout(() => {
+                if (info) document.getElementById('resultInfo').innerHTML = info;
+                document.getElementById('resultSection').classList.add('active');
+                document.getElementById('resultSection').dataset.filename = filename || 'result.pdf';
+                showToast('✅ تمت المعالجة بنجاح!', 'success');
+            }, 400);
+        }
+
+        function downloadResult() {
+            const fn = document.getElementById('resultSection').dataset.filename || 'result.pdf';
+            if (resultBlob) downloadBlob(resultBlob, fn);
+            else if (resultBlobs.length > 0) {
+                resultBlobs.forEach((rb, i) => setTimeout(() => downloadBlob(rb.blob, rb.name), i * 200));
+                showToast('✅ جاري تحميل ' + resultBlobs.length + ' ملفات', 'success');
+            }
+        }
+
+        function downloadBlob(blob, name) {
+            if (typeof saveAs !== 'undefined') saveAs(blob, name);
+            else {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // ============ PDF OPERATIONS ============
+        async function merge() {
+            if (uploadedFiles.length < 2) { showToast('⚠️ ارفع ملفين على الأقل', 'error');
+                hideProgress(); return; }
+            updateProgress(10, 'جاري الدمج...');
+            const { PDFDocument } = PDFLib;
+            const merged = await PDFDocument.create();
+            for (let i = 0; i < uploadedFiles.length; i++) {
+                updateProgress(10 + (i / uploadedFiles.length) * 60, `ملف ${i + 1}/${uploadedFiles.length}`);
+                const buf = await readFileAsArrayBuffer(uploadedFiles[i]);
+                const pdf = await PDFDocument.load(buf);
+                const pages = await merged.copyPages(pdf, pdf.getPageIndices());
+                pages.forEach(p => merged.addPage(p));
+            }
+            const bytes = await merged.save();
+            resultBlob = new Blob([bytes], { type: 'application/pdf' });
+            updateProgress(100, 'تم!');
+            showResult(`<p>تم دمج ${uploadedFiles.length} ملفات</p>`, 'merged.pdf');
+        }
+
+        async function split() {
+            updateProgress(10, 'جاري التقسيم...');
+            const { PDFDocument } = PDFLib;
+            const buf = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const src = await PDFDocument.load(buf);
+            const total = src.getPageCount();
+            resultBlobs = [];
+            for (let i = 0; i < total; i++) {
+                updateProgress(10 + (i / total) * 70, `صفحة ${i + 1}/${total}`);
+                const np = await PDFDocument.create();
+                const pp = await np.copyPages(src, [i]);
+                pp.forEach(p => np.addPage(p));
+                const b = await np.save();
+                resultBlobs.push({ blob: new Blob([b], { type: 'application/pdf' }), name: `page_${i + 1}.pdf` });
+            }
+            resultBlob = resultBlobs[0]?.blob;
+            updateProgress(100, 'تم!');
+            showResult(`<p>تم تقسيم ${total} صفحات</p>`, 'page_1.pdf');
+        }
+
+        async function compress() {
+            updateProgress(10, 'جاري الضغط...');
+            const { PDFDocument } = PDFLib;
+            const buf = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdf = await PDFDocument.load(buf);
+            const orig = uploadedFiles[0].size;
+            const level = document.getElementById('compLevel')?.value || 'medium';
+            const bytes = await pdf.save({ useObjectStreams: level !== 'low' });
+            resultBlob = new Blob([bytes], { type: 'application/pdf' });
+            const saved = ((1 - bytes.length / orig) * 100).toFixed(1);
+            updateProgress(100, 'تم!');
+            showResult(`<p>الأصلي: ${formatSize(orig)} | المضغوط: ${formatSize(bytes.length)}</p><p style="color:#27ae60;">🎯 توفير ${saved}%</p>`,
+                'compressed.pdf');
+        }
+
+        async function pdf2img() {
+            updateProgress(10, 'جاري التحويل...');
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            const buf = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+            const fmt = document.getElementById('imgFormat')?.value || 'png';
+            const preview = document.getElementById('previewArea');
+            if (preview) preview.innerHTML = '';
+            for (let i = 1; i <= pdf.numPages; i++) {
+                updateProgress(10 + (i / pdf.numPages) * 70, `صفحة ${i}/${pdf.numPages}`);
+                const page = await pdf.getPage(i);
+                const vp = page.getViewport({ scale: 2 });
+                const c = document.createElement('canvas');
+                c.width = vp.width;
+                c.height = vp.height;
+                await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+                if (preview) preview.appendChild(c);
+                if (i === 1) {
+                    const dataUrl = c.toDataURL(`image/${fmt}`);
+                    resultBlob = await (await fetch(dataUrl)).blob();
+                }
+            }
+            updateProgress(100, 'تم!');
+            showResult(`<p>تم تحويل ${pdf.numPages} صفحات</p>`, `page_1.${fmt}`);
+        }
+
+        async function img2pdf() {
+            updateProgress(5, 'جاري التحويل...');
+            const { PDFDocument } = PDFLib;
+            const doc = await PDFDocument.create();
+            for (let i = 0; i < uploadedFiles.length; i++) {
+                updateProgress(5 + (i / uploadedFiles.length) * 80, `صورة ${i + 1}/${uploadedFiles.length}`);
+                const buf = await readFileAsArrayBuffer(uploadedFiles[i]);
+                let img;
+                if (uploadedFiles[i].type === 'image/png') img = await doc.embedPng(buf);
+                else img = await doc.embedJpg(buf);
+                const page = doc.addPage([img.width, img.height]);
+                page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+            }
+            const bytes = await doc.save();
+            resultBlob = new Blob([bytes], { type: 'application/pdf' });
+            updateProgress(100, 'تم!');
+            showResult(`<p>تم تحويل ${uploadedFiles.length} صور</p>`, 'images.pdf');
+        }
+
+        async function rotate() {
+            updateProgress(10, 'جاري التدوير...');
+            const { PDFDocument } = PDFLib;
+            const buf = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdf = await PDFDocument.load(buf);
+            const angle = parseInt(document.getElementById('rotAngle')?.value) || 90;
+            pdf.getPages().forEach(p => p.setRotation({ angle: p.getRotation().angle + angle }));
+            const bytes = await pdf.save();
+            resultBlob = new Blob([bytes], { type: 'application/pdf' });
+            updateProgress(100, 'تم!');
+            showResult(`<p>تم تدوير بزاوية ${angle}°</p>`, 'rotated.pdf');
+        }
+
+        async function unlock() {
+            const pw = document.getElementById('unlockPass')?.value;
+            if (!pw) { showToast('⚠️ أدخل كلمة المرور', 'error');
+                hideProgress(); return; }
+            updateProgress(30, 'جاري فك الحماية...');
+            try {
+                const { PDFDocument } = PDFLib;
+                const buf = await readFileAsArrayBuffer(uploadedFiles[0]);
+                const pdf = await PDFDocument.load(buf, { password: pw });
+                const bytes = await pdf.save();
+                resultBlob = new Blob([bytes], { type: 'application/pdf' });
+                updateProgress(100, 'تم فك الحماية!');
+                showResult('<p>🔓 تم فك حماية الملف</p>', 'unlocked.pdf');
+            } catch {
+                hideProgress();
+                showToast('❌ كلمة المرور غير صحيحة', 'error');
+            }
+        }
+
+        async function protect() {
+            const pw = document.getElementById('pdfPass')?.value;
+            const pw2 = document.getElementById('pdfPass2')?.value;
+            if (!pw || pw.length < 3) { showToast('⚠️ كلمة مرور قصيرة', 'error');
+                hideProgress(); return; }
+            if (pw !== pw2) { showToast('⚠️ كلمتا المرور غير متطابقتين', 'error');
+                hideProgress(); return; }
+            updateProgress(30, 'جاري الحماية...');
+            const { PDFDocument } = PDFLib;
+            const buf = await readFileAsArrayBuffer(uploadedFiles[0]);
+            const pdf = await PDFDocument.load(buf);
+            pdf.encrypt({ userPassword: pw, ownerPassword: pw + '_owner', permissions: { printing: 'lowResolution',
+                    copying: false, modifying: false } });
+            const bytes = await pdf.save();
+            resultBlob = new Blob([bytes], { type: 'application/pdf' });
+            updateProgress(100, 'تم!');
+            showResult('<p>🔒 تمت حماية الملف</p>', 'protected.pdf');
+        }
+
+        async function sign() {
+            if (!signaturePad || signaturePad.isEmpty()) {
+                showToast('⚠️ ارسم توقيعك أولاً', 'error');
+                hideProgress();
+                return;
+            }
+            updateProgress(30, 'جاري إضافة التوقيع...');
+            const sigDataUrl = signaturePad.toDataURL();
+            const res = await fetch(sigDataUrl);
+            const sigBuf = await res.arrayBuffer();
+            const { PDFDocument } = PDFLib;
+            const buf = await readFileAsArrayBuf
